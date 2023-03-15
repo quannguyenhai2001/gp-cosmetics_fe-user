@@ -1,14 +1,20 @@
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { BrowserRouter } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { RouterWrapper } from "routes/RouterWrapper";
 
 const theme = createTheme();
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      hello
-      <CssBaseline />
-
+      <BrowserRouter>
+        <CssBaseline />
+        <RouterWrapper />
+        <ToastContainer />
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
