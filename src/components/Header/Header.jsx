@@ -5,7 +5,7 @@ import Navbar from './Navbar/Navbar';
 export default function Header() {
 
     return (
-        <Box>
+        <Box sx={{ mb: "8rem" }}>
             <Navbar />
         </Box >
     );
