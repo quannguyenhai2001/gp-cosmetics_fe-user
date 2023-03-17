@@ -8,7 +8,7 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import Slide from '@mui/material/Slide';
 import { styled } from '@mui/material/styles';
 import { Container, Divider, IconButton, TextField, Tooltip, tooltipClasses, Typography } from '@mui/material';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FaceIcon from '@mui/icons-material/Face';
 import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';
 import PeopleIcon from '@mui/icons-material/People';
 import StoreIcon from '@mui/icons-material/Store';
@@ -74,26 +74,26 @@ export default function NavBar(props) {
     const classes = useStyles();
 
     return (
-        <Container maxWidth="xl">
-            <HideOnScroll {...props}>
-                <AppBar className={classes.rootAppBarTop} elevation={0}>
-                    <Toolbar className={classes.rootToolBar}>
-                        <Box sx={{ width: "15rem", height: "2.8rem", marginRight: 4 }}>
+        <HideOnScroll {...props}>
+            <AppBar className={classes.rootAppBarTop} elevation={0}>
+                <Toolbar className={classes.rootToolBar}>
+                    <Box className={classes.centerItem}>
+                        <Box sx={{ height: "2.5rem", mr: 2 }}>
                             <img style={{ width: "100%", height: "100%" }} src={logo} alt="green iguana" />
                         </Box>
-
-                        <TextField
-                            className={classes.searchInput}
-                            InputProps={{
-                                endAdornment: (
-                                    <IconButton>
-                                        <SearchOutlinedIcon />
-                                    </IconButton>
-                                )
-                            }}
-                        />
-
-
+                    </Box>
+                    <TextField
+                        className={classes.searchInput}
+                        placeholder="Tìm kiếm"
+                        InputProps={{
+                            endAdornment: (
+                                <IconButton>
+                                    <SearchOutlinedIcon />
+                                </IconButton>
+                            )
+                        }}
+                    />
+                    <Box className={classes.centerItem} >
                         <CustomTooltip
                             title={
                                 <>
@@ -103,7 +103,7 @@ export default function NavBar(props) {
                                 </>
                             }
                         >
-                            <Box sx={{ display: "flex", alignItems: "center", margin: "0 0 0 10rem", "&:hover": { color: "blue", cursor: "pointer" } }}>
+                            <Box className={classes.iconBoxOne}>
                                 <IconButton
                                     size="medium"
                                     sx={{ "&:hover": { color: "blue" } }}
@@ -124,7 +124,7 @@ export default function NavBar(props) {
                             }
                         >
 
-                            <Box sx={{ display: "flex", alignItems: "center", margin: "0 2rem 0 2rem", "&:hover": { color: "blue", cursor: "pointer" } }}>
+                            <Box className={classes.iconBoxTwo}>
                                 <IconButton
                                     size="medium"
                                     sx={{ "&:hover": { color: "blue" } }}
@@ -135,37 +135,41 @@ export default function NavBar(props) {
                             </Box>
                         </CustomTooltip>
 
-                        <Divider sx={{
-                            height: "30px",
-                            marginTop: "23px",
-                            marginLeft: "11px"
-                        }} orientation="vertical" variant="middle" flexItem />
+                        <Divider className={classes.divideRoot} orientation="vertical" variant="middle" flexItem />
 
-                        <Box sx={{ display: "flex", alignItems: "center", margin: "0 2rem 0 2rem", "&:hover": { color: "blue", cursor: "pointer" } }}>
-                            <Typography >Đăng Nhập</Typography>
-                        </Box>
 
-                        <IconButton
-                            size="medium"
-                            aria-label="Like"
-                            sx={{ "&:hover": { color: "blue" }, margin: "0 0 0 4rem" }}
+                        <CustomTooltip
+                            title={
+                                <>
+                                    <Typography color="inherit">
+                                        Bạn chưa đăng nhập!
+                                    </Typography>
+                                </>
+                            }
                         >
-                            <FavoriteBorderIcon />
-                        </IconButton>
 
+                            <Box className={classes.iconBoxTwo}>
+                                <IconButton
+                                    size="medium"
+                                    sx={{ "&:hover": { color: "blue" } }}
+                                >
+                                    <FaceIcon />
+                                </IconButton>
+                                <Typography>Đăng Nhập</Typography>
+                            </Box>
+                        </CustomTooltip>
                         <IconButton
                             size="medium"
                             aria-label="Like"
                             sx={{ "&:hover": { color: "blue" }, margin: "0 0 0 1rem" }}
                         >
-
                             <ShoppingBasketOutlinedIcon />
 
                         </IconButton>
+                    </Box>
 
-                    </Toolbar>
-                </AppBar>
-            </HideOnScroll>
-        </Container>
+                </Toolbar>
+            </AppBar>
+        </HideOnScroll>
     );
 }

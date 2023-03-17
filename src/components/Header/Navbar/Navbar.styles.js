@@ -1,6 +1,6 @@
-import { styled } from "@mui/system";
+import { makeStyles } from '@mui/styles';
 
-export default styled(() => ({
+export default makeStyles((theme) => ({
     rootAppBarTop: {
         '&.MuiPaper-root': {
             backgroundColor: '#fff',
@@ -14,11 +14,60 @@ export default styled(() => ({
     },
     rootToolBar: {
         '&.MuiToolbar-root': {
-            height: '60px',
+            height: '80px',
+            justifyContent: 'space-between',
         }
     },
 
+    searchInput: {
+        [`& fieldset`]: {
+            borderRadius: '50px',
+        },
+        '& input': {
+            height: '6px',
 
+        },
+        overflow: "hidden",
+        flex: 1,
+        borderRadius: '50px',
+    },
+
+    centerItem: {
+        display: 'flex',
+        alignItems: 'center',
+
+    },
+    iconBoxOne: {
+        display: "flex",
+        alignItems: "center",
+        margin: "0 0 0 10rem",
+        [theme.breakpoints.down('md')]: {
+            display: "none",
+        },
+        "&:hover": {
+            color: "blue",
+            cursor: "pointer"
+        }
+    },
+    iconBoxTwo: {
+        display: "flex",
+        alignItems: "center",
+        margin: "0 1rem 0 1rem",
+        [theme.breakpoints.down('md')]: {
+            display: "none",
+        },
+        "&:hover": {
+            color: "blue",
+            cursor: "pointer"
+        }
+    },
+    divideRoot: {
+        height: "2.5rem",
+        marginLeft: 10,
+        [theme.breakpoints.down('md')]: {
+            display: "none",
+        },
+    },
     //list item
     rootListItem: {
         '&.MuiListItem-root': {
@@ -73,15 +122,4 @@ export default styled(() => ({
     },
 
 
-    searchInput: {
-        [`& fieldset`]: {
-            borderRadius: '50px',
-        },
-        '& input': {
-            height: '6px',
-        },
-        flex: "1",
-        overflow: "hidden",
-        borderRadius: '50px',
-    },
 }));
