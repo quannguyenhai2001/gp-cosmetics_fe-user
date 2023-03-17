@@ -58,7 +58,7 @@ const Footer = () => {
                                 </Typography>
                             </Box>
                         </Grid>
-                        <Grid item xs={12} md={4} >
+                        <Grid item xs={12} md={4} className={classes.headerFooter}>
                             <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }} >
                                 <AddCardIcon fontSize='large' />
                                 <Typography component='span'>
