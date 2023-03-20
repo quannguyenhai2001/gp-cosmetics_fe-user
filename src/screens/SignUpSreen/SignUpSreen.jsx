@@ -6,7 +6,7 @@ import InputField from 'components/FormElements/InputField/InputField';
 import SelectField from 'components/FormElements/SelectField/SelectField';
 import CheckBoxField from 'components/FormElements/CheckboxField/CheckboxField';
 
-const SignUpUserScreen = () => {
+const SignUpScreen = () => {
     const classes = useStyles()
     const [showPassword, setShowPassword] = useState(false)
     const [error, setError] = useState('')
@@ -118,4 +118,4 @@ const SignUpUserScreen = () => {
     );
 };
 
-export default SignUpUserScreen;
+export default SignUpScreen;

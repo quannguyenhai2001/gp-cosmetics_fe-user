@@ -27,6 +27,7 @@ function InputField(props) {
                 variant="outlined"
                 autoComplete='off'
                 fullWidth
+                size="small"
                 label={label}
                 type={type}
                 error={(showError || error) ? true : false}

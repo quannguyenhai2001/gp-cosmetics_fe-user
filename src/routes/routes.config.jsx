@@ -1,6 +1,7 @@
 import DefaultLayout from "layouts/DefaultLayout/DefaultLayout";
 import HomeScreen from "screens/HomeScreen/HomeScreen";
-import SignUpUserScreen from "screens/SignUpSreen/SignUpSreen";
+import SignInScreen from "screens/SignInSreen/SignInSreen";
+import SignUpScreen from "screens/SignUpSreen/SignUpSreen";
 
 export const RouteConfigs = [
     {
@@ -11,7 +12,13 @@ export const RouteConfigs = [
     },
     {
         path: "/sign-up",
-        element: SignUpUserScreen,
+        element: SignUpScreen,
+        isPrivate: false,
+        layout: DefaultLayout,
+    },
+    {
+        path: "/sign-in",
+        element: SignInScreen,
         isPrivate: false,
         layout: DefaultLayout,
     }
