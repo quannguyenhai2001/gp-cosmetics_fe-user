@@ -3,21 +3,22 @@ import { makeStyles } from '@mui/styles';
 export default makeStyles((theme) => ({
     boxSignIn: {
         backgroundImage: 'linear-gradient(315deg, #7cffcb 0%, #74f2ce 20%)',
+
     },
     container: {
-        minHeight: "50rem",
-        padding: '0 12rem'
+        padding: '0 12rem',
+        height: "60rem",
     },
 
     gridContainer: {
-        height: "inherit",
+        height: "100%",
     },
     signIn: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         [theme.breakpoints.down('md')]: {
-            marginBottom: "2rem",
+            margin: "2rem 0",
         },
     },
     signInForm: {

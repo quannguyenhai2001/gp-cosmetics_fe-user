@@ -6,6 +6,9 @@
 a {
   text-decoration: none;
 }
+li {
+  list-style: none;
+}
 
 /* set font-size and font*/
 html {
