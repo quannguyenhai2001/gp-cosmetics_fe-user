@@ -6,7 +6,7 @@ export default makeStyles((theme) => ({
 
     },
     container: {
-        padding: '0 12rem',
+        padding: '0 10rem',
         height: "60rem",
     },
 

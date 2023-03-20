@@ -7,8 +7,8 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import PinterestIcon from '@mui/icons-material/Pinterest';
 import GoogleIcon from '@mui/icons-material/Google';
-import USIcon from 'assets/img/language/united-states.png'
-import CanadaIcon from 'assets/img/language/canada.png'
+import USIcon from 'assets/images/language/united-states.png'
+import CanadaIcon from 'assets/images/language/canada.png'
 import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';

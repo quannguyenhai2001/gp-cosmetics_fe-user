@@ -2,7 +2,7 @@ import { Avatar, Box, Button, Container, Divider, Grid, Typography } from '@mui/
 import React, { useState } from 'react';
 import useStyles from './SignInSreen.styles';
 import { Field, Form, Formik } from 'formik';
-import Logo from 'assets/img/logo/logo_web.png';
+import Logo from 'assets/images/logo/logo_web.png';
 import { Link } from 'react-router-dom';
 import InputField from 'components/FormElements/InputField/InputField';
 
@@ -21,7 +21,7 @@ const SignInScreen = () => {
 
     return (
         <Box className={classes.boxSignIn}>
-            <Container maxWidth="xl" className={classes.container}>
+            <Container maxWidth="lg" className={classes.container}>
                 <Grid container className={classes.gridContainer}>
                     <Grid item xs={12} md={6} className={classes.signIn}>
                         <Box className={classes.signInForm}>

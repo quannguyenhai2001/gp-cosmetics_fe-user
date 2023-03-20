@@ -12,7 +12,7 @@ import FaceIcon from '@mui/icons-material/Face';
 import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';
 import PeopleIcon from '@mui/icons-material/People';
 import StoreIcon from '@mui/icons-material/Store';
-import logo from 'assets/img/logo/logo_web.png';
+import logo from 'assets/images/logo/logo_web.png';
 
 //hide and show navbar
 function HideOnScroll(props) {
