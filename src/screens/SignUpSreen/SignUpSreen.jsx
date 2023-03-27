@@ -20,8 +20,10 @@ const SignUpScreen = () => {
     const [error, setError] = useState('')
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const ageList = [...Array(100).keys()];
+
     const handleShowPassword = (name) => {
-        console.log(name)
         setShowInput({ ...showInput, [name]: !showInput[name] })
     }
     const changeError = () => {
@@ -35,9 +37,10 @@ const SignUpScreen = () => {
             const displayName = `${value.firstName} ${value.lastName}`
             const userData = {
                 display_name: displayName,
+                phone_number: value.phoneNumber,
                 ...valueObj
             }
-            const res = await dispatch(postLogin(userData)).unwrap()
+            await dispatch(postLogin(userData)).unwrap()
             navigate("/sign-in")
             toast.success('Đăng ký thành công!', {
                 position: "top-right",
@@ -50,6 +53,7 @@ const SignUpScreen = () => {
             });
         }
         catch (err) {
+            setError(err)
             toast.error('Lỗi!', {
                 position: "top-right",
                 autoClose: 3000,
@@ -132,6 +136,7 @@ const SignUpScreen = () => {
                                                         name="age"
                                                         component={SelectField}
                                                         label="Tuổi"
+                                                        list={ageList}
                                                     />
                                                 </Grid>
                                                 <Grid item xs={6}>
@@ -156,7 +161,7 @@ const SignUpScreen = () => {
                                             type="text"
                                         />
                                     </Grid>
-                                    <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
+                                    <Button type="submit" disabed fullWidth variant="contained" color="primary" className={classes.submit}>
                                         XÁC NHẬN
                                     </Button>
                                 </Paper>
