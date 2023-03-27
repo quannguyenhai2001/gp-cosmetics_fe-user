@@ -7,7 +7,7 @@ import SelectField from 'components/FormElements/SelectField/SelectField';
 import CheckBoxField from 'components/FormElements/CheckboxField/CheckboxField';
 import { createUserSchema, initialCreateUserValues } from 'utils/validation/form-validate';
 import { useDispatch } from 'react-redux';
-import { postLogin } from 'redux/slices/UserSlice';
+import { postSignUp } from 'redux/slices/UserSlice';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -40,7 +40,7 @@ const SignUpScreen = () => {
                 phone_number: value.phoneNumber,
                 ...valueObj
             }
-            await dispatch(postLogin(userData)).unwrap()
+            await dispatch(postSignUp(userData)).unwrap()
             navigate("/sign-in")
             toast.success('Đăng ký thành công!', {
                 position: "top-right",
@@ -64,7 +64,6 @@ const SignUpScreen = () => {
                 progress: undefined,
             });
         }
-
     }
     return (
         <Box>
@@ -166,7 +165,6 @@ const SignUpScreen = () => {
                                     </Button>
                                 </Paper>
                             </Container>
-
                         </Form>
                     )
                 }}
