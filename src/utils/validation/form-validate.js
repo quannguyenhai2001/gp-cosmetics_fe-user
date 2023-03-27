@@ -1,15 +1,15 @@
 import * as Yup from 'yup';
 export const initialCreateUserValues = {
-    firstName: '',
-    lastName: '',
-    username: '',
+    firstName: 'a',
+    lastName: 'a',
+    username: 'aaaaaa',
     email: '',
-    password: '',
-    confirmPassword: '',
-    sex: '',
-    phoneNumber: '',
-    address: '',
-    age: ''
+    password: '11111',
+    confirmPassword: '11111',
+    sex: 'nam',
+    phoneNumber: '11111',
+    address: '1',
+    age: '1'
 }
 export const createUserSchema = Yup.object().shape({
     firstName: Yup.string().required('Vui lòng nhập dữ liệu'),
@@ -35,5 +35,5 @@ export const createUserSchema = Yup.object().shape({
     sex: Yup.string().required('Vui lòng nhập dữ liệu'),
     phoneNumber: Yup.string().required('Vui lòng nhập dữ liệu'),
     address: Yup.string().required('Vui lòng nhập dữ liệu'),
-    age: Yup.number().required('Vui lòng nhập dữ liệu'),
+    // age: Yup.number().required('Vui lòng nhập dữ liệu'),
 })
