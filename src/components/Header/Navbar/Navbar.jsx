@@ -13,6 +13,7 @@ import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlin
 import PeopleIcon from '@mui/icons-material/People';
 import StoreIcon from '@mui/icons-material/Store';
 import logo from 'assets/images/logo/logo_web.png';
+import { Link } from 'react-router-dom';
 
 //hide and show navbar
 function HideOnScroll(props) {
@@ -103,7 +104,7 @@ export default function NavBar(props) {
                                 </>
                             }
                         >
-                            <Box className={classes.iconBoxOne}>
+                            <Box className={classes.BoxLeftIcon}>
                                 <IconButton
                                     size="medium"
                                     sx={{ "&:hover": { color: "blue" } }}
@@ -124,7 +125,7 @@ export default function NavBar(props) {
                             }
                         >
 
-                            <Box className={classes.iconBoxTwo}>
+                            <Box className={classes.BoxRightIcon}>
                                 <IconButton
                                     size="medium"
                                     sx={{ "&:hover": { color: "blue" } }}
@@ -148,14 +149,14 @@ export default function NavBar(props) {
                             }
                         >
 
-                            <Box className={classes.iconBoxTwo}>
+                            <Box className={classes.BoxRightIcon}>
                                 <IconButton
                                     size="medium"
                                     sx={{ "&:hover": { color: "blue" } }}
                                 >
                                     <FaceIcon />
                                 </IconButton>
-                                <Typography>Đăng Nhập</Typography>
+                                <Typography component={Link} to="/sign-in">Đăng Nhập</Typography>
                             </Box>
                         </CustomTooltip>
                         <IconButton
