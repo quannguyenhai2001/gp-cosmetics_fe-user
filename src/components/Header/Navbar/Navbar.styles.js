@@ -37,7 +37,7 @@ export default makeStyles((theme) => ({
         alignItems: 'center',
 
     },
-    iconBoxOne: {
+    BoxLeftIcon: {
         display: "flex",
         alignItems: "center",
         margin: "0 0 0 10rem",
@@ -49,17 +49,26 @@ export default makeStyles((theme) => ({
             cursor: "pointer"
         }
     },
-    iconBoxTwo: {
+    BoxRightIcon: {
         display: "flex",
         alignItems: "center",
         margin: "0 1rem 0 1rem",
+
         [theme.breakpoints.down('md')]: {
             display: "none",
         },
         "&:hover": {
             color: "blue",
             cursor: "pointer"
+        },
+        '& a': {
+            color: "black",
+            "&:hover": {
+                color: "blue",
+                cursor: "pointer"
+            },
         }
+
     },
     divideRoot: {
         height: "2.5rem",

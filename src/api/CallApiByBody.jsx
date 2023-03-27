@@ -20,8 +20,3 @@ export default function CallApiByBody(endpoint, method = "GET", body) {
         data: body
     })
 }
-// export default async function CallApiByBody(endpoint, method = "GET", body) {
-//     const response = await axiosInstance.get(endpoint)
-//     const data = response.data
-//     return data
-// }

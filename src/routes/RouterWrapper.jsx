@@ -11,7 +11,7 @@ import { RouteConfigs } from "./routes.config";
 function PrivateRouter() {
     const jwtToken = localStorage.getItem("token");
     return RouteConfigs.map((route, index) => {
-        if ((!route.isPrivate || (route.isPrivate && jwtToken && route.isScreenAdmin === false)) || (route.isPrivate && jwtToken && route.isScreenAdmin === true)) {
+        if ((!route.isPrivate || (route.isPrivate && jwtToken)) || (route.isPrivate && jwtToken)) {
             return <Route key={index} path={route.path} element={(() => {
                 return (
                     <route.layout>
@@ -21,11 +21,8 @@ function PrivateRouter() {
             })()}
             />
         }
-
-        else if (route.isPrivate && !jwtToken && route.isScreenAdmin === false) {
+        else if (route.isPrivate && !jwtToken) {
             return <Route key={index} path={route.path} element={<Navigate to="/sign-in" />} />
-        } else if (route.isPrivate && !jwtToken && route.isScreenAdmin === true) {
-            return <Route key={index} path={route.path} element={<Navigate to="/admin" />} />
         }
         else {
             return <Route key={index} path={route.path} element={<Navigate to="/" />} />
