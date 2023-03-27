@@ -28,11 +28,12 @@ const errorRequestInterceptor = error => {
 // responseInterceptor
 const responseInterceptor = async response => {
     if (
+
         response?.data?.result?.status_code === 401
-        // response.data.result.message === "AccessToken đã hết hạn"
+
     ) {
         try {
-
+            console.log(response)
 
             return Promise.resolve(response);
         } catch (error) {
