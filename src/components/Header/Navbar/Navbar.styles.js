@@ -111,8 +111,6 @@ export default makeStyles((theme) => ({
             }
         },
     },
-
-
     rootListItem2: {
         '&.MuiListItem-root': {
             padding: '0px',
@@ -129,6 +127,12 @@ export default makeStyles((theme) => ({
             }
         },
     },
-
+    typoAvatar: {
+        position: "relative",
+        marginLeft: "0.5rem",
+        [theme.breakpoints.down('md')]: {
+            display: "none",
+        },
+    }
 
 }));

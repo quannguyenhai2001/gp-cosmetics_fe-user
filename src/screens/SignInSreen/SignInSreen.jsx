@@ -6,7 +6,7 @@ import Logo from 'assets/images/logo/logo_web.png';
 import { Link, useNavigate } from 'react-router-dom';
 import InputField from 'components/FormElements/InputField/InputField';
 import { signInSchema, signInValues } from 'utils/validation/form-validate';
-import { postSignIn } from 'redux/slices/UserSlice';
+import { postSignIn } from 'redux/slices/userSlice';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
