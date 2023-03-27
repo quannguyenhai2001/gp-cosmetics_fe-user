@@ -31,6 +31,17 @@ export const postSignIn = createAsyncThunk(
     }
 );
 
+export const getUser = createAsyncThunk(
+    "auth/getUser",
+    async (data, { rejectWithValue }) => {
+        try {
+            const response = await instanceApi.get("/auth/get-user.php");
+            return response.data;
+        } catch (error) {
+            throw rejectWithValue(error.response.data);
+        }
+    }
+);
 const userSlice = createSlice({
     name: 'user',
     initialState,
@@ -40,12 +51,13 @@ const userSlice = createSlice({
     extraReducers: builder => {
         builder.addCase(postSignIn.fulfilled, (state, action) => {
             state.userInfo = action.payload.data;
-            state.accessToken = action.payload.token;
-            console.log(action)
             localStorage.setItem('access_token', action.payload.token);
+        })
+        builder.addCase(getUser.fulfilled, (state, action) => {
+            state.userInfo = action.payload.data;
         })
     }
 })
 
-const { reducer: userReducer, actions } = userSlice
+const { reducer: userReducer } = userSlice
 export default userReducer

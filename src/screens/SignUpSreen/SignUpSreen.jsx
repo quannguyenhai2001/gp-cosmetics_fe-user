@@ -7,7 +7,7 @@ import SelectField from 'components/FormElements/SelectField/SelectField';
 import CheckBoxField from 'components/FormElements/CheckboxField/CheckboxField';
 import { createUserSchema, initialCreateUserValues } from 'utils/validation/form-validate';
 import { useDispatch } from 'react-redux';
-import { postSignUp } from 'redux/slices/UserSlice';
+import { postSignUp } from 'redux/slices/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 

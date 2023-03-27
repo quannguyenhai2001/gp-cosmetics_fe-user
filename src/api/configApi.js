@@ -10,13 +10,8 @@ const instanceApi = axios.create({
 
 // requestInterceptor
 const requestInterceptor = request => {
-    for (const key in request.params) {
-        if (request.params[key] === "") {
-            request.params[key] = null;
-        }
-    }
-    if (localStorage.getItem('token')) {
-        request.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+    if (localStorage.getItem('access_token')) {
+        request.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`
     }
     return request
 };
@@ -28,13 +23,9 @@ const errorRequestInterceptor = error => {
 // responseInterceptor
 const responseInterceptor = async response => {
     if (
-
-        response?.data?.result?.status_code === 401
-
+        response?.data?.status_code === 401
     ) {
         try {
-            console.log(response)
-
             return Promise.resolve(response);
         } catch (error) {
             return Promise.reject(error);
@@ -46,12 +37,12 @@ const responseInterceptor = async response => {
 const errorResponseInterceptor = async error => {
     if (error && error.response?.status) {
         switch (error.response?.status) {
-            case 401: // Both RefreshToken and AccessToken expired
+            case 401:
                 localStorage.clear();
                 window.location.assign("/sign-in");
                 break;
             case 404: // Page not found
-                // window.location.assign("/404");
+                window.location.assign("/404");
                 break;
             default:
                 break;
