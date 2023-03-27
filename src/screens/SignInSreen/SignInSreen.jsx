@@ -3,22 +3,53 @@ import React, { useState } from 'react';
 import useStyles from './SignInSreen.styles';
 import { Field, Form, Formik } from 'formik';
 import Logo from 'assets/images/logo/logo_web.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import InputField from 'components/FormElements/InputField/InputField';
+import { signInSchema, signInValues } from 'utils/validation/form-validate';
+import { postSignIn } from 'redux/slices/UserSlice';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const SignInScreen = () => {
-
     const classes = useStyles()
     const [showPassword, setShowPassword] = useState(false)
-    const [error, setError] = useState('')
-
-    const changeError = (e) => {
-        setError('')
+    const [isError, setIsError] = useState(false)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const changeError = () => {
+        setIsError(false)
+        console.log("gd")
     }
     const handleShowPassword = () => {
         setShowPassword(!showPassword)
     }
-
+    const handleSubmit = async (value) => {
+        try {
+            await dispatch(postSignIn(value)).unwrap()
+            navigate("/")
+            toast.success('Đăng nhập thành công!', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+        catch (err) {
+            setIsError(err)
+            toast.error('Lỗi!', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    }
     return (
         <Box className={classes.boxSignIn}>
             <Container maxWidth="lg" className={classes.container}>
@@ -26,6 +57,11 @@ const SignInScreen = () => {
                     <Grid item xs={12} md={6} className={classes.signIn}>
                         <Box className={classes.signInForm}>
                             <Formik
+                                initialValues={signInValues}
+                                validationSchema={signInSchema}
+                                onSubmit={(value, { setFieldError }) => {
+                                    handleSubmit(value, setFieldError);
+                                }}
                             >
                                 {() => {
                                     return (
@@ -41,21 +77,20 @@ const SignInScreen = () => {
                                                         component={InputField}
                                                         label="Email"
                                                         type="email"
-                                                        error={error}
-                                                        changeError={changeError}
+                                                        onClick={changeError}
                                                     />
 
                                                     <Field
                                                         name="password"
                                                         component={InputField}
                                                         label="Mật khẩu"
+                                                        onClick={changeError}
                                                         type={showPassword ? "text" : "password"} handleShowPassword={handleShowPassword}
-                                                        error={error}
-                                                        changeError={changeError}
                                                     />
 
                                                 </Grid>
-                                                <Button fullWidth variant="contained" color="primary" className={classes.submitButton}>
+                                                {isError ? <Typography color="error">Email hoặc mật khẩu chưa đúng</Typography> : null}
+                                                <Button fullWidth variant="contained" type='submit' color="primary" className={classes.submitButton}>
                                                     Xác nhận
                                                 </Button>
                                             </Container>

@@ -4,17 +4,9 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { ErrorMessage } from 'formik';
 
-function InputField(props) {
-    const { field, form, type, label, half, disabled, handleShowPassword, error, changeError
-    } = props
+function InputField({ field, form, type, label, half, disabled, handleShowPassword, error, changeError }) {
     const { name, value, onChange, onBlur } = field
     const showError = form.errors[name] && form.touched[name]
-
-    // const sethiddenErrorHandler = () => {
-    //     if (form.touched['email']) {
-    //         changeErrorEmail()
-    //     }
-    // }
     return (
         <Grid item xs={12} sm={half ? 6 : 12}>
             <TextField
@@ -36,7 +28,7 @@ function InputField(props) {
                     endAdornment: (
                         <InputAdornment position="end" >
                             <IconButton
-                                onClick={handleShowPassword}
+                                onClick={() => handleShowPassword(name)}
                             >
                                 {type === 'password' ? <Visibility /> : <VisibilityOff />}
                             </IconButton>
