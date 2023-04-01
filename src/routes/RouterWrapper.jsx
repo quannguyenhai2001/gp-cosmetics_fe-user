@@ -9,7 +9,7 @@ import {
 import { RouteConfigs } from "./routes.config";
 
 function PrivateRouter() {
-    const jwtToken = localStorage.getItem("token");
+    const jwtToken = localStorage.getItem("access_token");
     return RouteConfigs.map((route, index) => {
         if ((!route.isPrivate || (route.isPrivate && jwtToken)) || (route.isPrivate && jwtToken)) {
             return <Route key={index} path={route.path} element={(() => {
