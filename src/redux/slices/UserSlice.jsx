@@ -42,6 +42,19 @@ export const getUser = createAsyncThunk(
         }
     }
 );
+
+export const patchUserInfo = createAsyncThunk(
+    "auth/patchUserInfo",
+    async (data, { rejectWithValue }) => {
+        try {
+            console.log(data)
+            const response = await instanceApi.post("/auth/update-user.php", data);
+            return response.data;
+        } catch (error) {
+            throw rejectWithValue(error.response.data);
+        }
+    }
+);
 const userSlice = createSlice({
     name: 'user',
     initialState,
