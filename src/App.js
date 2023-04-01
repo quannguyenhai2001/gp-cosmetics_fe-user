@@ -12,6 +12,7 @@ import './App.css';
 const theme = createTheme({
   typography: {
     fontSize: 18,
+
   },
 });
 function App() {
