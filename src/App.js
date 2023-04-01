@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { getUser } from 'redux/slices/userSlice';
+import { getUser } from 'redux/slices/UserSlice';
 import { RouterWrapper } from "routes/RouterWrapper";
 import './App.css';
 
