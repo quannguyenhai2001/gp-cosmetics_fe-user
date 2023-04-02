@@ -6,9 +6,10 @@ import { Grid, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCategories, setCategories } from 'redux/slices/productSlice';
+import { setCategories } from 'redux/slices/productSlice';
 import { Link } from 'react-router-dom';
 import GetCategoryList from 'utils/ListCategories';
+import { CallApiByBody } from 'api/configApi';
 
 
 const Categories = () => {
@@ -24,8 +25,9 @@ const Categories = () => {
     useEffect(() => {
         (async () => {
             try {
-                const res = await dispatch(getAllCategories()).unwrap()
-                dispatch(setCategories(GetCategoryList(res.data)))
+                let response = await CallApiByBody("categories/get-all-categories.php", "get", null);
+                console.log(response)
+                dispatch(setCategories(GetCategoryList(response.data.data)))
             } catch (e) {
                 toast.error('Lỗi!', {
                     position: "top-right",
