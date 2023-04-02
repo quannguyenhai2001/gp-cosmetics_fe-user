@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { getUser } from 'redux/slices/UserSlice';
+import { fetchAsyncGetUser } from 'redux/slices/UserSlice';
 import { RouterWrapper } from "routes/RouterWrapper";
 import './App.css';
 
@@ -20,7 +20,7 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     if (token) {
-      dispatch(getUser())
+      dispatch(fetchAsyncGetUser())
     }
   }, [dispatch])
 

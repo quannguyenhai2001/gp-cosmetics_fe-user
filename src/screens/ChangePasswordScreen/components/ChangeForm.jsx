@@ -1,7 +1,7 @@
 import { Avatar, Box, Button, Grid, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser, patchUserInfo } from 'redux/slices/UserSlice';
+import { fetchAsyncGetUser, fetchAsyncUpdateUser } from 'redux/slices/UserSlice';
 import { Toast } from 'utils/Toast';
 import useStyles from './ChangeForm.styles';
 
@@ -26,9 +26,9 @@ const ChangeForm = () => {
         } else {
             let data = new FormData();
             data.append("password", valueArray.password);
-            dispatch(patchUserInfo(data)).unwrap().then(() => {
+            dispatch(fetchAsyncUpdateUser(data)).unwrap().then(() => {
 
-                dispatch(getUser())
+                dispatch(fetchAsyncGetUser())
                 Toast('success', 'Update user success!');
 
             }).catch(err => {

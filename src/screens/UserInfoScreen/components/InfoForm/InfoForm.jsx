@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useStyles from './InfoForm.styles';
 import StringAvatar from 'utils/StringAvatar';
-import { getUser, patchUserInfo } from 'redux/slices/UserSlice';
+import { fetchAsyncGetUser, fetchAsyncUpdateUser } from 'redux/slices/UserSlice';
 
 const InfoForm = () => {
     const classes = useStyles();
@@ -49,7 +49,6 @@ const InfoForm = () => {
     };
 
     const handleSubmit = (e) => {
-        console.log(valueArray);
         let data = new FormData();
         data.append("avatar", valueArray.avatar);
         data.append("display_name", valueArray.display_name);
@@ -57,8 +56,8 @@ const InfoForm = () => {
         data.append("age", valueArray.age);
         data.append("address", "faff");
         console.log(data)
-        dispatch(patchUserInfo(data)).unwrap().then(() => {
-            dispatch(getUser())
+        dispatch(fetchAsyncUpdateUser(data)).unwrap().then(() => {
+            dispatch(fetchAsyncGetUser())
             // Toast('success', 'Update user success!');
         }).catch(err => {
             console.log(err)

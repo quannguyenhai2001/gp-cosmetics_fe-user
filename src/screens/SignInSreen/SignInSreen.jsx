@@ -8,7 +8,7 @@ import InputField from 'components/FormElements/InputField/InputField';
 import { signInSchema, signInValues } from 'utils/FormValidate';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { postSignIn } from 'redux/slices/UserSlice';
+import { fetchAsyncSignIn } from 'redux/slices/UserSlice';
 
 const SignInScreen = () => {
     const classes = useStyles()
@@ -25,7 +25,7 @@ const SignInScreen = () => {
     }
     const handleSubmit = async (value) => {
         try {
-            await dispatch(postSignIn(value)).unwrap()
+            await dispatch(fetchAsyncSignIn(value)).unwrap()
             navigate("/")
             toast.success('Đăng nhập thành công!', {
                 position: "top-right",

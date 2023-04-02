@@ -75,4 +75,3 @@ export function CallApiByParams(endpoint, method = "GET", body) {
         params: body
     })
 }
-export default instanceApi

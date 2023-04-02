@@ -8,7 +8,7 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import Slide from '@mui/material/Slide';
 import { styled } from '@mui/material/styles';
 import ReceiptIcon from '@mui/icons-material/Receipt';
-import { Avatar, Badge, Container, Divider, IconButton, List, ListItem, TextField, Tooltip, tooltipClasses, Typography } from '@mui/material';
+import { Avatar, Badge, Divider, IconButton, List, ListItem, TextField, Tooltip, tooltipClasses, Typography } from '@mui/material';
 import PeopleIcon from '@mui/icons-material/People';
 import StoreIcon from '@mui/icons-material/Store';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -18,7 +18,6 @@ import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlin
 import logo from 'assets/images/logo/logo_web.png';
 import { Link } from 'react-router-dom';
 import ContactMailOutlinedIcon from '@mui/icons-material/ContactMailOutlined';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useSelector } from 'react-redux';
 import Cart from './components/Cart';
 
@@ -80,7 +79,6 @@ const CustomTooltip = styled(({ className, ...props }) => (
 
 export default function NavBar(props) {
     const userInfo = useSelector(state => state.user.userInfo);
-    console.log(userInfo)
     const classes = useStyles();
 
     return (

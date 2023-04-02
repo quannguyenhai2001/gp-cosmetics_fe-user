@@ -1,4 +1,4 @@
-import instanceApi from "api/configApi";
+import instanceApi, { CallApiByBody } from "api/configApi";
 
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
@@ -7,11 +7,11 @@ const initialState = {
     accessToken: ""
 };
 
-export const postSignUp = createAsyncThunk(
-    "auth/postSignUp",
+export const fetchAsyncSignUp = createAsyncThunk(
+    "auth/fetchAsyncSignUp",
     async (data, { rejectWithValue }) => {
         try {
-            const response = await instanceApi.post("/auth/sign-up.php", data);
+            const response = await CallApiByBody("auth/sign-up.php", "post", data)
             return response.data;
         } catch (error) {
             throw rejectWithValue(error.response.data);
@@ -19,11 +19,11 @@ export const postSignUp = createAsyncThunk(
     }
 );
 
-export const postSignIn = createAsyncThunk(
-    "auth/postSignIn",
+export const fetchAsyncSignIn = createAsyncThunk(
+    "auth/fetchAsyncSignIn",
     async (data, { rejectWithValue }) => {
         try {
-            const response = await instanceApi.post("/auth/sign-in.php", data);
+            const response = await CallApiByBody("auth/sign-in.php", "post", data)
             return response.data;
         } catch (error) {
             throw rejectWithValue(error.response.data);
@@ -31,11 +31,11 @@ export const postSignIn = createAsyncThunk(
     }
 );
 
-export const getUser = createAsyncThunk(
-    "auth/getUser",
-    async (data, { rejectWithValue }) => {
+export const fetchAsyncGetUser = createAsyncThunk(
+    "auth/fetchAsyncGetUser",
+    async (_data, { rejectWithValue }) => {
         try {
-            const response = await instanceApi.get("/auth/get-user.php");
+            const response = await CallApiByBody("auth/get-user.php", "get", null)
             return response.data;
         } catch (error) {
             throw rejectWithValue(error.response.data);
@@ -43,12 +43,11 @@ export const getUser = createAsyncThunk(
     }
 );
 
-export const patchUserInfo = createAsyncThunk(
-    "auth/patchUserInfo",
+export const fetchAsyncUpdateUser = createAsyncThunk(
+    "auth/fetchAsyncUpdateUser",
     async (data, { rejectWithValue }) => {
         try {
-            console.log(data)
-            const response = await instanceApi.post("/auth/update-user.php", data);
+            const response = await CallApiByBody("auth/update-user.php", "post", data)
             return response.data;
         } catch (error) {
             throw rejectWithValue(error.response.data);
@@ -62,11 +61,11 @@ const userSlice = createSlice({
 
     },
     extraReducers: builder => {
-        builder.addCase(postSignIn.fulfilled, (state, action) => {
+        builder.addCase(fetchAsyncSignIn.fulfilled, (state, action) => {
             state.userInfo = action.payload.data;
             localStorage.setItem('access_token', action.payload.token);
         })
-        builder.addCase(getUser.fulfilled, (state, action) => {
+        builder.addCase(fetchAsyncGetUser.fulfilled, (state, action) => {
             state.userInfo = action.payload.data;
         })
     }
