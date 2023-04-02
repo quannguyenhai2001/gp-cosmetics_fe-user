@@ -5,15 +5,17 @@ import Box from '@mui/material/Box';
 import { Grid, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
-import { getAllCategories } from 'redux/slices/productSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllCategories, setCategories } from 'redux/slices/productSlice';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 
 const Categories = () => {
-    const [categories, setCategories] = useState([])
     const classes = useStyles()
     const dispatch = useDispatch()
+    const categories = useSelector(state => state.products.categories)
+
     //hidden nav
     const [isCheck, setIsCheck] = React.useState(false);
     const handleHiddenNav = () => {
@@ -40,7 +42,8 @@ const Categories = () => {
                     }
                     return { id: value.id, name: value.name, childCategoryList: childCategoryList }
                 })
-                setCategories(newCategoryList)
+
+                dispatch(setCategories(newCategoryList))
             } catch (e) {
                 toast.error('Lỗi!', {
                     position: "top-right",
@@ -81,7 +84,7 @@ const Categories = () => {
                                 <Grid item xs={3} key={index} >
                                     <Box sx={{ display: 'grid', placeItems: 'center' }} >
                                         <Box className={classes.boxEachChildCate} onClick={handleHiddenNav}>
-                                            <Typography className={classes.eachChildCate}> {childCategory.name}</Typography>
+                                            <Typography component={Link} to={`/products/${childCategory.id}`} className={classes.eachChildCate}> {childCategory.name}</Typography>
                                         </Box>
                                     </Box>
                                 </Grid>

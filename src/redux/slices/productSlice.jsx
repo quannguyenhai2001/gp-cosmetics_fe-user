@@ -3,7 +3,7 @@ import instanceApi from "api/configApi";
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
 const initialState = {
-
+    categories: []
 };
 
 export const getAllCategories = createAsyncThunk(
@@ -23,7 +23,9 @@ const productSlice = createSlice({
     name: 'products',
     initialState,
     reducers: {
-
+        setCategories: (state, action) => {
+            state.categories = action.payload
+        },
     },
     extraReducers: builder => {
 
@@ -31,4 +33,5 @@ const productSlice = createSlice({
 })
 
 const { reducer: productReducer, actions } = productSlice
+export const { setCategories } = actions
 export default productReducer

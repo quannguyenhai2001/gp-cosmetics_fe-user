@@ -2,6 +2,7 @@ import DefaultLayout from "layouts/DefaultLayout/DefaultLayout";
 import ProfileLayout from "layouts/ProfileLayout/ProfileLayout";
 import ChangePasswordScreen from "screens/ChangePasswordScreen/ChangePasswordScreen";
 import HomeScreen from "screens/HomeScreen/HomeScreen";
+import ProductsScreen from "screens/ProductsScreen/ProductsScreen";
 import SignInScreen from "screens/SignInSreen/SignInSreen";
 import SignUpScreen from "screens/SignUpSreen/SignUpSreen";
 import UserInfoScreen from "screens/UserInfoScreen/UserInfoScreen";
@@ -36,5 +37,11 @@ export const RouteConfigs = [
         element: ChangePasswordScreen,
         isPrivate: true,
         layout: ProfileLayout,
+    },
+    {
+        path: "/products/:categoryId",
+        element: ProductsScreen,
+        isPrivate: false,
+        layout: DefaultLayout,
     },
 ]
