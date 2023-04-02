@@ -7,8 +7,8 @@ import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCategories, setCategories } from 'redux/slices/productSlice';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import GetCategoryList from 'utils/ListCategories';
 
 
 const Categories = () => {
@@ -25,25 +25,7 @@ const Categories = () => {
         (async () => {
             try {
                 const res = await dispatch(getAllCategories()).unwrap()
-                const categoryList = res.data
-
-                let listFatherCategories = [];
-                categoryList.forEach((category, index) => {
-                    if (!+category.father_category_id) {
-                        listFatherCategories.push(category)
-                    }
-                })
-                const newCategoryList = listFatherCategories.map(value => {
-                    let childCategoryList = []
-                    for (let i = 0; i < categoryList.length; i++) {
-                        if (categoryList[i].father_category_id === value.id) {
-                            childCategoryList.push(categoryList[i])
-                        }
-                    }
-                    return { id: value.id, name: value.name, childCategoryList: childCategoryList }
-                })
-
-                dispatch(setCategories(newCategoryList))
+                dispatch(setCategories(GetCategoryList(res.data)))
             } catch (e) {
                 toast.error('Lỗi!', {
                     position: "top-right",

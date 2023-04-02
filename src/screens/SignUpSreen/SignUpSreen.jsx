@@ -5,7 +5,7 @@ import { FastField, Field, Form, Formik } from 'formik';
 import InputField from 'components/FormElements/InputField/InputField';
 import SelectField from 'components/FormElements/SelectField/SelectField';
 import CheckBoxField from 'components/FormElements/CheckboxField/CheckboxField';
-import { createUserSchema, initialCreateUserValues } from 'utils/validation/form-validate';
+import { createUserSchema, initialCreateUserValues } from 'utils/FormValidate';
 import { useDispatch } from 'react-redux';
 import { postSignUp } from 'redux/slices/UserSlice';
 import { useNavigate } from 'react-router-dom';
