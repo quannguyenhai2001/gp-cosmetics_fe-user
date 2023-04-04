@@ -26,7 +26,6 @@ const Categories = () => {
         (async () => {
             try {
                 let response = await CallApiByBody("categories/get-all-categories.php", "get", null);
-                console.log(response)
                 dispatch(setCategories(GetCategoryList(response.data.data)))
             } catch (e) {
                 toast.error('Lỗi!', {

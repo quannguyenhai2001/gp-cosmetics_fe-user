@@ -3,6 +3,10 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import useStyles from './ProductsScreen.styles';
+import Filter from './components/Filter/Filter';
+import ListProducts from './components/ListProducts/ListProducts';
+import SlideProductRelative from './components/SlideProductRelative/SlideProductRelative';
+import { fetchAsyncGetManufactures } from 'redux/slices/productSlice';
 
 const ProductsScreen = () => {
     const dispatch = useDispatch();
@@ -11,7 +15,6 @@ const ProductsScreen = () => {
 
     //get title category
     const categories = useSelector(state => state.products.categories)
-    console.log(categories)
     const [titleCategory, setTitleCategory] = React.useState({});
     useEffect(() => {
         categories.forEach(category => {
@@ -23,14 +26,10 @@ const ProductsScreen = () => {
         })
     }, [categories, params.categoryId]);
 
-    // //get manu and delete list manu
-    // useEffect(() => {
-    //     dispatch(fetchAsyncGetManu())
-    //     return () => {
-    //         dispatch(deleteListProducts());
+    useEffect(() => {
+        dispatch(fetchAsyncGetManufactures())
 
-    //     }
-    // }, [dispatch, params.categoryId]);
+    }, [dispatch, params.categoryId]);
 
 
     //page panigation
@@ -49,15 +48,15 @@ const ProductsScreen = () => {
                             </>)
                             : ''}
                     </Typography>
-                    {/* <Filter page={page} handleSetPage={handleSetPage} /> */}
+                    <Filter page={page} handleSetPage={handleSetPage} />
                 </Grid>
                 <Grid item xs={10}>
-                    {/* <ListProducts setPage={setPage} page={page} /> */}
+                    <ListProducts setPage={setPage} page={page} />
                 </Grid>
             </Grid>
             <Divider sx={{ margin: '2rem 0' }} />
             <Box>
-                {/* <SlideProductRelative /> */}
+                <SlideProductRelative />
             </Box>
         </Container >
 
