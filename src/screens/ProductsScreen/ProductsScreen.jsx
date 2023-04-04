@@ -5,8 +5,9 @@ import { useParams } from 'react-router-dom';
 import useStyles from './ProductsScreen.styles';
 import Filter from './components/Filter/Filter';
 import ListProducts from './components/ListProducts/ListProducts';
-import SlideProductRelative from './components/SlideProductRelative/SlideProductRelative';
+
 import { fetchAsyncGetManufactures } from 'redux/slices/productSlice';
+import ProductRelativeSlide from './components/ProductRelativeSlide/ProductRelativeSlide';
 
 const ProductsScreen = () => {
     const dispatch = useDispatch();
@@ -56,7 +57,7 @@ const ProductsScreen = () => {
             </Grid>
             <Divider sx={{ margin: '2rem 0' }} />
             <Box>
-                <SlideProductRelative />
+                <ProductRelativeSlide />
             </Box>
         </Container >
 

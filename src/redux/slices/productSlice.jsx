@@ -45,8 +45,30 @@ export const fetchAsyncGetManufactures = createAsyncThunk(
         }
     }
 );
+export const fetchAsyncGetDetailProduct = createAsyncThunk(
+    "product/fetchAsyncGetDetailProduct",
+    async (arg, { rejectWithValue }) => {
+        try {
+            const response = await CallApiByParams("products/get-product.php", "get", arg)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
 
 
+export const fetchAsyncGetRatings = createAsyncThunk(
+    "product/fetchAsyncGetRatings",
+    async (arg, { rejectWithValue }) => {
+        try {
+            const response = await CallApiByParams("ratings/get-all-ratings.php", "get", arg)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
 const productSlice = createSlice({
     name: 'products',
     initialState,

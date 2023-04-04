@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import { Paper } from '@mui/material';
 import { fetchAsyncGetRelativeProducts } from 'redux/slices/productSlice';
 import { Toast } from 'utils/Toast';
-const SlideProductRelative = () => {
+const ProductRelativeSlide = () => {
     const classes = useStyles();
     const navigate = useNavigate();
     const [products, setProducts] = useState([])
@@ -27,7 +27,6 @@ const SlideProductRelative = () => {
         (async () => {
             try {
                 let response = await dispatch(fetchAsyncGetRelativeProducts({ use_page: 1, page: 2 })).unwrap()
-                console.log(response)
                 setProducts(response.data)
 
             } catch (e) {
@@ -40,8 +39,8 @@ const SlideProductRelative = () => {
     }
     return (
         <Box sx={{ marginBottom: '5rem' }}>
-            <Typography variant="h5" gutterBottom sx={{ textAlign: 'Left', fontWeight: 'bold', marginBottom: '4rem' }}>
-                Các sản phẩm liên quan
+            <Typography variant="h5" gutterBottom sx={{ textAlign: 'Left', fontWeight: 'bold', marginBottom: '2rem' }}>
+                Bạn Có Thể Thích
             </Typography>
             <Swiper
                 className={classes.swiper}
@@ -75,4 +74,4 @@ const SlideProductRelative = () => {
     );
 };
 
-export default SlideProductRelative;
+export default ProductRelativeSlide;
