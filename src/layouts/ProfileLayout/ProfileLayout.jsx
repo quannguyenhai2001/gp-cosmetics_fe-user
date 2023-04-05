@@ -23,7 +23,7 @@ import Footer from 'components/Footer/Footer';
 const ProfileLayout = (props) => {
     const classes = useStyles();
     const { children } = props;
-    const { id, displayName, avatar } = useSelector(state => state.user.userInfo)
+    const { id, display_name, avatar } = useSelector(state => state.user.userInfo)
     //select list item
     const [selectedIndex, setSelectedIndex] = React.useState(0);
 
@@ -54,12 +54,12 @@ const ProfileLayout = (props) => {
                     {avatar ? (
                         <Avatar className={classes.rootAvatar} src={avatar} />
                     ) : (
-                        <Avatar className={classes.rootAvatar} {...StringAvatar(displayName)} />
+                        <Avatar className={classes.rootAvatar} {...StringAvatar(display_name)} />
                     )}
                     <Box sx={{ marginLeft: '1rem' }}>
-                        <Typography variant="h7" sx={{ marginBottom: '2px' }} component="div">{displayName}</Typography>
-                        <Box sx={{ display: 'flex' }}>
-                            <BuildIcon fontSize='5px' />
+                        <Typography variant="h7" sx={{ marginBottom: '2px' }} component="div">{display_name}</Typography>
+                        <Box sx={{ display: 'flex', alignItems: "center" }}>
+                            <BuildIcon fontSize='5px' sx={{ mr: "2px" }} />
                             <Typography color="text.secondary" >Chỉnh Sửa Hồ Sơ</Typography>
                         </Box>
                     </Box>

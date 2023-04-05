@@ -70,6 +70,19 @@ export const fetchAsyncGetRatings = createAsyncThunk(
         }
     }
 );
+
+export const fetchAsyncGetAllBills = createAsyncThunk(
+    "product/fetchAsyncGetAllBills",
+    async (arg, { rejectWithValue }) => {
+        try {
+            const response = await CallApiByParams("bills/get-all-bills.php", "get", null)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
+
 const productSlice = createSlice({
     name: 'products',
     initialState,
