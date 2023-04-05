@@ -19,7 +19,8 @@ import logo from 'assets/images/logo/logo_web.png';
 import { Link } from 'react-router-dom';
 import ContactMailOutlinedIcon from '@mui/icons-material/ContactMailOutlined';
 import { useSelector } from 'react-redux';
-import Cart from './components/Cart';
+import Cart from './components/Cart/Cart';
+
 
 //hide and show navbar
 function HideOnScroll(props) {

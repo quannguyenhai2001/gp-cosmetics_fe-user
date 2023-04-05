@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Avatar, Box, Grid, Typography } from '@mui/material';
+import { Avatar, Box, Divider, Grid, Rating, Typography } from '@mui/material';
 import useStyles from './styles';
 
 import StringAvatar from 'utils/StringAvatar';
@@ -17,9 +17,6 @@ const CommentList = () => {
   const { id } = params;
 
 
-
-
-
   useEffect(() => {
     (async () => {
       const res = await dispatch(fetchAsyncGetRatings({
@@ -29,50 +26,50 @@ const CommentList = () => {
     })()
   }, [dispatch, id]);
 
-
-
-
-
-  const render = (ratings.length) === 0 ? (<div>No comment...</div>) :
-    (
-      ratings.map((value, index) => {
-        return (<Box className={classes.eachComment} key={index}>
-          <Grid container>
-            <Grid item >
-              <Box>
-                {value.avatar ? (
-                  <Avatar className={classes.rootAvatar} src={value.avatar} />
-                ) : (
-                  <Avatar className={classes.rootAvatar} {...StringAvatar(value.displayName)} />
-                )}
-              </Box>
-            </Grid>
-            <Grid item xs={11}>
-              <Box className={classes.eachCommentContent}>
-
-                <Typography component="span" sx={{ fontWeight: "600", fontSize: "1.7rem", marginRight: '0.4rem' }}>{value.display_name}</Typography>
-                <Typography component="span">{value.create_at}</Typography>
-
-                <Typography component="span">{value.comment}</Typography>
-
-
-
-
-
-              </Box>
-              <Box className={classes.eachCommentButton}>
-
-              </Box>
-            </Grid>
-          </Grid>
-        </Box >)
-      })
-    )
   return (
     <Box className={classes.box}>
-      {render}
+      <Box>
+        <Typography variant="h5" gutterBottom sx={{ textAlign: 'Left', fontWeight: 'bold', marginBottom: '2rem' }}>
+          Đánh giá sản phẩm
+        </Typography>
+        <Box>
+          Tổng kết (chưa làm)
+        </Box>
+      </Box>
+      <Box>
+        {
+          ratings.length > 0 ?
+            (
+              ratings.map((value, index) => (<Box className={classes.eachComment} key={index}>
+                <Grid container>
+                  <Grid item >
+                    <Box>
+                      {value.avatar ? (
+                        <Avatar className={classes.rootAvatar} src={value.avatar} />
+                      ) : (
+                        <Avatar className={classes.rootAvatar} {...StringAvatar(value.displayName)} />
+                      )}
+                    </Box>
+                  </Grid>
+                  <Grid item xs={11}>
+                    <Box className={classes.eachCommentContent}>
+
+                      <Typography sx={{ fontWeight: "600", marginRight: '0.4rem' }}>{value.display_name}</Typography>
+                      <Rating name="half-rating-read" defaultValue={parseFloat(value.star_rating, 10)} precision={0.5} readOnly />
+                      <Typography mb={1}>{value.create_at} | Phân loại hàng: {value.size_label}</Typography>
+                      <Typography mb={2}>{value.comment}</Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+                <Divider sx={{ mb: "10px" }} />
+
+              </Box >)
+              )
+            ) : (<div>No comment...</div>)
+        }
+      </Box>
     </Box>
   );
 };
 
-export default memo(CommentList);
+export default CommentList;

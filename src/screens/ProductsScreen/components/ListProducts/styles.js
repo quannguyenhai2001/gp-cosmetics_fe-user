@@ -61,9 +61,9 @@ export default makeStyles((theme) => ({
             height: 0,
             top: '100%',
             borderTop: '9px solid transparent',
-            borderLeft: '22px solid red',
+            borderLeft: '25px solid red',
 
-            borderRight: '22px solid red',
+            borderRight: '25px solid red',
             transform: 'rotate(180deg)',
 
 

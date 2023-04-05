@@ -43,7 +43,7 @@ const Products = (props) => {
                                 (
                                     <Box className={classes.sale}>
                                         <span className="home-product-item__sale-off-percent">{product.promotion * 100}%</span>
-                                        <span className="home-product-item__sale-off-sale">Sale</span>
+                                        <span className="home-product-item__sale-off-sale">Giảm</span>
                                     </Box>
 
                                 ) : null}

@@ -8,6 +8,7 @@ const initialState = {
     products: [],
     pageInfo: {},
     manufacturers: [],
+    cartDetails: [],
     errorListProducts: false
 };
 

@@ -60,19 +60,19 @@ const ProductDetailScreen = () => {
                                 <Typography className={classes.typoRating1}>{parseFloat(detailProduct?.rating?.star_average, 10)}</Typography>
                                 <Rating className={classes.rootRating} name="half-rating-read" defaultValue={parseFloat(detailProduct?.rating?.star_average, 10)} precision={0.5} readOnly />
                                 <Divider orientation="vertical" flexItem />
-                                <Typography className={classes.typoRating2}>{parseFloat(detailProduct?.rating?.user_rating_total, 10)} Rating</Typography>
+                                <Typography className={classes.typoRating2}>{parseFloat(detailProduct?.rating?.user_rating_total, 10)} Đánh giá</Typography>
                             </Box>
 
                             {parseFloat(detailProduct.promotion) > 0 ?
                                 (<Box className={classes.boxPrice}>
                                     <Typography gutterBottom sx={{ fontSize: '1.4rem', fontWeight: '100', opacity: '70%', textDecoration: 'line-through' }}>
-                                        ${detailProduct.price}
+                                        {detailProduct.price}
                                     </Typography>
                                     <Typography variant="subtitle1" gutterBottom sx={{ fontSize: '1.5rem', color: 'red' }}>
-                                        ${parseFloat(detailProduct.price - (detailProduct.price * detailProduct.promotion), 2).toFixed(2)}
+                                        <Typography component="span">đ</Typography>{parseFloat(detailProduct.price - (detailProduct.price * detailProduct.promotion), 2).toFixed(2)}
                                     </Typography>
                                     <Typography>
-                                        {detailProduct.promotion * 100}% sale off
+                                        {detailProduct.promotion * 100}% Giảm
                                     </Typography>
                                 </Box>) : (
                                     <Box className={classes.boxPrice}>

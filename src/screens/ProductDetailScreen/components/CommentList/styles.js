@@ -35,6 +35,7 @@ export default makeStyles((theme) => ({
     rootAvatar: {
         '&.MuiAvatar-root': {
             marginRight: '8px',
+            marginTop: '3px',
         }
     },
     rootTextField: {
@@ -56,11 +57,11 @@ export default makeStyles((theme) => ({
         },
     },
     //box container
-    box: {
-        display: 'flex',
-        flexDirection: 'column-reverse',
-        marginBottom: '3rem',
-    },
+    // box: {
+    //     display: 'flex',
+    //     flexDirection: 'column',
+    //     marginBottom: '3rem',
+    // },
 
     displayNone: {
         display: 'none'
