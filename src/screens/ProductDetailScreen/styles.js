@@ -52,9 +52,10 @@ export default makeStyles((theme) => ({
             transform: 'translateY(0.4rem)',
         },
         '& .MuiTypography-root:nth-child(3)': {
-            padding: '0.4rem',
+            padding: '0.2rem',
             backgroundColor: 'red',
             color: 'white',
+            fontWeight: 'bold',
         }
     },
     boxMargin: {

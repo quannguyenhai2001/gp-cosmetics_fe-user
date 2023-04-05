@@ -12,6 +12,8 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 
 import { Toast } from 'utils/Toast';
+import CurrencyTypo from 'components/CurrencyTypo/CurrencyTypo';
+import convertToVND from 'utils/ConvertToVND';
 
 const Cart = () => {
     const toggleDrawer = (open) => (event) => {
@@ -150,9 +152,9 @@ const Cart = () => {
                     <Box className={classes.cartBoxTotal} onClick={toggleDrawer(false)}>
                         <Paper className={classes.cartBoxTotalPaper} elevation={3}>
                             <Typography>
-                                Tổng thanh toán ({listProductInCart.length} sản phẩm): ${listProductInCart.reduce((total, item) => {
+                                Tổng thanh toán ({listProductInCart.length} sản phẩm): {convertToVND(listProductInCart.reduce((total, item) => {
                                     return total + (item.price - (item.price * item.promotion)) * item.quantity
-                                }, 0).toFixed(2)}
+                                }, 0))}
                             </Typography>
 
                         </Paper>
