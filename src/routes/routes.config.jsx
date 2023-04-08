@@ -2,6 +2,7 @@ import DefaultLayout from "layouts/DefaultLayout/DefaultLayout";
 import ProfileLayout from "layouts/ProfileLayout/ProfileLayout";
 import ChangePasswordScreen from "screens/ChangePasswordScreen/ChangePasswordScreen";
 import HomeScreen from "screens/HomeScreen/HomeScreen";
+import OrderDetailScreen from "screens/OrderDetailScreen/OrderDetailScreen";
 import OrderScreen from "screens/OrderScreen/OrderScreen";
 
 import ProductDetailScreen from "screens/ProductDetailScreen/ProductDetailScreen";
@@ -59,5 +60,11 @@ export const RouteConfigs = [
         isPrivate: true,
         layout: ProfileLayout,
 
+    },
+    {
+        path: "/user/:id/order/:orderID",
+        element: OrderDetailScreen,
+        isPrivate: true,
+        layout: ProfileLayout,
     },
 ]

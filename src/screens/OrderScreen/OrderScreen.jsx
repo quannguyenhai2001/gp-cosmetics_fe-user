@@ -5,7 +5,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import useStyles from './styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchAsyncGetAllBills } from 'redux/slices/productSlice';
 import { useState } from 'react';
 import OrderTabs from './components/OrderTabs/OrderTabs';
@@ -43,17 +43,18 @@ const OrderScreen = () => {
     const classes = useStyles();
     const [value, setValue] = useState("all");
     const [bills, setBills] = useState([])
+    const { id } = useSelector(state => state.user.userInfo)
 
     const dispatch = useDispatch();
 
     const handleChange = async (event, newValue) => {
         setValue(newValue);
-        const res = await dispatch(fetchAsyncGetAllBills({ user_id: 32, status: `${newValue}` })).unwrap();
+        const res = await dispatch(fetchAsyncGetAllBills({ user_id: id, status: `${newValue}` })).unwrap();
         setBills(res.data)
     };
     React.useEffect(() => {
         (async () => {
-            const res = await dispatch(fetchAsyncGetAllBills({ user_id: 32 })).unwrap();
+            const res = await dispatch(fetchAsyncGetAllBills({ user_id: id })).unwrap();
             setBills(res.data)
             // console.log(res)
         })()

@@ -86,9 +86,9 @@ const Filter = (props) => {
 
         dispatch(fetchAsyncGetProducts(
             {
-                cate_Id: params.categoryId,
+                category_id: params.categoryId,
                 use_page: 1,
-                ...newArray
+                // ...newArray
             }))
 
         //params string

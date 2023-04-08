@@ -8,6 +8,7 @@ import { Box, Grid, Pagination, Skeleton, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import useStyles from './styles';
 import Rating from '@mui/material/Rating';
+import convertToVND from 'utils/ConvertToVND';
 
 const Products = (props) => {
     const classes = useStyles();
@@ -76,10 +77,10 @@ const Products = (props) => {
                                     {parseFloat(product.promotion) > 0 ?
                                         (<>
                                             <Typography gutterBottom sx={{ fontSize: '1.4rem', fontWeight: '100', opacity: '70%', textDecoration: 'line-through' }}>
-                                                ${product.price}
+                                                {convertToVND(product.price)}
                                             </Typography>
                                             <Typography variant="subtitle1" gutterBottom sx={{ fontSize: '1.5rem', color: 'red' }}>
-                                                ${parseFloat(product.price - (product.price * product.promotion), 2).toFixed(2)}
+                                                {convertToVND(parseFloat(product.price - (product.price * product.promotion)))}
                                             </Typography>
                                         </>) : (
                                             <>
@@ -91,7 +92,7 @@ const Products = (props) => {
 
                                 </Box>
                                 <Box sx={{ transform: 'translateY(-2px)' }}>
-                                    <Rating className={classes.rootRatting} name="half-rating-read" defaultValue={parseFloat(product.rating?.star_average)} precision={0.5} readOnly />
+                                    <Rating className={classes.rootRatting} name="half-rating-read" defaultValue={product.rating ? parseFloat(product.rating?.star_average) : 0} precision={0.5} readOnly />
                                 </Box>
                             </CardContent>
                         </Card>

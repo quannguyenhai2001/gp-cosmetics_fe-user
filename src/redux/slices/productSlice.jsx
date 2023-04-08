@@ -83,6 +83,18 @@ export const fetchAsyncGetAllBills = createAsyncThunk(
     }
 );
 
+export const fetchAsyncGetAllBillDetails = createAsyncThunk(
+    "product/fetchAsyncGetAllBillDetails",
+    async (arg, { rejectWithValue }) => {
+        try {
+            const response = await CallApiByParams("bill-details/get-all-bill-details.php", "get", arg)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
+
 const productSlice = createSlice({
     name: 'products',
     initialState,

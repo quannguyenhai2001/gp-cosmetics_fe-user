@@ -168,7 +168,7 @@ export default function NavBar(props) {
                                                 <Box sx={{ marginRight: 1 }}>
                                                     <ReceiptIcon />
                                                 </Box>
-                                                <Typography component={Link} to={`/user/${userInfo.id}/order/all`} sx={{ transform: 'translateY(-1px)' }}>
+                                                <Typography component={Link} to={`/user/${userInfo.id}/order`} sx={{ transform: 'translateY(-1px)' }}>
                                                     Đơn Đặt Hàng
                                                 </Typography>
 

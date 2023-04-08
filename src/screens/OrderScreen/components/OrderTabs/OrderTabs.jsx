@@ -4,7 +4,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import useStyles from './styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchAsyncGetAllBills } from 'redux/slices/productSlice';
 import { useState } from 'react';
 import Card from '@mui/material/Card';
@@ -12,8 +12,11 @@ import { CardMedia, Divider, Grid, Rating, Button } from '@mui/material';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import convertToVND from 'utils/ConvertToVND';
 import { BILL_STATUS } from 'constants/contants';
+import { Link, useNavigate } from 'react-router-dom';
 
 const OrderTabs = ({ bills }) => {
+    const userInfo = useSelector(state => state.user.userInfo);
+    const navigate = useNavigate();
     const getOptionLabel = (value, optionsType) => {
         const optionValue = optionsType.find(option => option.value === value);
         return optionValue?.label;
@@ -124,7 +127,12 @@ const OrderTabs = ({ bills }) => {
                                                 </Typography>
                                             </Box>
                                             <Box >
-                                                <Button variant="outlined">Chi tiết hóa đơn</Button>
+                                                <Button variant="outlined" onClick={() => navigate(
+                                                    `/user/${userInfo.id}/order/${item.id}`,
+                                                    {
+                                                        state: { status: item.status }
+                                                    }
+                                                )}>Chi tiết hóa đơn</Button>
                                             </Box>
 
                                         </Box>
