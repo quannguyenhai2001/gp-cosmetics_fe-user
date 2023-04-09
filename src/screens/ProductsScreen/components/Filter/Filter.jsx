@@ -1,5 +1,5 @@
 import { Box, Button, TextField } from '@mui/material';
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -11,9 +11,11 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { useNavigate, useParams } from 'react-router-dom';
+import qs from "query-string";
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { deleteListProducts, fetchAsyncGetProducts } from 'redux/slices/productSlice';
+import { toast } from 'react-toastify';
+import removeEmptyValuesInObject from 'utils/removeEmptyValuesInObject';
 
 //price
 function valuetext(value) {
@@ -28,100 +30,88 @@ const Filter = (props) => {
     const dispatch = useDispatch();
     const params = useParams();
 
-    //set page = 1
-    const handleSetPage = () => {
-        props.handleSetPage();
-    }
-    //filter price
-    const [isCheckChangePrice, setIsCheckChangePrice] = React.useState(false);
-    const handleChangePrice = (event, newValue) => {
-        setIsCheckChangePrice(true);
-        setArray1({ ...array1, price: newValue, page: '' })
-
-    };
 
     //filter manu
-    const [checkedManu, setCheckedManu] = React.useState(false);
-    const [valueIndex, setValueIndex] = React.useState('');
-    const handleChangeCheckedManu = (event) => {
-        setCheckedManu(event.target.checked)
-        if (!event.target.checked) {
-            setArray1({ ...array1, manu_Id: '' })
-
-        }
-    }
-    const handleClickCheckBox = (arg) => {
-        setValueIndex(arg.index);
-        setArray1({ ...array1, manu_Id: arg.item.id })
-        props.handleSetPage();
-
-    }
-
-    //filter sale
-    const handleChangeCheckedSale = (event) => {
-        // setCheckedSale(event.target.checked);
-        setArray1({ ...array1, promotion: event.target.checked })
-    };
-
-    // array tham so
-    const [array1, setArray1] = React.useState({ cate_Id: params.categoryId, manu_Id: '', price: [0, 300], promotion: '', limit: 20, page: '' });
-
-    //call api
-    React.useEffect(() => {
-        // console.log({ array: array1 })
-        let newArray = {};
-
-        for (let key in array1) {
-            if (array1[key] && key !== 'price') {
-                newArray[key] = array1[key];
-            }
-            else if (key === 'price' && array1['price'].join('') !== '') {
-                newArray[key] = array1[key];
-            }
-        }
-
-        if (props.page !== 0) {
-            newArray.page = props.page;
-        }
-
-        dispatch(fetchAsyncGetProducts(
-            {
-                category_id: params.categoryId,
-                use_page: 1,
-                // ...newArray
-            }))
-
-        //params string
-        let stringParams = '';
-        for (let key in newArray) {
-
-            if (key !== 'price' & key !== 'limit' & key !== 'cate_Id') {
-                stringParams += `${key}=${newArray[key]}&`;
-            }
-        }
-        if (!isCheckChangePrice) {
-
-            const editedTextNoPrice = stringParams.slice(0, -1)
-            navigate('/products/' + params.categoryId + `?${editedTextNoPrice}`)
+    const [isCheckManu, setIsCheckManu] = React.useState(false);
+    const [manuValue, setManuValue] = React.useState('');
+    const handleChangeCheckedManu = (e, item) => {
+        setIsCheckManu(e.target.checked)
+        if (e.target.checked) {
+            setManuValue(item.id)
         }
         else {
-            stringParams += `price[]=${newArray.price[0]}&price[]=${newArray.price[1]}&`;
-            const editedTextHavePrice = stringParams.slice(0, -1)
-            navigate('/products/' + params.categoryId + `?${editedTextHavePrice}`)
+            setManuValue("")
         }
-        return () => {
-            dispatch(deleteListProducts());
-            // console.log("unmount filter")
-        }
-    }, [array1, props.page, isCheckChangePrice, dispatch, params.categoryId, navigate]);
+    }
 
-    //reset filter
-    React.useEffect(() => {
-        setArray1({ cate_Id: params.categoryId, manu_Id: '', price: [0, 300], promotion: '', limit: 20 });
-        setValueIndex('');
-        setCheckedManu(false);
-        navigate('/products/' + params.categoryId)
-    }, [params.categoryId, navigate]);
+    //filter price
+    const [priceValues, setPriceValues] = React.useState({
+        startPrice: "",
+        endPrice: ""
+
+    });
+    const handleChangePrice = (e) => {
+        setPriceValues({ ...priceValues, [e.target.name]: e.target.value })
+    }
+    //filter sale
+    const [isCheckSale, setIsCheckSale] = React.useState(false);
+
+    const handleChangeCheckedSale = (event) => {
+        setIsCheckSale(event.target.checked);
+    };
+
+
+
+    const location = useLocation();
+    const qsParsed = qs.parse(location.search);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                await dispatch(
+                    fetchAsyncGetProducts({
+                        ...qsParsed,
+                        use_page: 1,
+                        category_id: params.categoryId
+                    })
+                ).unwrap();
+
+            } catch (e) {
+
+                toast({
+                    severity: "warning",
+                    message: "Không có kết quả!",
+                });
+            }
+        })();
+    }, [location.search, dispatch, qsParsed, params]);
+
+    const handleFilter = async values => {
+        try {
+            const initSearchValues = {
+                manufacturer_id: manuValue ? manuValue : null,
+                promotion: isCheckSale ? true : null,
+                start_price: priceValues.startPrice ? priceValues.startPrice : null,
+                end_price: priceValues.endPrice ? priceValues.endPrice : null
+            };
+            const newInitSearchValues = removeEmptyValuesInObject(initSearchValues);
+            navigate({
+                pathname: `/products/${params.categoryId}`,
+                search: qs.stringify({ ...newInitSearchValues }),
+            });
+        } catch (e) {
+            toast({
+                severity: "warning",
+                message: "Không có kết quả!",
+            });
+        }
+    };
+    const handleDelte = () => {
+        navigate({
+            pathname: `/products/${params.categoryId}`,
+
+        });
+    }
 
     return (
         <Box>
@@ -140,9 +130,8 @@ const Filter = (props) => {
                     <FormGroup>
                         {listManu.length > 0 && listManu.map((item, index) => {
                             return (
-                                <FormControlLabel key={index} control={<Checkbox checked={valueIndex === index ? checkedManu : false}
-                                    onChange={handleChangeCheckedManu}
-                                    onClick={() => { handleClickCheckBox({ index, item }) }}
+                                <FormControlLabel key={index} control={<Checkbox checked={manuValue === item.id ? isCheckManu : false}
+                                    onChange={(e) => handleChangeCheckedManu(e, item)}
                                     inputProps={{ 'aria-label': 'controlled' }} />} label={item.name} />
                             )
                         })}
@@ -160,21 +149,15 @@ const Filter = (props) => {
                     <Typography>Giá</Typography>
                 </AccordionSummary>
                 <AccordionDetails className={classes.rootAccordionDetails}>
-                    <Box sx={{ width: 'interhit' }}>
-                        <Box sx={{ width: '100%', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-                            <Slider
-                                sx={{ width: '80%' }}
-                                max={300}
-                                value={array1.price}
-                                onChange={handleChangePrice}
-                                valueLabelDisplay="auto"
-                                getAriaValueText={valuetext}
-                                onClick={handleSetPage}
-                            />
-
-                        </Box>
-                        <Typography sx={{ padding: '0 1.8rem' }}>Giá từ ${array1.price[0]} tới ${array1.price[1]}</Typography>
-                        {/* <Button sx={{ margin: '2rem 0' }} fullWidth variant="contained" >Apply</Button> */}
+                    <Box sx={{ width: 'interhit', display: "flex", gap: "3px", alignItems: "center" }}>
+                        <TextField onChange={handleChangePrice} name="startPrice" id="outlined-basic" size="small" type="number" label="Từ" variant="outlined" />
+                        <Typography sx={{
+                            height: "1px",
+                            width: "10px",
+                            background: "#bdbdbd",
+                            margin: "0 0.625rem",
+                        }}>  </Typography>
+                        <TextField onChange={handleChangePrice} name="endPrice" id="outlined-basic" size="small" type="number" label="Đến" variant="outlined" />
                     </Box>
                 </AccordionDetails>
             </Accordion>
@@ -190,16 +173,23 @@ const Filter = (props) => {
                 </AccordionSummary>
                 <AccordionDetails className={classes.rootAccordionDetails}>
                     <FormGroup>
-                        <FormControlLabel control={<Checkbox checked={setArray1.promotion}
+                        <FormControlLabel control={<Checkbox
                             onChange={handleChangeCheckedSale}
-                            onClick={handleSetPage}
-                            inputProps={{ 'aria-label': 'controlled' }} />} label="Sale" />
+                            inputProps={{ 'aria-label': 'controlled' }} />} label="Đang giảm giá" />
                     </FormGroup>
                 </AccordionDetails>
             </Accordion>
 
+            {/* Lọc */}
+            <Box sx={{ m: "2rem 0" }}>
+                <Button variant='outlined' fullWidth onClick={handleFilter}>Lọc</Button>
+            </Box>
+            {/* Xóa */}
+            <Box sx={{ m: "1rem 0" }}>
+                <Button variant='outlined' fullWidth onClick={handleDelte}>Xóa Tất Cả</Button>
+            </Box>
         </Box>
     );
 };
 
-export default memo(Filter);
+export default Filter;

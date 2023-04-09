@@ -122,9 +122,19 @@ const productSlice = createSlice({
     extraReducers: builder => {
 
         builder.addCase(fetchAsyncGetProducts.fulfilled, (state, action) => {
-            state.products = action.payload.data
-            state.pageInfo = action.payload.pageInfo
+
+            if (action.payload.data.length > 0) {
+                state.products = action.payload.data
+                state.pageInfo = action.payload.pageInfo
+                state.errorListProducts = false
+            }
+            else {
+                state.products = []
+                state.pageInfo = []
+                state.errorListProducts = true
+            }
         })
+
         builder.addCase(fetchAsyncGetManufactures.fulfilled, (state, action) => {
             state.manufacturers = action.payload.data
 
