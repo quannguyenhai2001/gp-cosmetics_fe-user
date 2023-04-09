@@ -8,7 +8,7 @@ const initialState = {
     products: [],
     pageInfo: {},
     manufacturers: [],
-    cartDetails: [],
+    carts: [],
     errorListProducts: false
 };
 
@@ -95,6 +95,18 @@ export const fetchAsyncGetAllBillDetails = createAsyncThunk(
     }
 );
 
+export const fetchAsyncGetAllCarts = createAsyncThunk(
+    "product/fetchAsyncGetAllCarts",
+    async (arg, { rejectWithValue }) => {
+        try {
+            const response = await CallApiByBody("carts/get-all-carts.php", "get", null)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
+
 const productSlice = createSlice({
     name: 'products',
     initialState,
@@ -115,6 +127,10 @@ const productSlice = createSlice({
         })
         builder.addCase(fetchAsyncGetManufactures.fulfilled, (state, action) => {
             state.manufacturers = action.payload.data
+
+        })
+        builder.addCase(fetchAsyncGetAllCarts.fulfilled, (state, action) => {
+            state.carts = action.payload.data
 
         })
     }

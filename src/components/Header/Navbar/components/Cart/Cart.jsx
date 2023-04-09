@@ -14,6 +14,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { Toast } from 'utils/Toast';
 import CurrencyTypo from 'components/CurrencyTypo/CurrencyTypo';
 import convertToVND from 'utils/ConvertToVND';
+import { fetchAsyncGetAllCarts } from 'redux/slices/productSlice';
 
 const Cart = () => {
     const toggleDrawer = (open) => (event) => {
@@ -25,14 +26,19 @@ const Cart = () => {
     };
     const dispatch = useDispatch();
     const userInfo = useSelector(state => state.user.userInfo);
-    const listProductInCart = useSelector(state => state.products.cartDetails);
+    const carts = useSelector(state => state.products.carts);
     const classes = useStyles();
     //cart
-    React.useEffect(() => {
-        // dispatch(fetchAsyncGetListProductInCart())
-    }, [dispatch])
     const [state, setState] = React.useState(false);
 
+
+
+    React.useEffect(() => {
+        (async () => {
+            await dispatch(fetchAsyncGetAllCarts()).unwrap();
+        })()
+
+    }, [dispatch]);
     // const handleClickIncrease = (id) => {
     //     dispatch(fetchAsyncAddProductToCart({ id })).unwrap().then(() => {
     //         dispatch(fetchAsyncGetListProductInCart());
@@ -60,8 +66,8 @@ const Cart = () => {
 
     const RenderlistProductInCart = () => (
         <Box className={classes.cartBox}>
-            {listProductInCart.length > 0 ?
-                (listProductInCart.map((item, index) => (
+            {carts.length > 0 ?
+                (carts.map((item, index) => (
                     <Card className={classes.cartCard} key={index}>
                         <Grid container spacing={1}>
                             <Grid item xs={3}>
@@ -74,10 +80,10 @@ const Cart = () => {
 
                                     ) : null}
 
-                                {item.image ? (<CardMedia
+                                {item.thumbnail_url ? (<CardMedia
                                     component="img"
                                     sx={{ width: '100%', height: '100%' }}
-                                    image={JSON.parse(item.image)[0]}
+                                    image={item.thumbnail_url}
                                     alt="green iguana"
                                 />) : (
                                     <CardMedia className={classes.rootCardMedia}
@@ -93,12 +99,16 @@ const Cart = () => {
                                     <Typography noWrap gutterBottom>
                                         {item.name}
                                     </Typography>
+                                    <Typography noWrap variant="body2" gutterBottom>
+                                        Phân loại:  {item.label}
+                                    </Typography>
                                     <Box sx={{ display: 'flex', margin: '1rem 0' }}>
                                         <Typography variant="body2" color="textSecondary" sx={{ marginRight: '2rem' }}>
-                                            Giá:  ${parseFloat(item.price - (item.price * item.promotion), 2).toFixed(2)}
+                                            Giá: {convertToVND(parseFloat(item.price) + parseFloat(item.additional_price))}
                                         </Typography>
                                         <Typography variant="body2" color="textSecondary" >
-                                            Tổng: ${((parseFloat(item.price - (item.price * item.promotion), 2).toFixed(2)) * item.quantity).toFixed(2)}
+                                            Tổng: {convertToVND(parseFloat(((parseFloat(item.price) + parseFloat(item.additional_price)) * (1 - item.promotion))) * item.quantity)}
+
                                         </Typography>
                                     </Box>
                                     <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
@@ -139,7 +149,7 @@ const Cart = () => {
             size="medium"
             sx={{ "&:hover": { color: "blue" }, margin: "0 0 0 1rem" }}
         >
-            <Badge badgeContent={listProductInCart.length > 0 ? listProductInCart.length : null} color="primary">
+            <Badge badgeContent={carts.length > 0 ? carts.length : null} color="primary">
                 <ShoppingBasketOutlinedIcon onClick={toggleDrawer(true)} />
                 <Drawer className={classes.cartDrawer}
                     anchor={'right'}
@@ -152,7 +162,7 @@ const Cart = () => {
                     <Box className={classes.cartBoxTotal} onClick={toggleDrawer(false)}>
                         <Paper className={classes.cartBoxTotalPaper} elevation={3}>
                             <Typography>
-                                Tổng thanh toán ({listProductInCart.length} sản phẩm): {convertToVND(listProductInCart.reduce((total, item) => {
+                                Tổng thanh toán ({carts.length} sản phẩm): {convertToVND(carts.reduce((total, item) => {
                                     return total + (item.price - (item.price * item.promotion)) * item.quantity
                                 }, 0))}
                             </Typography>
@@ -162,7 +172,7 @@ const Cart = () => {
 
                     {/* button order */}
                     <Box className={classes.cartDivButton} onClick={toggleDrawer(false)}>
-                        <Button component={Link} to={`/user/${userInfo.id}/payment`} className={classes.cartButtonOrder} disabled={listProductInCart.length > 0 ? false : true} fullWidth variant="contained">ĐẶT HÀNG</Button>
+                        <Button component={Link} to={`/user/${userInfo.id}/payment`} className={classes.cartButtonOrder} disabled={carts.length > 0 ? false : true} fullWidth variant="contained">ĐẶT HÀNG</Button>
                     </Box>
                 </Drawer>
             </Badge>

@@ -21,7 +21,7 @@ export default makeStyles((theme) => ({
     },
     cartCard: {
         display: 'grid',
-        height: '11rem',
+        height: '12rem',
         marginBottom: '0.5rem',
         overflowY: 'hidden',
         position: 'relative',
