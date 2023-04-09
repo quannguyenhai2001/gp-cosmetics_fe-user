@@ -6,13 +6,12 @@ import { useParams } from 'react-router-dom';
 import { Toast } from 'utils/Toast';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import useStyles from './styles';
-import { fetchAsyncGetAllSizes, fetchAsyncGetDetailProduct } from 'redux/slices/productSlice';
+import { fetchAsyncCreateCart, fetchAsyncGetAllCarts, fetchAsyncGetAllSizes, fetchAsyncGetDetailProduct } from 'redux/slices/productSlice';
 import ProductImagesSlider from './components/productImagesSlider';
 import Description from './components/Description/Description';
 import ProductRelativeSlide from './components/ProductRelativeSlide/ProductRelativeSlide';
 import CommentList from './components/CommentList/CommentList';
 import convertToVND from 'utils/ConvertToVND';
-import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -22,7 +21,7 @@ const ProductDetailScreen = () => {
     const dispatch = useDispatch();
     const [detailProduct, setDetailProduct] = useState({})
     const [sizes, setSizes] = useState([])
-    const [currentSize, setCurentSize] = useState({})
+    const [currentSize, setCurrentSize] = useState({})
     const [quantity, setQuantity] = useState(1)
 
     const params = useParams();
@@ -44,24 +43,25 @@ const ProductDetailScreen = () => {
 
 
     const handleClickSize = (value) => {
-        setCurentSize(value)
+        if (value.id === currentSize.id) {
+            setCurrentSize({})
+            return
+        }
+        setCurrentSize(value)
     }
-
-
-
-
-
-
-
-    // const handleAddProduct = () => {
-    //     dispatch(fetchAsyncAddProductToCart({ id })).unwrap().then(() => {
-    //         Toast('success', 'Thêm vào giỏ hàng thành công!');
-    //         dispatch(fetchAsyncGetListProductInCart());
-    //     }).catch(err => {
-    //         console.log(err);
-    //     })
-    // }
-    // console.log(detailProduct)
+    console.log(detailProduct)
+    const handleClickAddToCart = () => {
+        dispatch(fetchAsyncCreateCart({
+            quantity,
+            product_id: detailProduct.id,
+            size_id: currentSize.id
+        })).unwrap().then(() => {
+            dispatch(fetchAsyncGetAllCarts());
+            Toast('success', 'Thêm sản phẩm thành công!');
+        }).catch(err => {
+            console.log(err);
+        })
+    }
 
     return (
         <Container maxWidth='xl' sx={{ height: 'fit-content', marginBottom: '3rem', bgColor: 'gray' }}>
@@ -105,37 +105,6 @@ const ProductDetailScreen = () => {
                                         </Typography>
                                     </Box>
                                 )}
-
-                            {/* code */}
-                            {/* <Box className={classes.boxMargin}>
-                                <Box className={classes.boxSale}>
-                                    <Typography>
-                                        Mã Giảm Giá
-                                    </Typography>
-                                    <Box>
-                                        <Button variant="contained">5% off</Button>
-                                        <Button variant="contained">10% off</Button>
-                                        <Button variant="contained">15% off</Button>
-                                    </Box>
-                                </Box>
-                            </Box> */}
-                            {/* <Box className={classes.boxMargin}>
-                                <Box className={classes.boxSize}>
-                                    <Typography>Kích Thước</Typography>
-                                    <Box>
-                                        {detailProduct.size === "Small" ?
-                                            (<>
-                                                <Button variant="outlined" color="primary">Nhỏ</Button>
-                                                <Button variant="outlined" color="primary" disabled>To</Button>
-                                            </>) :
-                                            (<>
-                                                <Button variant="outlined" color="primary" disabled>Nhỏ</Button>
-                                                <Button variant="outlined" color="primary" >To</Button>
-                                            </>)}
-                                    </Box>
-                                </Box>
-                            </Box> */}
-
                             <Grid container sx={{ display: "flex", alignItems: "center", mb: "2rem", alignContent: "center" }}>
                                 <Grid item xs={2}>
                                     <Typography mt="5px">Kích Thước</Typography>
@@ -145,7 +114,7 @@ const ProductDetailScreen = () => {
                                     {
                                         sizes.length > 0 ? (
                                             <>
-                                                {sizes.map((size, index) => (<Button key={index} disabled={parseFloat(size.quantity) ? false : true} variant="outlined" size="small" sx={{ mr: 1 }} onClick={() => handleClickSize(size)}>{size.label}</Button>))}
+                                                {sizes.map((size, index) => (<Button className={classes.customButton} key={index} disabled={parseFloat(size.quantity) ? false : true} variant={Object.keys(currentSize).length > 0 ? "contained" : "outlined"} size="small" sx={{ mr: 1 }} onClick={() => handleClickSize(size)}>{size.label}</Button>))}
                                             </>)
                                             : null
                                     }
@@ -158,23 +127,25 @@ const ProductDetailScreen = () => {
                                     <Typography mt="5px">Số lượng</Typography>
                                 </Grid>
 
-                                <Grid item xs={3}>
-                                    <Box>
-                                        <Stack direction="row" alignItems="center" spacing={1}>
-                                            <IconButton disabled={quantity === '1' ? true : false} aria-label="delete" size="small"  >
-                                                <RemoveIcon fontSize="inherit" />
-                                            </IconButton>
-                                            <Typography>{quantity}</Typography>
-                                            <IconButton aria-label="delete" size="small">
-                                                <AddIcon fontSize="inherit" />
-                                            </IconButton>
-                                        </Stack>
+                                <Grid item xs={10}>
+                                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                                        <Box sx={{ marginRight: "2rem" }}>
+                                            <Stack direction="row" alignItems="center" spacing={1}>
+                                                <IconButton disabled={quantity === '1' ? true : false} aria-label="delete" size="small"  >
+                                                    <RemoveIcon fontSize="inherit" />
+                                                </IconButton>
+                                                <Typography>{quantity}</Typography>
+                                                <IconButton aria-label="delete" size="small">
+                                                    <AddIcon fontSize="inherit" />
+                                                </IconButton>
+                                            </Stack>
+                                        </Box>
+                                        <Box>
+                                            {currentSize.quantity && (<Typography>
+                                                {currentSize.quantity} sản phẩm có sẵn
+                                            </Typography>)}
+                                        </Box>
                                     </Box>
-                                </Grid>
-                                <Grid item sx={5}>
-                                    {currentSize.quantity && (<Typography>
-                                        {currentSize.quantity} sản phẩm có sẵn
-                                    </Typography>)}
                                 </Grid>
                             </Grid>
 
@@ -182,7 +153,7 @@ const ProductDetailScreen = () => {
 
 
 
-                            <Button variant="contained" size="small" className={classes.buttonCart} startIcon={<ShoppingCartIcon />} >Thêm vào giỏ hàng</Button>
+                            <Button variant="contained" size="small" onClick={handleClickAddToCart} className={classes.buttonCart} startIcon={<ShoppingCartIcon />} >Thêm vào giỏ hàng</Button>
                         </Grid>
                     </Grid>
                 )}

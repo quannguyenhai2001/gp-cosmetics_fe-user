@@ -12,7 +12,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 
 import { Toast } from 'utils/Toast';
-import CurrencyTypo from 'components/CurrencyTypo/CurrencyTypo';
+
 import convertToVND from 'utils/ConvertToVND';
 import { fetchAsyncDeleteCart, fetchAsyncGetAllCarts, fetchAsyncUpdateCart } from 'redux/slices/productSlice';
 

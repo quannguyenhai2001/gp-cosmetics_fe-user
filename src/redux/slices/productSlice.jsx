@@ -106,6 +106,17 @@ export const fetchAsyncGetAllCarts = createAsyncThunk(
         }
     }
 );
+export const fetchAsyncCreateCart = createAsyncThunk(
+    "product/fetchAsyncCreateCart",
+    async (arg, { rejectWithValue }) => {
+        try {
+            const response = await CallApiByBody("carts/create-cart.php", "POST", arg)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
 export const fetchAsyncUpdateCart = createAsyncThunk(
     "product/fetchAsyncUpdateCart",
     async (arg, { rejectWithValue }) => {

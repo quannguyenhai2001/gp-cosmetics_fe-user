@@ -7,7 +7,14 @@ export default makeStyles((theme) => ({
 
         }
     },
-
+    // customButton: {
+    //     "&.MuiButtonBase-root": {
+    //         "&.MuiButton-root": {
+    //             boxShadow: "none",
+    //             backgroundColor: "#5da4eb"
+    //         }
+    //     }
+    // },
     //rating
     boxRating: {
         display: 'flex',
@@ -91,7 +98,8 @@ export default makeStyles((theme) => ({
     buttonCart: {
         '&.MuiButton-root': {
             margin: '5rem 0 0 0rem',
-            padding: '1rem 2rem',
+            padding: '1rem 1rem',
+            backgroundColor: "#358de5"
 
         },
     },
