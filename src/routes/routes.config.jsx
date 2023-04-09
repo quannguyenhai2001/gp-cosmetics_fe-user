@@ -7,6 +7,7 @@ import OrderScreen from "screens/OrderScreen/OrderScreen";
 
 import ProductDetailScreen from "screens/ProductDetailScreen/ProductDetailScreen";
 import ProductsScreen from "screens/ProductsScreen/ProductsScreen";
+import SearchScreen from "screens/SearchScreen/SearchScreen";
 import SignInScreen from "screens/SignInSreen/SignInSreen";
 import SignUpScreen from "screens/SignUpSreen/SignUpSreen";
 import UserInfoScreen from "screens/UserInfoScreen/UserInfoScreen";
@@ -66,5 +67,12 @@ export const RouteConfigs = [
         element: OrderDetailScreen,
         isPrivate: true,
         layout: ProfileLayout,
+    },
+    {
+        path: "/search",
+        element: SearchScreen,
+        isPrivate: false,
+        layout: DefaultLayout,
+
     },
 ]

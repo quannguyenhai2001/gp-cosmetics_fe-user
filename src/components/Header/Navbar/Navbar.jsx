@@ -16,7 +16,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import FaceIcon from '@mui/icons-material/Face';
 import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';
 import logo from 'assets/images/logo/logo_web.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ContactMailOutlinedIcon from '@mui/icons-material/ContactMailOutlined';
 import { useSelector } from 'react-redux';
 import Cart from './components/Cart/Cart';
@@ -81,7 +81,23 @@ const CustomTooltip = styled(({ className, ...props }) => (
 export default function NavBar(props) {
     const userInfo = useSelector(state => state.user.userInfo);
     const classes = useStyles();
+    const navigate = useNavigate();
 
+    const [searchValue, setSearchValue] = React.useState('');
+    const handleChangeSearch = (event) => {
+        setSearchValue(event.target.value);
+
+    };
+    const handleKeyDownSearch = (event) => {
+        if (event.keyCode === 13) {
+            if (searchValue !== '') {
+                navigate('/search?value=' + searchValue);
+            }
+            else {
+                navigate('/');
+            }
+        }
+    };
     return (
         <HideOnScroll {...props}>
             <AppBar className={classes.rootAppBarTop} elevation={0}>
@@ -92,8 +108,10 @@ export default function NavBar(props) {
                         </Box>
                     </Box>
                     <TextField
+                        autoComplete={false}
                         className={classes.searchInput}
                         placeholder="Tìm kiếm"
+                        onChange={handleChangeSearch} onKeyDown={handleKeyDownSearch}
                         InputProps={{
                             endAdornment: (
                                 <IconButton>
