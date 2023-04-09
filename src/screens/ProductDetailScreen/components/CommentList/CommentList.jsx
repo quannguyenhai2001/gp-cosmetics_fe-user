@@ -65,7 +65,7 @@ const CommentList = () => {
 
               </Box >)
               )
-            ) : (<div>No comment...</div>)
+            ) : (<div>Không có đánh giá...</div>)
         }
       </Box>
     </Box>
