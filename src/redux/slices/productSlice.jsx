@@ -106,7 +106,40 @@ export const fetchAsyncGetAllCarts = createAsyncThunk(
         }
     }
 );
+export const fetchAsyncUpdateCart = createAsyncThunk(
+    "product/fetchAsyncUpdateCart",
+    async (arg, { rejectWithValue }) => {
+        try {
+            const response = await CallApiByBody("carts/update-cart.php", "PUT", arg)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
+export const fetchAsyncDeleteCart = createAsyncThunk(
+    "product/fetchAsyncDeleteCart",
+    async (arg, { rejectWithValue }) => {
+        try {
+            const response = await CallApiByBody("carts/delete-cart.php", "DELETE", arg)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
 
+export const fetchAsyncGetAllSizes = createAsyncThunk(
+    "product/fetchAsyncGetAllSizes",
+    async (arg, { rejectWithValue }) => {
+        try {
+            const response = await CallApiByParams("sizes/get-all-sizes.php", "get", arg)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
 const productSlice = createSlice({
     name: 'products',
     initialState,

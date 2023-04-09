@@ -14,7 +14,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { Toast } from 'utils/Toast';
 import CurrencyTypo from 'components/CurrencyTypo/CurrencyTypo';
 import convertToVND from 'utils/ConvertToVND';
-import { fetchAsyncGetAllCarts } from 'redux/slices/productSlice';
+import { fetchAsyncDeleteCart, fetchAsyncGetAllCarts, fetchAsyncUpdateCart } from 'redux/slices/productSlice';
 
 const Cart = () => {
     const toggleDrawer = (open) => (event) => {
@@ -39,29 +39,37 @@ const Cart = () => {
         })()
 
     }, [dispatch]);
-    // const handleClickIncrease = (id) => {
-    //     dispatch(fetchAsyncAddProductToCart({ id })).unwrap().then(() => {
-    //         dispatch(fetchAsyncGetListProductInCart());
-    //     }).catch(err => {
-    //         console.log(err);
-    //     })
+    const handleClickIncrease = (item) => {
+        console.log(item)
+        dispatch(fetchAsyncUpdateCart({
+            id: item.id,
+            quantity: +item.quantity + 1
+        })).unwrap().then(() => {
+            dispatch(fetchAsyncGetAllCarts());
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+    const handleClickDecrease = (item) => {
+        console.log(item)
+        dispatch(fetchAsyncUpdateCart({
+            id: item.id,
+            quantity: +item.quantity - 1
+        })).unwrap().then(() => {
+            dispatch(fetchAsyncGetAllCarts());
+        }).catch(err => {
+            console.log(err);
+        })
+    }
 
-    // }
-    // const handleClickDecrease = (id) => {
-    //     dispatch(fetchAsyncDecreaseQuantityProduct({ id })).unwrap().then(() => {
-    //         dispatch(fetchAsyncGetListProductInCart());
-    //     }).catch(err => {
-    //         console.log(err);
-    //     })
-    // }
-    // const handleClickDelete = (id) => {
-    //     dispatch(fetchAsyncDeleteProductInCart({ id })).unwrap().then(() => {
-    //         dispatch(fetchAsyncGetListProductInCart());
-    //         Toast('success', 'Xóa sản phẩm thành công!');
-    //     }).catch(err => {
-    //         console.log(err);
-    //     })
-    // }
+    const handleClickDelete = (id) => {
+        dispatch(fetchAsyncDeleteCart({ id })).unwrap().then(() => {
+            dispatch(fetchAsyncGetAllCarts());
+            Toast('success', 'Xóa sản phẩm thành công!');
+        }).catch(err => {
+            console.log(err);
+        })
+    }
 
 
     const RenderlistProductInCart = () => (
@@ -114,17 +122,17 @@ const Cart = () => {
                                     <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
                                         <Box>
                                             <Stack direction="row" alignItems="center" spacing={1}>
-                                                <IconButton disabled={item.quantity === '1' ? true : false} aria-label="delete" size="small"  >
+                                                <IconButton disabled={item.quantity === '1' ? true : false} onClick={() => handleClickDecrease(item)} aria-label="decrease" size="small"  >
                                                     <RemoveIcon fontSize="inherit" />
                                                 </IconButton>
                                                 <Typography>{item.quantity}</Typography>
-                                                <IconButton aria-label="delete" size="small">
-                                                    <AddIcon fontSize="inherit" />
+                                                <IconButton aria-label="add" size="small">
+                                                    <AddIcon fontSize="inherit" onClick={() => handleClickIncrease(item)} />
                                                 </IconButton>
                                             </Stack>
                                         </Box>
                                         <IconButton aria-label="delete" size="small" sx={{ transformX: '2rem' }}>
-                                            <DeleteIcon fontSize="inherit" />
+                                            <DeleteIcon fontSize="inherit" onClick={() => handleClickDelete(item.id)} />
                                         </IconButton>
                                     </Stack>
 

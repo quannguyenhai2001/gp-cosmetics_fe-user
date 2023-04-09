@@ -1,4 +1,4 @@
-import { Container, Typography, Grid, Button, Box, Paper, Divider, Rating } from '@mui/material';
+import { Container, Typography, Grid, Button, Box, Paper, Divider, Rating, Stack, IconButton } from '@mui/material';
 import React, { memo, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -6,29 +6,51 @@ import { useParams } from 'react-router-dom';
 import { Toast } from 'utils/Toast';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import useStyles from './styles';
-import { fetchAsyncGetDetailProduct } from 'redux/slices/productSlice';
+import { fetchAsyncGetAllSizes, fetchAsyncGetDetailProduct } from 'redux/slices/productSlice';
 import ProductImagesSlider from './components/productImagesSlider';
 import Description from './components/Description/Description';
 import ProductRelativeSlide from './components/ProductRelativeSlide/ProductRelativeSlide';
 import CommentList from './components/CommentList/CommentList';
 import convertToVND from 'utils/ConvertToVND';
+import DeleteIcon from '@mui/icons-material/Delete';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
+
+
 const ProductDetailScreen = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [detailProduct, setDetailProduct] = useState({})
+    const [sizes, setSizes] = useState([])
+    const [currentSize, setCurentSize] = useState({})
+    const [quantity, setQuantity] = useState(1)
+
     const params = useParams();
     const { id } = params;
 
 
     useEffect(() => {
         (async () => {
-            const res = await dispatch(fetchAsyncGetDetailProduct({
+            const res1 = await dispatch(fetchAsyncGetDetailProduct({
                 "product_id": id
             })).unwrap();
-            setDetailProduct(res.data)
-
+            const res2 = await dispatch(fetchAsyncGetAllSizes({
+                "product_id": id
+            })).unwrap();
+            setDetailProduct(res1.data)
+            setSizes(res2.data)
         })()
     }, [dispatch, id]);
+
+
+    const handleClickSize = (value) => {
+        setCurentSize(value)
+    }
+
+
+
+
+
 
 
     // const handleAddProduct = () => {
@@ -113,27 +135,53 @@ const ProductDetailScreen = () => {
                                     </Box>
                                 </Box>
                             </Box> */}
-                            <Grid container sx={{ display: "flex", alignItems: "center", alignContent: "center" }}>
-                                <Grid item xs={2}>
-                                    <Typography mt="5px">Kích Thước</Typography>
-                                </Grid>
-                                <Grid item xs={10}>
-                                    <Button variant="outlined" size="small" sx={{ mr: 1 }} >size 34</Button>
-                                    <Button variant="outlined" size="small" >size 34</Button>
-                                </Grid>
-                            </Grid>
-                            <Grid container sx={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+
+                            <Grid container sx={{ display: "flex", alignItems: "center", mb: "2rem", alignContent: "center" }}>
                                 <Grid item xs={2}>
                                     <Typography mt="5px">Kích Thước</Typography>
                                 </Grid>
 
                                 <Grid item xs={10}>
+                                    {
+                                        sizes.length > 0 ? (
+                                            <>
+                                                {sizes.map((size, index) => (<Button key={index} disabled={parseFloat(size.quantity) ? false : true} variant="outlined" size="small" sx={{ mr: 1 }} onClick={() => handleClickSize(size)}>{size.label}</Button>))}
+                                            </>)
+                                            : null
+                                    }
+                                </Grid>
+                            </Grid>
 
-                                    <Button variant="outlined" size="small" sx={{ mr: 1 }} >size 34</Button>
-                                    <Button variant="outlined" size="small" >size 34</Button>
+
+                            <Grid container sx={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+                                <Grid item xs={2}>
+                                    <Typography mt="5px">Số lượng</Typography>
                                 </Grid>
 
+                                <Grid item xs={3}>
+                                    <Box>
+                                        <Stack direction="row" alignItems="center" spacing={1}>
+                                            <IconButton disabled={quantity === '1' ? true : false} aria-label="delete" size="small"  >
+                                                <RemoveIcon fontSize="inherit" />
+                                            </IconButton>
+                                            <Typography>{quantity}</Typography>
+                                            <IconButton aria-label="delete" size="small">
+                                                <AddIcon fontSize="inherit" />
+                                            </IconButton>
+                                        </Stack>
+                                    </Box>
+                                </Grid>
+                                <Grid item sx={5}>
+                                    {currentSize.quantity && (<Typography>
+                                        {currentSize.quantity} sản phẩm có sẵn
+                                    </Typography>)}
+                                </Grid>
                             </Grid>
+
+
+
+
+
                             <Button variant="contained" size="small" className={classes.buttonCart} startIcon={<ShoppingCartIcon />} >Thêm vào giỏ hàng</Button>
                         </Grid>
                     </Grid>
