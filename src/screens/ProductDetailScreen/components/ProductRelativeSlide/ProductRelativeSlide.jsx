@@ -38,7 +38,7 @@ const ProductRelativeSlide = () => {
         navigate(`/products/detail/${id}`);
     }
     return (
-        <Box sx={{ marginBottom: '5rem' }}>
+        <Box sx={{ marginBottom: '4rem' }}>
             <Typography variant="h5" gutterBottom sx={{ textAlign: 'Left', fontWeight: 'bold', marginBottom: '2rem' }}>
                 Bạn Có Thể Thích
             </Typography>

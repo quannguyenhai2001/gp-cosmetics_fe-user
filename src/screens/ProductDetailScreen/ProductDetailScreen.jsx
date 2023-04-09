@@ -49,18 +49,32 @@ const ProductDetailScreen = () => {
         }
         setCurrentSize(value)
     }
-    console.log(detailProduct)
+    const handleReduceQuantity = () => {
+        setQuantity(quantity - 1)
+    }
+    const handleAddQuantity = () => {
+        setQuantity(quantity + 1)
+    }
+
+
     const handleClickAddToCart = () => {
-        dispatch(fetchAsyncCreateCart({
-            quantity,
-            product_id: detailProduct.id,
-            size_id: currentSize.id
-        })).unwrap().then(() => {
-            dispatch(fetchAsyncGetAllCarts());
-            Toast('success', 'Thêm sản phẩm thành công!');
-        }).catch(err => {
-            console.log(err);
-        })
+        if (Object.keys(currentSize).length > 0) {
+            dispatch(fetchAsyncCreateCart({
+                quantity,
+                product_id: detailProduct.id,
+                size_id: currentSize.id
+            })).unwrap().then(() => {
+                dispatch(fetchAsyncGetAllCarts());
+                Toast('success', 'Thêm sản phẩm thành công!');
+            }).catch(err => {
+                console.log(err);
+            })
+        }
+        else {
+            Toast('warning', 'Hãy chọn phân loại hàng!');
+
+        }
+
     }
 
     return (
@@ -131,11 +145,11 @@ const ProductDetailScreen = () => {
                                     <Box sx={{ display: "flex", alignItems: "center" }}>
                                         <Box sx={{ marginRight: "2rem" }}>
                                             <Stack direction="row" alignItems="center" spacing={1}>
-                                                <IconButton disabled={quantity === '1' ? true : false} aria-label="delete" size="small"  >
+                                                <IconButton disabled={quantity === '1' ? true : false} onClick={handleReduceQuantity} aria-label="delete" size="small"  >
                                                     <RemoveIcon fontSize="inherit" />
                                                 </IconButton>
                                                 <Typography>{quantity}</Typography>
-                                                <IconButton aria-label="delete" size="small">
+                                                <IconButton aria-label="delete" size="small" onClick={handleAddQuantity} disabled={quantity === currentSize.quantity ? true : false}>
                                                     <AddIcon fontSize="inherit" />
                                                 </IconButton>
                                             </Stack>
@@ -148,11 +162,6 @@ const ProductDetailScreen = () => {
                                     </Box>
                                 </Grid>
                             </Grid>
-
-
-
-
-
                             <Button variant="contained" size="small" onClick={handleClickAddToCart} className={classes.buttonCart} startIcon={<ShoppingCartIcon />} >Thêm vào giỏ hàng</Button>
                         </Grid>
                     </Grid>
@@ -168,7 +177,7 @@ const ProductDetailScreen = () => {
                         <ProductRelativeSlide />
                     </Box>
                     <Box>
-                        <Divider></Divider>
+                        <Divider sx={{ marginBottom: '2rem' }}></Divider>
 
                         <CommentList />
                     </Box>

@@ -3,7 +3,7 @@ import { makeStyles } from '@mui/styles';
 export default makeStyles((theme) => ({
     swiper: {
         width: '100%',
-        height: '30rem',
+        height: '25rem',
         '& .swiper-button-prev': {
             '&:after': {
                 fontSize: '3rem',
@@ -25,7 +25,7 @@ export default makeStyles((theme) => ({
     swiperSlideImg: {
         display: 'block',
         width: '100%',
-        height: '70%',
+        height: '60%',
         objectFit: 'fill',
         marginBottom: '2rem'
 

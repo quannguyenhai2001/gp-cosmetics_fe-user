@@ -11,7 +11,7 @@ const Description = ({ detailProduct }) => {
     const classes = useStyles();
 
     return (
-        <Box sx={{ marginBottom: '4rem' }}>
+        <Box sx={{ marginBottom: '3rem' }}>
             {/* {detailProduct.description && */}
             {/* (<> */}
             {/* <Typography variant="h5" gutterBottom sx={{ textAlign: 'Left', fontWeight: 'bold', marginBottom: '2rem' }}>
