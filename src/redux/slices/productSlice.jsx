@@ -82,7 +82,17 @@ export const fetchAsyncGetAllBills = createAsyncThunk(
         }
     }
 );
-
+export const fetchAsyncCreateBill = createAsyncThunk(
+    "product/fetchAsyncCreateBill",
+    async (arg, { rejectWithValue }) => {
+        try {
+            const response = await CallApiByParams("bills/create-bill.php", "post", arg)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
 export const fetchAsyncGetAllBillDetails = createAsyncThunk(
     "product/fetchAsyncGetAllBillDetails",
     async (arg, { rejectWithValue }) => {
@@ -161,6 +171,9 @@ const productSlice = createSlice({
         deleteListProducts: (state, action) => {
             state.products = []
         },
+        deleteCarts: (state, action) => {
+            state.carts = []
+        }
 
     },
     extraReducers: builder => {
@@ -191,5 +204,5 @@ const productSlice = createSlice({
 })
 
 const { reducer: productReducer, actions } = productSlice
-export const { setCategories, deleteListProducts } = actions
+export const { setCategories, deleteListProducts, deleteCarts } = actions
 export default productReducer

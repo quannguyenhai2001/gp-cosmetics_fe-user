@@ -4,6 +4,7 @@ import ChangePasswordScreen from "screens/ChangePasswordScreen/ChangePasswordScr
 import HomeScreen from "screens/HomeScreen/HomeScreen";
 import OrderDetailScreen from "screens/OrderDetailScreen/OrderDetailScreen";
 import OrderScreen from "screens/OrderScreen/OrderScreen";
+import PaymentScreen from "screens/PaymentScreen/PaymentScreen";
 
 import ProductDetailScreen from "screens/ProductDetailScreen/ProductDetailScreen";
 import ProductsScreen from "screens/ProductsScreen/ProductsScreen";
@@ -72,6 +73,12 @@ export const RouteConfigs = [
         path: "/search",
         element: SearchScreen,
         isPrivate: false,
+        layout: DefaultLayout,
+    },
+    {
+        path: "/user/:id/payment",
+        element: PaymentScreen,
+        isPrivate: true,
         layout: DefaultLayout,
 
     },

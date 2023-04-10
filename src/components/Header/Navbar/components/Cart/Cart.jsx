@@ -171,7 +171,7 @@ const Cart = () => {
                         <Paper className={classes.cartBoxTotalPaper} elevation={3}>
                             <Typography>
                                 Tổng thanh toán ({carts.length} sản phẩm): {convertToVND(carts.reduce((total, item) => {
-                                    return total + (item.price - (item.price * item.promotion)) * item.quantity
+                                    return total + (parseFloat(((parseFloat(item.price) + parseFloat(item.additional_price)) * (1 - item.promotion))) * item.quantity)
                                 }, 0))}
                             </Typography>
 
