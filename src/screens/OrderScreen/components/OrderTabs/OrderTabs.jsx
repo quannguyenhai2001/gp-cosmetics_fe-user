@@ -17,9 +17,9 @@ import { Link, useNavigate } from 'react-router-dom';
 const OrderTabs = ({ bills }) => {
     const userInfo = useSelector(state => state.user.userInfo);
     const navigate = useNavigate();
-    const getOptionLabel = (value, optionsType) => {
+    const getOption = (value, optionsType) => {
         const optionValue = optionsType.find(option => option.value === value);
-        return optionValue?.label;
+        return optionValue;
     };
     return (
         <>
@@ -38,8 +38,8 @@ const OrderTabs = ({ bills }) => {
                                                 </Typography>
                                             </Box>
                                             <Box sx={{ gap: '1rem', color: 'blue', alignItems: 'baseline' }}>
-                                                <LocalShippingIcon sx={{ transform: 'translate(-5px,4px)', display: 'inline-block' }} />
-                                                <Typography component="span">{getOptionLabel(item.status, BILL_STATUS)}</Typography>
+                                                {item.status !== "cancelled" && <LocalShippingIcon sx={{ transform: 'translate(-5px,4px)', display: 'inline-block', color: `${getOption(item.status, BILL_STATUS).color}` }} />}
+                                                <Typography component="span" sx={{ color: `${getOption(item.status, BILL_STATUS).color}` }}>{getOption(item.status, BILL_STATUS).label}</Typography>
                                             </Box>
 
                                         </Box>
@@ -142,7 +142,7 @@ const OrderTabs = ({ bills }) => {
                                     </Card>
                                 </Box>
 
-                            </Box>
+                            </Box >
                         </Box >
                     )
                 }))

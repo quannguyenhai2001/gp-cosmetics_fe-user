@@ -92,7 +92,7 @@ const Categories = () => {
                             <>
                                 {listNav}
                                 <li>
-                                    Blogs
+                                    Tin tức
                                 </li>
                                 <li>
                                     Về chúng tôi

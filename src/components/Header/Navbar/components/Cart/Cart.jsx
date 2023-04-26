@@ -70,8 +70,6 @@ const Cart = () => {
             console.log(err);
         })
     }
-
-
     const RenderlistProductInCart = () => (
         <Box className={classes.cartBox}>
             {carts.length > 0 ?

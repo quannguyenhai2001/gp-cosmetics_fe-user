@@ -8,7 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { fetchAsyncGetUser } from 'redux/slices/UserSlice';
 import { RouterWrapper } from "routes/RouterWrapper";
 import './App.css';
-import { fetchAsyncGetAllProducts } from "redux/slices/productSlice";
 
 const theme = createTheme({
   typography: {

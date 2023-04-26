@@ -26,7 +26,7 @@ const ProductRelativeSlide = () => {
     useEffect(() => {
         (async () => {
             try {
-                let response = await dispatch(fetchAsyncGetRelativeProducts({ use_page: 1, page: 2 })).unwrap()
+                let response = await dispatch(fetchAsyncGetRelativeProducts({ use_page: 1, page: 1 })).unwrap()
                 console.log(response)
                 setProducts(response.data)
 

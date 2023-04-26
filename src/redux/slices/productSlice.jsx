@@ -86,7 +86,7 @@ export const fetchAsyncCreateBill = createAsyncThunk(
     "product/fetchAsyncCreateBill",
     async (arg, { rejectWithValue }) => {
         try {
-            const response = await CallApiByParams("bills/create-bill.php", "post", arg)
+            const response = await CallApiByBody("bills/create-bill.php", "post", arg)
             return response.data
         } catch (error) {
             return rejectWithValue(error.response.data)

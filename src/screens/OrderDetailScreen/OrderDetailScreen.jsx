@@ -25,6 +25,24 @@ import { Toast } from 'utils/Toast';
 import { useNavigate } from 'react-router-dom';
 import convertToVND from 'utils/ConvertToVND';
 import { BILL_STATUS } from 'constants/contants';
+
+function SimpleDialog(props) {
+    const { onClose, selectedValue, open } = props;
+
+    const handleClose = () => {
+        onClose(selectedValue);
+    };
+
+
+
+    return (
+        <Dialog onClose={handleClose} open={open}>
+            <DialogTitle>Set backup account</DialogTitle>
+
+        </Dialog>
+    );
+}
+
 const OrderDetailScreen = () => {
     const [billDetails, setBillDetails] = useState([])
     const { orderID } = useParams();
@@ -52,6 +70,17 @@ const OrderDetailScreen = () => {
         navigate(`/products/detail/${id}`);
     }
 
+    const [open, setOpen] = React.useState(false);
+    const [selectedValue, setSelectedValue] = React.useState();
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (value) => {
+        setOpen(false);
+        setSelectedValue(value);
+    };
     return (
         <Box>
             <Box mb="1.5rem">
@@ -147,7 +176,7 @@ const OrderDetailScreen = () => {
                                         </Box>
 
 
-                                        {status === "delivered" ? (
+                                        {status === "delivered" && (
                                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: "center", gap: '1rem' }}>
                                                 <Box>
                                                     {
@@ -160,36 +189,52 @@ const OrderDetailScreen = () => {
                                                 <Box sx={{ display: 'flex', gap: '2rem' }}>
                                                     {!item.is_rated ? (
                                                         <>
-                                                            <Button variant="contained" sx={{ width: '10rem' }}>ĐÁNH GIÁ</Button>
-                                                            {/* {valueArray.bill_details_Id === item.id ?
-                                                                    (<SimpleDialog
-                                                                        open={open}
-                                                                        arrayId={valueArray}
-                                                                        onClose={handleClose}
-                                                                    />) :
-                                                                    null} */}
-                                                        </>
-                                                    ) :
+                                                            <Button variant="contained" sx={{ width: '10rem' }} onClick={handleClickOpen}>ĐÁNH GIÁ</Button>
+
+                                                            <SimpleDialog
+                                                                selectedValue={selectedValue}
+                                                                open={open}
+                                                                onClose={handleClose}
+                                                            />
+                                                        </>)
+                                                        :
                                                         (<Button variant="contained" onClick={() => handleNavigate(item.product_id)} sx={{ width: '10rem' }}>MUA LẠI</Button>)
                                                     }
                                                     <Button variant="outlined">LIÊN HỆ NGƯỜI BÁN</Button>
                                                 </Box>
                                             </Box>
 
-                                        ) : (
-                                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: "center", gap: '1rem' }}>
-
-                                                <Box sx={{ display: 'flex', gap: '1rem', color: 'red' }}>
-                                                    <LocalShippingIcon />
-                                                    <Typography >Sản phẩm đang được giao</Typography>
-                                                </Box>
-                                                <Box sx={{ display: 'flex', gap: '2rem' }}>
-                                                    <Button variant="contained" sx={{ width: '8rem' }} disabled>CHỜ</Button>
-                                                    <Button variant="outlined">LIÊN HỆ NGƯỜI BÁN</Button>
-                                                </Box>
-                                            </Box>
-
                                         )}
+                                        {status === "delivering" &&
+                                            (
+                                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: "center", gap: '1rem' }}>
+
+                                                    <Box sx={{ display: 'flex', gap: '1rem', color: 'red' }}>
+                                                        <LocalShippingIcon />
+                                                        <Typography >Sản phẩm đang được giao</Typography>
+                                                    </Box>
+                                                    <Box sx={{ display: 'flex', gap: '2rem' }}>
+                                                        <Button variant="contained" sx={{ width: '8rem' }} disabled>CHỜ</Button>
+                                                        <Button variant="outlined">LIÊN HỆ NGƯỜI BÁN</Button>
+                                                    </Box>
+                                                </Box>
+
+                                            )}
+                                        {status === "cancelled" &&
+                                            (
+                                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: "center", gap: '1rem' }}>
+
+                                                    <Box sx={{ display: 'flex', gap: '1rem', color: 'red' }}>
+
+                                                        <Typography >Sản phẩm đã được hủy</Typography>
+                                                    </Box>
+                                                    <Box sx={{ display: 'flex', gap: '2rem' }}>
+
+                                                        <Button variant="outlined">LIÊN HỆ NGƯỜI BÁN</Button>
+                                                    </Box>
+                                                </Box>
+
+                                            )}
 
 
                                     </Card>

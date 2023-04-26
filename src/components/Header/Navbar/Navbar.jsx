@@ -108,7 +108,7 @@ export default function NavBar(props) {
                         </Box>
                     </Box>
                     <TextField
-                        autoComplete="false"
+                        autoComplete='off'
                         className={classes.searchInput}
                         placeholder="Tìm kiếm"
                         onChange={handleChangeSearch} onKeyDown={handleKeyDownSearch}

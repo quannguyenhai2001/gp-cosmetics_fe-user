@@ -46,7 +46,7 @@ const OrderScreen = () => {
     const { id } = useSelector(state => state.user.userInfo)
 
     const dispatch = useDispatch();
-
+    console.log(id)
     const handleChange = async (event, newValue) => {
         setValue(newValue);
         const res = await dispatch(fetchAsyncGetAllBills({ user_id: id, status: `${newValue}` })).unwrap();
@@ -54,12 +54,15 @@ const OrderScreen = () => {
     };
     React.useEffect(() => {
         (async () => {
-            const res = await dispatch(fetchAsyncGetAllBills({ user_id: id })).unwrap();
-            setBills(res.data)
-            // console.log(res)
+            if (id) {
+                const res = await dispatch(fetchAsyncGetAllBills({ user_id: id })).unwrap();
+                setBills(res.data)
+            }
+
+
         })()
 
-    }, [dispatch]);
+    }, [dispatch, id]);
 
     return (
         <Box sx={{ width: '100%' }}>
@@ -76,11 +79,9 @@ const OrderScreen = () => {
             </TabPanel >
             <TabPanel value={value} index={"delivering"}>
                 <OrderTabs bills={bills} />
-
             </TabPanel>
             <TabPanel value={value} index={"delivered"}>
                 <OrderTabs bills={bills} />
-
             </TabPanel>
             <TabPanel value={value} index={"cancelled"}>
                 <OrderTabs bills={bills} />

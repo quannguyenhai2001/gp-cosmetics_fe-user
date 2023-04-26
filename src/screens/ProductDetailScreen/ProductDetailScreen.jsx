@@ -77,6 +77,13 @@ const ProductDetailScreen = () => {
 
     }
 
+    const isEnabledSizeButton = (size) => {
+        if (Object.keys(currentSize).length > 0 && currentSize.id === size.id) {
+            return true
+        }
+        return false
+
+    }
     return (
         <Container maxWidth='xl' sx={{ height: 'fit-content', marginBottom: '3rem', bgColor: 'gray' }}>
             {/* <Typography>Title</Typography> */}
@@ -128,7 +135,7 @@ const ProductDetailScreen = () => {
                                     {
                                         sizes.length > 0 ? (
                                             <>
-                                                {sizes.map((size, index) => (<Button className={classes.customButton} key={index} disabled={parseFloat(size.quantity) ? false : true} variant={Object.keys(currentSize).length > 0 ? "contained" : "outlined"} size="small" sx={{ mr: 1 }} onClick={() => handleClickSize(size)}>{size.label}</Button>))}
+                                                {sizes.map((size, index) => (<Button className={classes.customButton} key={index} disabled={parseFloat(size.quantity) ? false : true} variant={isEnabledSizeButton(size) ? "contained" : "outlined"} size="small" sx={{ mr: 1 }} onClick={() => handleClickSize(size)}>{size.label}</Button>))}
                                             </>)
                                             : null
                                     }
