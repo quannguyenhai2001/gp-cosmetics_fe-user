@@ -70,7 +70,17 @@ export const fetchAsyncGetRatings = createAsyncThunk(
         }
     }
 );
-
+export const fetchAsyncCreateRating = createAsyncThunk(
+    "product/fetchAsyncGetRating",
+    async (arg, { rejectWithValue }) => {
+        try {
+            const response = await CallApiByBody("ratings/create-rating.php", "post", arg)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
 export const fetchAsyncGetAllBills = createAsyncThunk(
     "product/fetchAsyncGetAllBills",
     async (arg, { rejectWithValue }) => {

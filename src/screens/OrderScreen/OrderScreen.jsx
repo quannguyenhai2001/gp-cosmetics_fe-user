@@ -69,12 +69,17 @@ const OrderScreen = () => {
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={value} onChange={handleChange} className={classes.rootTab} aria-label="basic tabs example">
                     <Tab label="Tất cả" value={"all"} {...a11yProps(0)} />
-                    <Tab label="Đang giao " value={"delivering"}  {...a11yProps(1)} />
-                    <Tab label="Hoàn thành" value={"delivered"}  {...a11yProps(2)} />
-                    <Tab label="Đã hủy" value={"cancelled"} {...a11yProps(3)} />
+                    <Tab label="Xác nhận" value={"pending"} {...a11yProps(1)} />
+                    <Tab label="Đang giao " value={"delivering"}  {...a11yProps(2)} />
+                    <Tab label="Hoàn thành" value={"delivered"}  {...a11yProps(3)} />
+                    <Tab label="Đã hủy" value={"cancelled"} {...a11yProps(4)} />
+
                 </Tabs>
             </Box>
             <TabPanel value={value} index={"all"}>
+                <OrderTabs bills={bills} />
+            </TabPanel >
+            <TabPanel value={value} index={"pending"}>
                 <OrderTabs bills={bills} />
             </TabPanel >
             <TabPanel value={value} index={"delivering"}>

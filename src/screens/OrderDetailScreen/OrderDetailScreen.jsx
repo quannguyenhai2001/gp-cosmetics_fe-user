@@ -2,11 +2,11 @@ import { Box, Button } from '@mui/material';
 import React, { useState } from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAsyncGetAllBillDetails } from 'redux/slices/productSlice';
+import { fetchAsyncCreateRating, fetchAsyncGetAllBillDetails } from 'redux/slices/productSlice';
 import { useLocation, useParams } from 'react-router-dom';
 import { CardMedia, Divider, Grid, Typography, Rating } from '@mui/material';
 import Card from '@mui/material/Card';
-
+import TextareaAutosize from '@mui/base/TextareaAutosize';
 import useStyles from './styles';
 
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
@@ -25,20 +25,94 @@ import { Toast } from 'utils/Toast';
 import { useNavigate } from 'react-router-dom';
 import convertToVND from 'utils/ConvertToVND';
 import { BILL_STATUS } from 'constants/contants';
+import StarIcon from '@mui/icons-material/Star';
+const labels = {
 
+    1: 'Vô dụng',
+
+    2: 'Không tốt',
+
+    3: 'Tạm ổn',
+
+    4: 'Tốt',
+
+    5: 'Tuyệt vời',
+};
+function getLabelText(value) {
+    return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
+}
 function SimpleDialog(props) {
-    const { onClose, selectedValue, open } = props;
+    const classes = useStyles();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { id, orderID } = useParams();
 
+    const [value, setValue] = React.useState(0);
+    const [conmentValue, setCommentValue] = React.useState("");
+    const [hover, setHover] = React.useState(-1);
+    const { onClose, open, billDetailItem, setIsRating } = props;
+    console.log(billDetailItem)
     const handleClose = () => {
-        onClose(selectedValue);
+        onClose();
     };
 
+    const handleRating = async () => {
+        try {
+            const payload = {
+                star_rating: value,
+                comment: conmentValue,
+                product_id: billDetailItem.product_id,
+                bill_detail_id: billDetailItem.id
+            }
+            await dispatch(fetchAsyncCreateRating(payload)).unwrap();
+            setIsRating(value => !value)
+            Toast('success', 'Đánh giá sản phẩm thành công!')
+            onClose();
 
-
+        } catch (e) {
+            Toast('error', "Đánh giá thất bại!")
+            onClose();
+        }
+    }
     return (
         <Dialog onClose={handleClose} open={open}>
-            <DialogTitle>Set backup account</DialogTitle>
-
+            <DialogTitle><Typography sx={{ textAlign: "center" }} variant='h5' fontWeight="bold">Hãy đánh giá cho sản phẩm của chúng tôi! </Typography> </DialogTitle>
+            <List sx={{ p: "0 40px" }}>
+                <Box sx={{
+                    mb: "20px",
+                    width: "400px",
+                    justifyContent: "center",
+                    display: 'flex',
+                    alignItems: 'center',
+                }}>
+                    <Rating className={classes.rootRating}
+                        name="simple-controlled"
+                        value={value}
+                        getLabelText={getLabelText}
+                        size="large"
+                        onChange={(event, newValue) => {
+                            setValue(newValue);
+                        }}
+                        onChangeActive={(event, newHover) => {
+                            setHover(newHover);
+                        }}
+                        emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+                    />
+                    {value !== null && (
+                        <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
+                    )}
+                </Box>
+                <TextareaAutosize
+                    aria-label="minimum height"
+                    minRows={8}
+                    onChange={(e) => setCommentValue(e.target.value)}
+                    placeholder="Bình luận..."
+                    style={{ width: 400 }}
+                />
+                <Box sx={{ display: 'flex', justifyContent: 'center', margin: '2rem 0 2rem 0' }}>
+                    <Button variant="contained" onClick={handleRating} >XÁC NHẬN</Button>
+                </Box>
+            </List>
         </Dialog>
     );
 }
@@ -51,19 +125,16 @@ const OrderDetailScreen = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const status = location.state.status;
+    const [isRating, setIsRating] = useState(false)
 
-    const getOptionLabel = (value, optionsType) => {
-        const optionValue = optionsType.find(option => option.value === value);
-        return optionValue?.label;
-    };
     React.useEffect(() => {
         (async () => {
             const res = await dispatch(fetchAsyncGetAllBillDetails({ bill_id: orderID })).unwrap();
             setBillDetails(res.data)
-            console.log(res)
+
         })()
 
-    }, [dispatch, orderID]);
+    }, [dispatch, orderID, isRating]);
 
 
     const handleNavigate = (id) => {
@@ -71,15 +142,14 @@ const OrderDetailScreen = () => {
     }
 
     const [open, setOpen] = React.useState(false);
-    const [selectedValue, setSelectedValue] = React.useState();
-
-    const handleClickOpen = () => {
+    const [billDetailItem, setBillDetailItem] = React.useState({});
+    const handleClickOpen = (item) => {
         setOpen(true);
+        setBillDetailItem(item);
     };
 
     const handleClose = (value) => {
         setOpen(false);
-        setSelectedValue(value);
     };
     return (
         <Box>
@@ -189,12 +259,13 @@ const OrderDetailScreen = () => {
                                                 <Box sx={{ display: 'flex', gap: '2rem' }}>
                                                     {!item.is_rated ? (
                                                         <>
-                                                            <Button variant="contained" sx={{ width: '10rem' }} onClick={handleClickOpen}>ĐÁNH GIÁ</Button>
+                                                            <Button variant="contained" sx={{ width: '10rem' }} onClick={() => handleClickOpen(item)}>ĐÁNH GIÁ</Button>
 
                                                             <SimpleDialog
-                                                                selectedValue={selectedValue}
                                                                 open={open}
                                                                 onClose={handleClose}
+                                                                billDetailItem={billDetailItem}
+                                                                setIsRating={setIsRating}
                                                             />
                                                         </>)
                                                         :
