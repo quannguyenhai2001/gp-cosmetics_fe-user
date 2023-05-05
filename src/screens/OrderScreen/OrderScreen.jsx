@@ -69,26 +69,26 @@ const OrderScreen = () => {
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={value} onChange={handleChange} className={classes.rootTab} aria-label="basic tabs example">
                     <Tab label="Tất cả" value={"all"} {...a11yProps(0)} />
-                    <Tab label="Xác nhận" value={"pending"} {...a11yProps(1)} />
-                    <Tab label="Đang giao " value={"delivering"}  {...a11yProps(2)} />
-                    <Tab label="Hoàn thành" value={"delivered"}  {...a11yProps(3)} />
-                    <Tab label="Đã hủy" value={"cancelled"} {...a11yProps(4)} />
+                    <Tab label="Chờ xác nhận" value={"Chờ xác nhận"} {...a11yProps(1)} />
+                    <Tab label="Đang giao" value={"Đang giao"}  {...a11yProps(2)} />
+                    <Tab label="Hoàn thành" value={"Đã giao"}  {...a11yProps(3)} />
+                    <Tab label="Đã hủy" value={"Hủy"} {...a11yProps(4)} />
 
                 </Tabs>
             </Box>
             <TabPanel value={value} index={"all"}>
                 <OrderTabs bills={bills} />
             </TabPanel >
-            <TabPanel value={value} index={"pending"}>
+            <TabPanel value={value} index={"Chờ xác nhận"}>
                 <OrderTabs bills={bills} />
             </TabPanel >
-            <TabPanel value={value} index={"delivering"}>
+            <TabPanel value={value} index={"Đang giao"}>
                 <OrderTabs bills={bills} />
             </TabPanel>
-            <TabPanel value={value} index={"delivered"}>
+            <TabPanel value={value} index={"Đã giao"}>
                 <OrderTabs bills={bills} />
             </TabPanel>
-            <TabPanel value={value} index={"cancelled"}>
+            <TabPanel value={value} index={"Hủy"}>
                 <OrderTabs bills={bills} />
             </TabPanel>
         </Box >

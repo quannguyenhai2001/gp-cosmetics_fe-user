@@ -135,7 +135,7 @@ const ProductDetailScreen = () => {
                                     {
                                         sizes.length > 0 ? (
                                             <>
-                                                {sizes.map((size, index) => (<Button className={classes.customButton} key={index} disabled={parseFloat(size.quantity) ? false : true} variant={isEnabledSizeButton(size) ? "contained" : "outlined"} size="small" sx={{ mr: 1 }} onClick={() => handleClickSize(size)}>{size.label}</Button>))}
+                                                {sizes.map((size, index) => (<Button className={classes.customButton} key={index} disabled={parseFloat(size.quantity) ? false : true} variant={isEnabledSizeButton(size) ? "contained" : "outlined"} size="small" sx={{ mr: 1 }} onClick={() => handleClickSize(size)}>{size.name}</Button>))}
                                             </>)
                                             : null
                                     }
@@ -152,11 +152,11 @@ const ProductDetailScreen = () => {
                                     <Box sx={{ display: "flex", alignItems: "center" }}>
                                         <Box sx={{ marginRight: "2rem" }}>
                                             <Stack direction="row" alignItems="center" spacing={1}>
-                                                <IconButton disabled={quantity === '1' ? true : false} onClick={handleReduceQuantity} aria-label="delete" size="small"  >
+                                                <IconButton disabled={quantity == 1 ? true : false} onClick={handleReduceQuantity} aria-label="delete" size="small"  >
                                                     <RemoveIcon fontSize="inherit" />
                                                 </IconButton>
                                                 <Typography>{quantity}</Typography>
-                                                <IconButton aria-label="delete" size="small" onClick={handleAddQuantity} disabled={quantity === currentSize.quantity ? true : false}>
+                                                <IconButton aria-label="delete" size="small" onClick={handleAddQuantity} disabled={quantity == currentSize.quantity ? true : false}>
                                                     <AddIcon fontSize="inherit" />
                                                 </IconButton>
                                             </Stack>

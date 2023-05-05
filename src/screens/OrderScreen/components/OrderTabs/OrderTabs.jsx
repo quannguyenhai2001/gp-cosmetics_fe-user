@@ -38,7 +38,7 @@ const OrderTabs = ({ bills }) => {
                                                 </Typography>
                                             </Box>
                                             <Box sx={{ gap: '1rem', color: 'blue', alignItems: 'baseline' }}>
-                                                {item.status !== "cancelled" && <LocalShippingIcon sx={{ transform: 'translate(-5px,4px)', display: 'inline-block', color: `${getOption(item.status, BILL_STATUS).color}` }} />}
+                                                {item.status !== "Hủy" && <LocalShippingIcon sx={{ transform: 'translate(-5px,4px)', display: 'inline-block', color: `${getOption(item.status, BILL_STATUS).color}` }} />}
                                                 <Typography component="span" sx={{ color: `${getOption(item.status, BILL_STATUS).color}` }}>{getOption(item.status, BILL_STATUS).label}</Typography>
                                             </Box>
 
@@ -127,12 +127,23 @@ const OrderTabs = ({ bills }) => {
                                                 </Typography>
                                             </Box>
                                             <Box >
+                                                {
+                                                    item.status === "Chờ xác nhận" &&
+                                                    <Button variant="outlined" sx={{ mr: 4 }} onClick={() => navigate(
+                                                        `/user/${userInfo.id}/order/${item.id}`,
+                                                        {
+                                                            state: { status: item.status }
+                                                        }
+                                                    )}>Hủy đơn hàng</Button>
+                                                }
+
                                                 <Button variant="outlined" onClick={() => navigate(
                                                     `/user/${userInfo.id}/order/${item.id}`,
                                                     {
                                                         state: { status: item.status }
                                                     }
                                                 )}>Chi tiết hóa đơn</Button>
+
                                             </Box>
 
                                         </Box>

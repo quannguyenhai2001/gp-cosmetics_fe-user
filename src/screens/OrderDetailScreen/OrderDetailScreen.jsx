@@ -246,7 +246,7 @@ const OrderDetailScreen = () => {
                                         </Box>
 
 
-                                        {status === "delivered" && (
+                                        {status === "Đã giao" && (
                                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: "center", gap: '1rem' }}>
                                                 <Box>
                                                     {
@@ -276,7 +276,7 @@ const OrderDetailScreen = () => {
                                             </Box>
 
                                         )}
-                                        {status === "delivering" &&
+                                        {(status === "Đang giao" || status === "Chờ xác nhận") &&
                                             (
                                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: "center", gap: '1rem' }}>
 
@@ -291,7 +291,7 @@ const OrderDetailScreen = () => {
                                                 </Box>
 
                                             )}
-                                        {status === "cancelled" &&
+                                        {status === "Hủy" &&
                                             (
                                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: "center", gap: '1rem' }}>
 
