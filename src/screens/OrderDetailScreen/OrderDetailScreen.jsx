@@ -61,7 +61,7 @@ function SimpleDialog(props) {
             const payload = {
                 star_rating: value,
                 comment: conmentValue,
-                product_id: billDetailItem.product_id,
+                size_id: billDetailItem.size_id,
                 bill_detail_id: billDetailItem.id
             }
             await dispatch(fetchAsyncCreateRating(payload)).unwrap();
@@ -212,7 +212,7 @@ const OrderDetailScreen = () => {
                                                                 </Grid>
                                                                 <Grid item xs={2}>
                                                                     <Typography>
-                                                                        {item.size_label}
+                                                                        {item.size_name}
                                                                     </Typography>
                                                                 </Grid>
                                                             </Grid>

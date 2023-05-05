@@ -11,6 +11,7 @@ const ChangeForm = () => {
     // const userDetail = useSelector(state => state.user.userDetail);
     const dispatch = useDispatch();
     const [valueArray, setValueArray] = React.useState({
+        oldPassword: '',
         password: '',
         confirmPassword: '',
     });
@@ -24,9 +25,8 @@ const ChangeForm = () => {
         if (valueArray.password !== valueArray.confirmPassword) {
             alert('Password and Confirm Password is not match');
         } else {
-            let data = new FormData();
-            data.append("password", valueArray.password);
-            dispatch(fetchAsyncUpdateUser(data)).unwrap().then(() => {
+
+            dispatch(fetchAsyncUpdateUser(valueArray)).unwrap().then(() => {
 
                 dispatch(fetchAsyncGetUser())
                 Toast('success', 'Update user success!');
@@ -41,11 +41,13 @@ const ChangeForm = () => {
             <Grid container spacing={2}>
                 <Grid item xs={2}>
                     <Box className={classes.Typo}>
+                        <Typography className={classes.rootTypo}>Mật khẩu cũ:</Typography>
                         <Typography className={classes.rootTypo}>Mật khẩu mới:</Typography>
                         <Typography className={classes.rootTypo}>Xác nhận mật khẩu:</Typography>
                     </Box>
                 </Grid>
                 <Grid item xs={10}>
+                    <TextField onChange={handleChange} type="password" className={classes.rootTextField} name="oldPassword" variant="outlined" size="small" value={valueArray.oldPassword} />
                     <TextField onChange={handleChange} type="password" className={classes.rootTextField} name="password" variant="outlined" size="small" value={valueArray.password} />
                     <TextField onChange={handleChange} type="password" className={classes.rootTextField} name="confirmPassword" variant="outlined" size="small" value={valueArray.confirmPassword} />
                     <Button onClick={handleConfirm} variant="contained">Lưu</Button>

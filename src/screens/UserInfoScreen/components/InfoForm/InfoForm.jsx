@@ -49,14 +49,8 @@ const InfoForm = () => {
     };
 
     const handleSubmit = (e) => {
-        let data = new FormData();
-        data.append("avatar", valueArray.avatar);
-        data.append("display_name", valueArray.display_name);
-        data.append("sex", valueArray.sex);
-        data.append("age", valueArray.age);
-        data.append("address", "faff");
-        console.log(data)
-        dispatch(fetchAsyncUpdateUser(data)).unwrap().then(() => {
+
+        dispatch(fetchAsyncUpdateUser(valueArray)).unwrap().then(() => {
             dispatch(fetchAsyncGetUser())
             // Toast('success', 'Update user success!');
         }).catch(err => {

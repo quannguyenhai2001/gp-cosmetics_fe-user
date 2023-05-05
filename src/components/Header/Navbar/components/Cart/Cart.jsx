@@ -106,7 +106,7 @@ const Cart = () => {
                                         {item.name}
                                     </Typography>
                                     <Typography noWrap variant="body2" gutterBottom>
-                                        Phân loại:  {item.label}
+                                        Phân loại:  {item.size_name}
                                     </Typography>
                                     <Box sx={{ display: 'flex', margin: '1rem 0' }}>
                                         <Typography variant="body2" color="textSecondary" sx={{ marginRight: '2rem' }}>

@@ -103,6 +103,17 @@ export const fetchAsyncCreateBill = createAsyncThunk(
         }
     }
 );
+export const fetchAsyncCancelBill = createAsyncThunk(
+    "product/fetchAsyncCancelBill",
+    async (arg, { rejectWithValue }) => {
+        try {
+            const response = await CallApiByBody("bills/cancel-bill.php", "put", arg)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
 export const fetchAsyncGetAllBillDetails = createAsyncThunk(
     "product/fetchAsyncGetAllBillDetails",
     async (arg, { rejectWithValue }) => {

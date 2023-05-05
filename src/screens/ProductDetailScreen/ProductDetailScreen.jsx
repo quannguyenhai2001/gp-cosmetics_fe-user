@@ -105,6 +105,8 @@ const ProductDetailScreen = () => {
                                 <Rating className={classes.rootRating} name="half-rating-read" defaultValue={detailProduct.rating ? parseFloat(detailProduct?.rating?.star_average, 10) : 0} precision={0.5} readOnly />
                                 <Divider orientation="vertical" flexItem />
                                 <Typography className={classes.typoRating2}>{detailProduct.rating ? parseFloat(detailProduct?.rating?.user_rating_total, 10) : 0} Đánh giá</Typography>
+
+
                             </Box>
 
                             {parseFloat(detailProduct.promotion) > 0 ?
@@ -162,9 +164,10 @@ const ProductDetailScreen = () => {
                                             </Stack>
                                         </Box>
                                         <Box>
-                                            {currentSize.quantity && (<Typography>
+                                            {currentSize.quantity ? (<Typography>{currentSize.quantity} sản phẩm có sẵn</Typography>) : (<Typography>{detailProduct.quantity} sản phẩm có sẵn</Typography>)}
+                                            {/* {currentSize.quantity && (<Typography>
                                                 {currentSize.quantity} sản phẩm có sẵn
-                                            </Typography>)}
+                                            </Typography>)} */}
                                         </Box>
                                     </Box>
                                 </Grid>

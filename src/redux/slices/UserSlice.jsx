@@ -47,6 +47,7 @@ export const fetchAsyncUpdateUser = createAsyncThunk(
     "auth/fetchAsyncUpdateUser",
     async (data, { rejectWithValue }) => {
         try {
+            instanceApi.defaults.headers["Content-Type"] = "multipart/form-data";
             const response = await CallApiByBody("auth/update-user.php", "post", data)
             return response.data;
         } catch (error) {

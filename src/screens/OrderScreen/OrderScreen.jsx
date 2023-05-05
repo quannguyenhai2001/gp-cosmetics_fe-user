@@ -44,7 +44,7 @@ const OrderScreen = () => {
     const [value, setValue] = useState("all");
     const [bills, setBills] = useState([])
     const { id } = useSelector(state => state.user.userInfo)
-
+    const [isAction, setIsAction] = useState(false)
     const dispatch = useDispatch();
     console.log(id)
     const handleChange = async (event, newValue) => {
@@ -62,7 +62,7 @@ const OrderScreen = () => {
 
         })()
 
-    }, [dispatch, id]);
+    }, [dispatch, id, isAction]);
 
     return (
         <Box sx={{ width: '100%' }}>
@@ -77,19 +77,19 @@ const OrderScreen = () => {
                 </Tabs>
             </Box>
             <TabPanel value={value} index={"all"}>
-                <OrderTabs bills={bills} />
+                <OrderTabs bills={bills} setIsAction={setIsAction} />
             </TabPanel >
             <TabPanel value={value} index={"Chờ xác nhận"}>
-                <OrderTabs bills={bills} />
+                <OrderTabs bills={bills} setIsAction={setIsAction} />
             </TabPanel >
             <TabPanel value={value} index={"Đang giao"}>
-                <OrderTabs bills={bills} />
+                <OrderTabs bills={bills} setIsAction={setIsAction} />
             </TabPanel>
             <TabPanel value={value} index={"Đã giao"}>
-                <OrderTabs bills={bills} />
+                <OrderTabs bills={bills} setIsAction={setIsAction} />
             </TabPanel>
             <TabPanel value={value} index={"Hủy"}>
-                <OrderTabs bills={bills} />
+                <OrderTabs bills={bills} setIsAction={setIsAction} />
             </TabPanel>
         </Box >
     );

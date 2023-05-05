@@ -5,21 +5,80 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAsyncGetAllBills } from 'redux/slices/productSlice';
+import { fetchAsyncCancelBill, fetchAsyncGetAllBills } from 'redux/slices/productSlice';
 import { useState } from 'react';
 import Card from '@mui/material/Card';
 import { CardMedia, Divider, Grid, Rating, Button } from '@mui/material';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import convertToVND from 'utils/ConvertToVND';
 import { BILL_STATUS } from 'constants/contants';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Toast } from 'utils/Toast';
+import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog';
+import List from '@mui/material/List';
+function SimpleDialog(props) {
+    const classes = useStyles();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-const OrderTabs = ({ bills }) => {
+
+    const { onClose, open, billItem, setIsAction } = props;
+
+    const handleClose = () => {
+        onClose();
+    };
+    console.log(billItem)
+    const handleRating = async () => {
+        try {
+
+            await dispatch(fetchAsyncCancelBill({
+                bill_id: billItem.id
+            })).unwrap();
+
+            Toast('success', 'Hủy đơn hàng thành công!')
+            onClose();
+            setIsAction(value => !value)
+        } catch (e) {
+            Toast('error', "Lỗi!")
+            console.log(e)
+            // onClose();
+        }
+    }
+    return (
+        <Dialog onClose={handleClose} open={open}>
+            <DialogTitle><Typography sx={{ textAlign: "center" }} variant='h5' fontWeight="bold">Bạn chắc chắn muốn hủy đơn hàng? </Typography> </DialogTitle>
+            <List sx={{ p: "0 40px" }}>
+                <Box sx={{
+
+                }}>
+
+                    <Box sx={{ display: 'flex', justifyContent: 'center', margin: '2rem 0 2rem 0' }}>
+                        <Button variant="contained" onClick={handleRating} >XÁC NHẬN</Button>
+
+
+                    </Box>
+                </Box>
+            </List>
+        </Dialog>
+    );
+}
+const OrderTabs = ({ bills, setIsAction }) => {
     const userInfo = useSelector(state => state.user.userInfo);
     const navigate = useNavigate();
     const getOption = (value, optionsType) => {
         const optionValue = optionsType.find(option => option.value === value);
         return optionValue;
+    };
+    const [open, setOpen] = React.useState(false);
+    const [billItem, setBillItem] = React.useState({});
+    const handleClickOpen = (item) => {
+        setOpen(true);
+        setBillItem(item);
+    };
+
+    const handleClose = (value) => {
+        setOpen(false);
     };
     return (
         <>
@@ -126,15 +185,14 @@ const OrderTabs = ({ bills }) => {
                                                     {convertToVND(item.total_price)}
                                                 </Typography>
                                             </Box>
-                                            <Box >
+                                            <Box sx={{ display: 'flex', gap: '2rem' }} >
                                                 {
-                                                    item.status === "Chờ xác nhận" &&
-                                                    <Button variant="outlined" sx={{ mr: 4 }} onClick={() => navigate(
-                                                        `/user/${userInfo.id}/order/${item.id}`,
-                                                        {
-                                                            state: { status: item.status }
-                                                        }
-                                                    )}>Hủy đơn hàng</Button>
+                                                    item.status === "Chờ xác nhận" && <>
+                                                        <Button variant="outlined" sx={{ "&.MuiButton-root": { color: "red", borderColor: "red", ":hover": { backgroundColor: "white" } } }} onClick={() => handleClickOpen(item)
+                                                        }>Hủy đơn hàng</Button>
+
+                                                    </>
+
                                                 }
 
                                                 <Button variant="outlined" onClick={() => navigate(
@@ -143,17 +201,17 @@ const OrderTabs = ({ bills }) => {
                                                         state: { status: item.status }
                                                     }
                                                 )}>Chi tiết hóa đơn</Button>
-
                                             </Box>
-
                                         </Box>
-
-
-
                                     </Card>
                                 </Box>
-
                             </Box >
+                            <SimpleDialog
+                                open={open}
+                                onClose={handleClose}
+                                billItem={billItem}
+                                setIsAction={setIsAction}
+                            />
                         </Box >
                     )
                 }))
