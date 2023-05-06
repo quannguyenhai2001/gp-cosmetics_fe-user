@@ -224,7 +224,7 @@ const OrderDetailScreen = () => {
                                                                     {convertToVND(parseFloat(item.product_price) + parseFloat(item.size_additional_price))}
                                                                 </Typography>
                                                                 <Typography variant="subtitle1" component="span" gutterBottom sx={{ fontSize: '1.5rem', color: 'red' }}>
-                                                                    {convertToVND(parseFloat(((parseFloat(item.product_price) + parseFloat(item.size_additional_price)) * (1 - item.product_promotion))))}
+                                                                    {convertToVND(parseFloat(((parseFloat(item.product_price) + parseFloat(item.size_additional_price)) * (1 - item.product_promotion / 100))))}
                                                                 </Typography>
                                                             </Box>
                                                         </Grid>
@@ -241,7 +241,7 @@ const OrderDetailScreen = () => {
                                         <Box textAlign="right" m="10px 0">
                                             Thành tiền:
                                             <Typography variant="subtitle1" component="span" gutterBottom sx={{ fontSize: '1.8rem', fontWeight: '600', textAlign: 'right', color: 'red' }}>
-                                                {convertToVND(parseFloat(((parseFloat(item.product_price) + parseFloat(item.size_additional_price)) * (1 - item.product_promotion))) * item.quantity)}
+                                                {convertToVND(parseFloat(((parseFloat(item.product_price) + parseFloat(item.size_additional_price)) * (1 - item.product_promotion / 100))) * item.quantity)}
                                             </Typography>
                                         </Box>
 

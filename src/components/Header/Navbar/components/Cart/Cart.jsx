@@ -80,7 +80,7 @@ const Cart = () => {
                                 {Number(item.promotion) > 0 ?
                                     (
                                         <Box className={classes.sale}>
-                                            <span className="home-product-item__sale-off-percent">{item.promotion * 100}%</span>
+                                            <span className="home-product-item__sale-off-percent">{item.promotion}%</span>
 
                                         </Box>
 
@@ -113,7 +113,7 @@ const Cart = () => {
                                             Giá: {convertToVND(parseFloat(item.price) + parseFloat(item.additional_price))}
                                         </Typography>
                                         <Typography variant="body2" color="textSecondary" >
-                                            Tổng: {convertToVND(parseFloat(((parseFloat(item.price) + parseFloat(item.additional_price)) * (1 - item.promotion))) * item.quantity)}
+                                            Tổng: {convertToVND(parseFloat(((parseFloat(item.price) + parseFloat(item.additional_price)) * (1 - item.promotion / 100))) * item.quantity)}
 
                                         </Typography>
                                     </Box>
@@ -169,7 +169,7 @@ const Cart = () => {
                         <Paper className={classes.cartBoxTotalPaper} elevation={3}>
                             <Typography>
                                 Tổng thanh toán ({carts.length} sản phẩm): {convertToVND(carts.reduce((total, item) => {
-                                    return total + (parseFloat(((parseFloat(item.price) + parseFloat(item.additional_price)) * (1 - item.promotion))) * item.quantity)
+                                    return total + (parseFloat(((parseFloat(item.price) + parseFloat(item.additional_price)) * (1 - item.promotion / 100))) * item.quantity)
                                 }, 0))}
                             </Typography>
 

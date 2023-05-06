@@ -27,7 +27,7 @@ const ListProducts = () => {
                                 {/* sale */}
                                 {Number(product.promotion) > 0 ?
                                     (<Typography className={classes.sale} color="text.secondary">
-                                        Sale: {product.promotion * 100}%
+                                        Sale: {product.promotion}%
                                     </Typography>) : null}
                                 {product.thumbnail_url ? (<CardMedia className={classes.rootCardMedia}
                                     component="img"
@@ -58,7 +58,7 @@ const ListProducts = () => {
                                                     {convertToVND(product.price)}
                                                 </Typography>
                                                 <Typography variant="subtitle1" gutterBottom sx={{ fontSize: '1.5rem', color: 'red' }}>
-                                                    {convertToVND(parseFloat(product.price - (product.price * product.promotion)))}
+                                                    {convertToVND(parseFloat(product.price - (product.price * product.promotion / 100)))}
                                                 </Typography>
                                             </>) : (
                                                 <>

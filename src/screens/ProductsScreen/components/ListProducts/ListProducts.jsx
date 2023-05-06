@@ -49,7 +49,7 @@ const Products = (props) => {
                                 {Number(product.promotion) > 0 ?
                                     (
                                         <Box className={classes.sale}>
-                                            <span className="home-product-item__sale-off-percent">{product.promotion * 100}%</span>
+                                            <span className="home-product-item__sale-off-percent">{product.promotion}%</span>
                                             <span className="home-product-item__sale-off-sale">Giảm</span>
                                         </Box>
 
@@ -86,7 +86,7 @@ const Products = (props) => {
                                                     {convertToVND(product.price)}
                                                 </Typography>
                                                 <Typography variant="subtitle1" gutterBottom sx={{ fontSize: '1.5rem', color: 'red' }}>
-                                                    {convertToVND(parseFloat(product.price - (product.price * product.promotion)))}
+                                                    {convertToVND(parseFloat(product.price - (product.price * product.promotion / 100)))}
                                                 </Typography>
                                             </>) : (
                                                 <>

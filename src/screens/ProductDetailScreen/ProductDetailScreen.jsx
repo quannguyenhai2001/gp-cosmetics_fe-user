@@ -116,10 +116,10 @@ const ProductDetailScreen = () => {
                                     </Typography>
 
                                     <Typography variant="subtitle1" gutterBottom sx={{ fontSize: '1.5rem', color: 'red' }}>
-                                        {convertToVND(parseFloat(detailProduct.price - (detailProduct.price * detailProduct.promotion)))}
+                                        {convertToVND(parseFloat(detailProduct.price - (detailProduct.price * detailProduct.promotion / 100)))}
                                     </Typography>
                                     <Typography sx={{ fontSize: 10 }}>
-                                        {detailProduct.promotion * 100}% Giảm
+                                        {detailProduct.promotion}% Giảm
                                     </Typography>
                                 </Box>) : (
                                     <Box className={classes.boxPrice}>

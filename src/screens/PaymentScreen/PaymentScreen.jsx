@@ -65,7 +65,7 @@ export default function PaymentScreen() {
         payment_method: '',
         receiver_name: '',
         total_price: carts.reduce((total, item) => {
-            return total + (parseFloat(((parseFloat(item.price) + parseFloat(item.additional_price)) * (1 - item.promotion))) * item.quantity)
+            return total + (parseFloat(((parseFloat(item.price) + parseFloat(item.additional_price)) * (1 - item.promotion / 100))) * item.quantity)
         }, 0)
     });
 
@@ -207,7 +207,7 @@ export default function PaymentScreen() {
                         </Grid>
                         <Grid item xs={8}>
                             <Typography sx={{ fontSize: '1.6rem' }}>{convertToVND(carts.reduce((total, item) => {
-                                return total + (parseFloat(((parseFloat(item.price) + parseFloat(item.additional_price)) * (1 - item.promotion))) * item.quantity)
+                                return total + (parseFloat(((parseFloat(item.price) + parseFloat(item.additional_price)) * (1 - item.promotion / 100))) * item.quantity)
                             }, 0))}</Typography>
                         </Grid>
                     </Grid>
