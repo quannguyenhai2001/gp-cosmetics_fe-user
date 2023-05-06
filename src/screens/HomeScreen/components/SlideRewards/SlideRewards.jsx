@@ -15,7 +15,7 @@ import "swiper/css/effect-creative";
 import { Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { fetchAsyncGetRelativeProducts } from 'redux/slices/productSlice';
+import { fetchAsyncGetLatestProducts, fetchAsyncGetRelativeProducts } from 'redux/slices/productSlice';
 import { Toast } from 'utils/Toast';
 const SlideRewards = () => {
     const classes = useStyles();
@@ -26,7 +26,7 @@ const SlideRewards = () => {
     useEffect(() => {
         (async () => {
             try {
-                let responseOne = await dispatch(fetchAsyncGetRelativeProducts({ use_page: 1, page: 1 })).unwrap()
+                let responseOne = await dispatch(fetchAsyncGetLatestProducts()).unwrap()
                 setProductsTab(responseOne.data)
 
 
@@ -42,7 +42,7 @@ const SlideRewards = () => {
         <Box sx={{ marginBottom: '5rem' }}>
             <Box className={classes.boxTitle}>
                 <Typography variant="h4" gutterBottom sx={{ textAlign: 'center', marginBottom: '4rem' }}>
-                    SẢN PHẨM SẮP RA MẮT
+                    SẢN PHẨM BÁN CHẠY
                 </Typography>
                 <Button className={classes.boxTitleButton} endIcon={<ArrowForwardIcon />} variant="text">THÊM</Button>
             </Box>

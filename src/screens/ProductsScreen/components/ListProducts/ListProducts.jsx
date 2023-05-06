@@ -110,7 +110,7 @@ const Products = (props) => {
             </Grid>
             <Box sx={{ margin: '5rem 0', textAlign: 'center' }}>
                 <Stack spacing={2} className={classes.stackPagination}>
-                    <Pagination count={pageInfo.total_page} color="primary" page={pageInfo.page} onChange={handleChange} />
+                    <Pagination count={pageInfo?.total_page} color="primary" page={pageInfo.page} onChange={handleChange} />
 
                 </Stack>
             </Box>

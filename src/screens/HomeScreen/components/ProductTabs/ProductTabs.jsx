@@ -18,7 +18,7 @@ import { Button } from '@mui/material';
 // import GetRandomNumber from 'utils/GetRandomNumber';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { fetchAsyncGetRelativeProducts } from 'redux/slices/productSlice';
+import { fetchAsyncGetBestSellerProducts, fetchAsyncGetLatestProducts, fetchAsyncGetRelativeProducts } from 'redux/slices/productSlice';
 import { Toast } from 'utils/Toast';
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -52,20 +52,15 @@ export default function ProductTabs() {
     const navigate = useNavigate();
     const [productsTabOne, setProductsTabOne] = useState([])
     const [productsTabTwo, setProductsTabTwo] = useState([])
-    const [productsTabThree, setProductsTabThree] = useState([])
 
     const dispatch = useDispatch()
     useEffect(() => {
         (async () => {
             try {
-                let responseOne = await dispatch(fetchAsyncGetRelativeProducts({ use_page: 1, page: 1 })).unwrap()
-                let responseTwo = await dispatch(fetchAsyncGetRelativeProducts({ use_page: 1, page: 2 })).unwrap()
-                let responseThree = await dispatch(fetchAsyncGetRelativeProducts({ use_page: 1, page: 3 })).unwrap()
-
+                let responseOne = await dispatch(fetchAsyncGetLatestProducts()).unwrap()
+                let responseTwo = await dispatch(fetchAsyncGetBestSellerProducts()).unwrap()
                 setProductsTabOne(responseOne.data)
                 setProductsTabTwo(responseTwo.data)
-                setProductsTabThree(responseThree.data)
-
             } catch (e) {
                 Toast('error', 'Lỗi!');
             }
@@ -90,9 +85,8 @@ export default function ProductTabs() {
             </Box>
             <Box sx={{ margin: "2rem 0" }}>
                 <Tabs sx={{ justifyContent: 'center', display: 'grid' }} value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="Bán Chạy" {...a11yProps(0)} />
-                    <Tab label="Bộ Sưu Tập" {...a11yProps(1)} />
-                    <Tab label="Dành Cho Bạn" {...a11yProps(2)} />
+                    <Tab label="Mới nhất" {...a11yProps(0)} />
+                    <Tab label="Bán chạy" {...a11yProps(1)} />
                 </Tabs>
             </Box>
             <Box>
@@ -144,7 +138,7 @@ export default function ProductTabs() {
                                             <Box className={classes.boxContentNumber}>
                                                 #{index + 1}
                                             </Box>
-                                            {item.thumbnail_url && (<img className={classes.swiperSlideImg} src={item.thumbnail_url} alt="Product" />)}
+                                            {item.product_thumbnail_url && (<img className={classes.swiperSlideImg} src={item.product_thumbnail_url} alt="Product" />)}
                                             <Box sx={{ textAlign: 'center' }}>
                                                 <Typography component="div" noWrap sx={{ fontWeight: 'bold', margin: '1rem 0' }}>
                                                     {item.manufacturer_name}
@@ -159,44 +153,10 @@ export default function ProductTabs() {
                                     </SwiperSlide>
                                 ))
                             ) :
-                            null}
+                            <SwiperSlide>  <Typography>Không có sản phẩm nào!</Typography>   </SwiperSlide>}
                     </Swiper>
                 </TabPanel>
-                <TabPanel value={value} index={2}>
-                    <Swiper
-                        className={classes.swiper}
-                        slidesPerView={6}
-                        spaceBetween={45}
-                        navigation={true}
-                        modules={[Navigation]}
-                    >
-                        {productsTabThree.length > 0 ?
-                            (
-                                productsTabThree.map((item, index) => (
-                                    <SwiperSlide key={index}>
-                                        <Box className={classes.boxContent} onClick={() => handleNavigate(item.id)}>
-                                            <Box className={classes.boxContentNumber}>
-                                                #{index + 1}
-                                            </Box>
-                                            {item.thumbnail_url && (<img className={classes.swiperSlideImg} src={item.thumbnail_url} alt="Product" />)}
 
-                                            <Box sx={{ textAlign: 'center' }}>
-                                                <Typography component="div" noWrap sx={{ fontWeight: 'bold', margin: '1rem 0' }}>
-                                                    {item.manufacturer_name}
-
-                                                </Typography>
-                                                <Typography component="div" sx={{ height: '2rem' }}>
-                                                    {item.product_name}
-
-                                                </Typography>
-                                            </Box>
-                                        </Box>
-                                    </SwiperSlide>
-                                ))
-                            ) :
-                            null}
-                    </Swiper>
-                </TabPanel>
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'center', margin: '1rem 0 3rem 0' }}>
                 <Button variant="outlined">XEM THÊM</Button>

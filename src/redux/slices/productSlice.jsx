@@ -182,6 +182,29 @@ export const fetchAsyncGetAllSizes = createAsyncThunk(
         }
     }
 );
+
+export const fetchAsyncGetLatestProducts = createAsyncThunk(
+    "product/fetchAsyncGetLatestProducts",
+    async (data, { rejectWithValue }) => {
+        try {
+            const response = await CallApiByParams("feed/get-latest-product-list.php", "get", data)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
+export const fetchAsyncGetBestSellerProducts = createAsyncThunk(
+    "product/fetchAsyncGetBestSellerProducts",
+    async (data, { rejectWithValue }) => {
+        try {
+            const response = await CallApiByParams("feed/get-best-seller-product-list.php", "get", data)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
 const productSlice = createSlice({
     name: 'products',
     initialState,
