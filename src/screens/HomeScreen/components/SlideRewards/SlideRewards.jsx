@@ -15,7 +15,7 @@ import "swiper/css/effect-creative";
 import { Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { fetchAsyncGetLatestProducts, fetchAsyncGetRelativeProducts } from 'redux/slices/productSlice';
+import { fetchAsyncGetBestSellerProducts, fetchAsyncGetLatestProducts, fetchAsyncGetRelativeProducts } from 'redux/slices/productSlice';
 import { Toast } from 'utils/Toast';
 const SlideRewards = () => {
     const classes = useStyles();
@@ -26,9 +26,9 @@ const SlideRewards = () => {
     useEffect(() => {
         (async () => {
             try {
-                let responseOne = await dispatch(fetchAsyncGetLatestProducts()).unwrap()
+                let responseOne = await dispatch(fetchAsyncGetBestSellerProducts()).unwrap()
                 setProductsTab(responseOne.data)
-
+                console.log(responseOne)
 
             } catch (e) {
                 Toast('error', 'Lỗi!');
@@ -56,10 +56,10 @@ const SlideRewards = () => {
             >
                 {productsTab.length > 0 ?
                     (
-                        productsTab.slice(1, 15).map((item, index) => (
+                        productsTab.map((item, index) => (
                             <SwiperSlide key={index}>
                                 <Box className={classes.boxContent} onClick={() => handleNavigate(item.id)}>
-                                    {item.thumbnail_url && (<img className={classes.swiperSlideImg} src={item.thumbnail_url} alt="Product" />)}
+                                    {item.product_thumbnail_url && (<img className={classes.swiperSlideImg} src={item.product_thumbnail_url} alt="Product" />)}
                                     <Box sx={{ textAlign: 'center' }}>
                                         <Typography component="div" noWrap sx={{ fontWeight: 'bold', margin: '1rem 0' }}>
                                             {item.manufacturer_name}

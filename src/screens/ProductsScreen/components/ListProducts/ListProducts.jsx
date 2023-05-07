@@ -97,10 +97,19 @@ const Products = (props) => {
                                             )}
 
                                     </Box>
-                                    <Box sx={{ transform: 'translateY(-2px)' }}>
+                                    <Box sx={{ display: "flex", alignItems: "center" }}>
                                         {product.rating ?
-                                            (<> <Rating className={classes.rootRatting} name="half-rating-read" defaultValue={parseFloat(product.rating?.star_average)} precision={0.5} readOnly /></>) : (<>
-                                                <Rating className={classes.rootRatting} name="half-rating-read" defaultValue={0} precision={0.5} readOnly /></>)}
+                                            (<>
+                                                <Rating className={classes.rootRatting} name="half-rating-read" defaultValue={parseFloat(product.rating?.star_average)} precision={0.5} readOnly />
+                                            </>)
+                                            : (
+                                                <>
+                                                    <Rating className={classes.rootRatting} name="half-rating-read" defaultValue={0} precision={0.5} readOnly />
+                                                </>
+                                            )}
+                                        <Typography ml="3px">
+                                            Đã bán {product.total_sold}
+                                        </Typography>
                                     </Box>
                                 </CardContent>
                             </Card>

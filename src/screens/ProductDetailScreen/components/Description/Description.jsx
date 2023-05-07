@@ -27,7 +27,7 @@ const Description = ({ detailProduct }) => {
                         <Typography sx={{ fontWeight: 600 }} variant="h6">Chi Tiết Sản Phẩm</Typography>
                     </AccordionSummary>
                     <AccordionDetails className={classes.rootAccordionDetails}>
-                        <Box className={classes.boxDescription} dangerouslySetInnerHTML={{ __html: detailProduct.description }}></Box>
+                        <Box className={classes.boxDescription} dangerouslySetInnerHTML={{ __html: detailProduct.product_information }}></Box>
                     </AccordionDetails>
                 </Accordion>
                 <Accordion className={classes.rootPaper}>
@@ -39,9 +39,7 @@ const Description = ({ detailProduct }) => {
                         <Typography sx={{ fontWeight: 600 }} variant="h6">Thành Phần</Typography>
                     </AccordionSummary>
                     <AccordionDetails className={classes.rootAccordionDetails}>
-                        <Typography>
-                            No Information!
-                        </Typography>
+                        <Box className={classes.boxDescription} dangerouslySetInnerHTML={{ __html: detailProduct.ingredients }}></Box>
                     </AccordionDetails>
                 </Accordion>
                 <Accordion className={classes.rootPaper}>
@@ -53,9 +51,7 @@ const Description = ({ detailProduct }) => {
                         <Typography sx={{ fontWeight: 600 }} variant="h6">Cách Sử Dụng</Typography>
                     </AccordionSummary>
                     <AccordionDetails className={classes.rootAccordionDetails}>
-                        <Typography>
-                            No Information!
-                        </Typography>
+                        <Box className={classes.boxDescription} dangerouslySetInnerHTML={{ __html: detailProduct.usage_instructions }}></Box>
                     </AccordionDetails>
                 </Accordion>
             </Box>

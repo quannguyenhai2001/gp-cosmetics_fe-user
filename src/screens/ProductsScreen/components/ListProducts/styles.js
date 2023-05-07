@@ -2,7 +2,7 @@ import { makeStyles } from '@mui/styles';
 export default makeStyles((theme) => ({
     rootCard: {
         '&.MuiPaper-root': {
-            height: 320,
+            height: 330,
             position: 'relative',
             transition: '0.3s',
             cursor: 'pointer',

@@ -32,9 +32,9 @@ const CommentList = () => {
         <Typography variant="h5" gutterBottom sx={{ textAlign: 'Left', fontWeight: 'bold', marginBottom: '2rem' }}>
           Đánh giá sản phẩm
         </Typography>
-        <Box sx={{ marginBottom: '2rem' }}>
+        {/* <Box sx={{ marginBottom: '2rem' }}>
           Tổng kết (chưa làm)
-        </Box>
+        </Box> */}
       </Box>
       <Box>
         {

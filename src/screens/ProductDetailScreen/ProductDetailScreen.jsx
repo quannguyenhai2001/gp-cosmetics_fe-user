@@ -20,7 +20,7 @@ const ProductDetailScreen = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [detailProduct, setDetailProduct] = useState({})
-    const [sizes, setSizes] = useState([])
+
     const [currentSize, setCurrentSize] = useState({})
     const [quantity, setQuantity] = useState(1)
 
@@ -33,11 +33,9 @@ const ProductDetailScreen = () => {
             const res1 = await dispatch(fetchAsyncGetDetailProduct({
                 "product_id": id
             })).unwrap();
-            const res2 = await dispatch(fetchAsyncGetAllSizes({
-                "product_id": id
-            })).unwrap();
+
             setDetailProduct(res1.data)
-            setSizes(res2.data)
+
         })()
     }, [dispatch, id]);
 
@@ -135,11 +133,11 @@ const ProductDetailScreen = () => {
 
                                 <Grid item xs={10}>
                                     {
-                                        sizes.length > 0 ? (
+                                        detailProduct?.sizes.length > 0 ? (
                                             <>
-                                                {sizes.map((size, index) => (<Button className={classes.customButton} key={index} disabled={parseFloat(size.quantity) ? false : true} variant={isEnabledSizeButton(size) ? "contained" : "outlined"} size="small" sx={{ mr: 1 }} onClick={() => handleClickSize(size)}>{size.name}</Button>))}
+                                                {detailProduct.sizes.map((size, index) => (<Button className={classes.customButton} key={index} disabled={parseFloat(size.quantity) ? false : true} variant={isEnabledSizeButton(size) ? "contained" : "outlined"} size="small" sx={{ mr: 1 }} onClick={() => handleClickSize(size)}>{size.name}</Button>))}
                                             </>)
-                                            : null
+                                            : <Typography>Hết hàng</Typography>
                                     }
                                 </Grid>
                             </Grid>
