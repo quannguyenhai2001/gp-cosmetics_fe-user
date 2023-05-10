@@ -191,10 +191,6 @@ const OrderDetailScreen = () => {
                                                     </Typography>
 
 
-                                                    <Typography variant="h6" >
-                                                        {item.product_name}
-                                                    </Typography>
-
 
                                                     <Grid container
                                                     >

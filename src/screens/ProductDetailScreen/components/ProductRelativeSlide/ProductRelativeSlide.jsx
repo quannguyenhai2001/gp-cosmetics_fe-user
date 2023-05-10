@@ -16,7 +16,7 @@ import "swiper/css/effect-creative";
 // import GetRandomNumber from 'utils/GetRandomNumber';
 import { useNavigate } from 'react-router-dom';
 import { Paper } from '@mui/material';
-import { fetchAsyncGetRelativeProducts } from 'redux/slices/productSlice';
+import { fetchAsyncGetBestSellerProducts, fetchAsyncGetRelativeProducts } from 'redux/slices/productSlice';
 import { Toast } from 'utils/Toast';
 const ProductRelativeSlide = () => {
     const classes = useStyles();
@@ -26,7 +26,7 @@ const ProductRelativeSlide = () => {
     useEffect(() => {
         (async () => {
             try {
-                let response = await dispatch(fetchAsyncGetRelativeProducts({ use_page: 1, page: 2 })).unwrap()
+                let response = await dispatch(fetchAsyncGetBestSellerProducts()).unwrap()
                 setProducts(response.data)
 
             } catch (e) {
@@ -54,7 +54,7 @@ const ProductRelativeSlide = () => {
                         products.map((item, index) => (
                             <SwiperSlide key={index} className={classes.swiperSlide}>
                                 <Paper className={classes.boxContent} onClick={() => handleNavigate(item.id)}>
-                                    {item.thumbnail_url && (<img className={classes.swiperSlideImg} src={item.thumbnail_url} alt="Product" />)}
+                                    {item.product_thumbnail_url && (<img className={classes.swiperSlideImg} src={item.product_thumbnail_url} alt="Product" />)}
                                     <Box sx={{ textAlign: 'center' }}>
                                         <Typography component="div" noWrap sx={{ fontWeight: 'bold', margin: '1rem 0' }}>
                                             {item.manufacturer_name}
