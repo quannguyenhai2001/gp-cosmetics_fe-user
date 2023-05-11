@@ -1,4 +1,4 @@
-import { Container, Typography, Grid, Button, Box, Paper, Divider, Rating, Stack, IconButton } from '@mui/material';
+import { Container, Typography, Grid, Button, Box, Paper, Divider, Rating, Stack, IconButton, TextField } from '@mui/material';
 import React, { memo, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -45,7 +45,9 @@ const ProductDetailScreen = () => {
             setCurrentSize({})
             return
         }
+        setQuantity(1)
         setCurrentSize(value)
+        console.log(1)
     }
     const handleReduceQuantity = () => {
         setQuantity(quantity - 1)
@@ -74,7 +76,20 @@ const ProductDetailScreen = () => {
         }
 
     }
+    const handleChangeQuantity = (e) => {
+        setQuantity(Number(e.target.value))
+        if (Number(currentSize.quantity) < Number(e.target.value)) {
+            setQuantity(Number(currentSize.quantity))
 
+        }
+        else if (Number(e.target.value) < 0) {
+            setQuantity(1)
+
+        }
+        else {
+            setQuantity(Number(e.target.value))
+        }
+    }
     const isEnabledSizeButton = (size) => {
         if (Object.keys(currentSize).length > 0 && currentSize.id === size.id) {
             return true
@@ -155,7 +170,23 @@ const ProductDetailScreen = () => {
                                                 <IconButton disabled={quantity == 1 ? true : false} onClick={handleReduceQuantity} aria-label="delete" size="small"  >
                                                     <RemoveIcon fontSize="inherit" />
                                                 </IconButton>
-                                                <Typography>{quantity}</Typography>
+                                                <TextField id="outlined-basic"
+                                                    variant="outlined"
+                                                    size="small"
+                                                    defaultValue="1"
+                                                    value={quantity}
+                                                    onChange={
+                                                        handleChangeQuantity
+                                                    }
+                                                    type="number"
+                                                    sx={{
+                                                        width: "80px",
+
+                                                        "& .MuiInputBase-input": {
+                                                            textAlign: "center",
+                                                        }
+
+                                                    }} />
                                                 <IconButton aria-label="delete" size="small" onClick={handleAddQuantity} disabled={quantity == currentSize.quantity ? true : false}>
                                                     <AddIcon fontSize="inherit" />
                                                 </IconButton>
@@ -163,9 +194,7 @@ const ProductDetailScreen = () => {
                                         </Box>
                                         <Box>
                                             {currentSize.quantity ? (<Typography>{currentSize.quantity} sản phẩm có sẵn</Typography>) : (<Typography>{detailProduct.quantity} sản phẩm có sẵn</Typography>)}
-                                            {/* {currentSize.quantity && (<Typography>
-                                                {currentSize.quantity} sản phẩm có sẵn
-                                            </Typography>)} */}
+
                                         </Box>
                                     </Box>
                                 </Grid>

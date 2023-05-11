@@ -18,7 +18,6 @@ const SignInScreen = () => {
     const navigate = useNavigate()
     const changeError = () => {
         setIsError(false)
-        console.log("gd")
     }
     const handleShowPassword = () => {
         setShowPassword(!showPassword)
