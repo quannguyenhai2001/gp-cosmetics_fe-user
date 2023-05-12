@@ -105,17 +105,7 @@ const ProfileLayout = (props) => {
                                             <ListItemText primary="Đơn hàng" />
                                         </ListItemButton>
                                     </ListItem >
-                                    <ListItem disablePadding component={Link} to={`/user/${id}/delete-account`}>
-                                        <ListItemButton
-                                            selected={selectedIndex === 3}
-                                            onClick={(event) => handleListItemClick(event, 3)}
-                                        >
-                                            <ListItemIcon className={classes.rootListIcon}>
-                                                <DeleteForeverIcon />
-                                            </ListItemIcon>
-                                            <ListItemText primary="Cài đặt" />
-                                        </ListItemButton>
-                                    </ListItem>
+
                                 </List>
                             </nav>
                         </Box>

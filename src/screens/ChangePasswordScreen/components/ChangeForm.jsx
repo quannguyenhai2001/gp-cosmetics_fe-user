@@ -23,16 +23,17 @@ const ChangeForm = () => {
     const handleConfirm = (event) => {
         event.preventDefault();
         if (valueArray.password !== valueArray.confirmPassword) {
-            alert('Password and Confirm Password is not match');
+            Toast('error', 'Mật khẩu xác thực không trùng khớp!');
         } else {
 
             dispatch(fetchAsyncUpdateUser(valueArray)).unwrap().then(() => {
 
                 dispatch(fetchAsyncGetUser())
-                Toast('success', 'Update user success!');
+                Toast('success', 'Thay đổi mật khẩu thành công!');
 
             }).catch(err => {
-                console.log(err)
+                Toast('error', 'Lỗi!');
+
             })
         }
     }

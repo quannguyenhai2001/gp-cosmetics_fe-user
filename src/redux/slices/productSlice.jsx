@@ -1,4 +1,4 @@
-import { CallApiByBody, CallApiByParams } from "api/configApi";
+import instanceApi, { CallApiByBody, CallApiByParams } from "api/configApi";
 
 
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
@@ -16,6 +16,7 @@ export const fetchAsyncGetProducts = createAsyncThunk(
     "product/fetchAsyncGetProducts",
     async (data, { rejectWithValue }) => {
         try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
             const response = await CallApiByParams("products/get-all-products.php", "get", data)
             return response.data
         } catch (error) {
@@ -27,6 +28,7 @@ export const fetchAsyncGetRelativeProducts = createAsyncThunk(
     "product/fetchAsyncGetProducts",
     async (data, { rejectWithValue }) => {
         try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
             const response = await CallApiByParams("products/get-all-products.php", "get", data)
             return response.data
         } catch (error) {
@@ -39,6 +41,7 @@ export const fetchAsyncGetManufactures = createAsyncThunk(
     "product/fetchAsyncGetManufactures",
     async (arg, { rejectWithValue }) => {
         try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
             const response = await CallApiByBody("manufacturers/get-all-manufacturers.php", "get", null)
             return response.data
         } catch (error) {
@@ -50,6 +53,7 @@ export const fetchAsyncGetDetailProduct = createAsyncThunk(
     "product/fetchAsyncGetDetailProduct",
     async (arg, { rejectWithValue }) => {
         try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
             const response = await CallApiByParams("products/get-product.php", "get", arg)
             return response.data
         } catch (error) {
@@ -63,6 +67,7 @@ export const fetchAsyncGetRatings = createAsyncThunk(
     "product/fetchAsyncGetRatings",
     async (arg, { rejectWithValue }) => {
         try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
             const response = await CallApiByParams("ratings/get-all-ratings.php", "get", arg)
             return response.data
         } catch (error) {
@@ -74,6 +79,7 @@ export const fetchAsyncCreateRating = createAsyncThunk(
     "product/fetchAsyncGetRating",
     async (arg, { rejectWithValue }) => {
         try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
             const response = await CallApiByBody("ratings/create-rating.php", "post", arg)
             return response.data
         } catch (error) {
@@ -85,6 +91,7 @@ export const fetchAsyncGetAllBills = createAsyncThunk(
     "product/fetchAsyncGetAllBills",
     async (arg, { rejectWithValue }) => {
         try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
             const response = await CallApiByParams("bills/get-all-bills.php", "get", arg)
             return response.data
         } catch (error) {
@@ -96,6 +103,7 @@ export const fetchAsyncCreateBill = createAsyncThunk(
     "product/fetchAsyncCreateBill",
     async (arg, { rejectWithValue }) => {
         try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
             const response = await CallApiByBody("bills/create-bill.php", "post", arg)
             return response.data
         } catch (error) {
@@ -107,6 +115,7 @@ export const fetchAsyncCancelBill = createAsyncThunk(
     "product/fetchAsyncCancelBill",
     async (arg, { rejectWithValue }) => {
         try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
             const response = await CallApiByBody("bills/cancel-bill.php", "put", arg)
             return response.data
         } catch (error) {
@@ -118,6 +127,7 @@ export const fetchAsyncGetAllBillDetails = createAsyncThunk(
     "product/fetchAsyncGetAllBillDetails",
     async (arg, { rejectWithValue }) => {
         try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
             const response = await CallApiByParams("bill-details/get-all-bill-details.php", "get", arg)
             return response.data
         } catch (error) {
@@ -130,6 +140,7 @@ export const fetchAsyncGetAllCarts = createAsyncThunk(
     "product/fetchAsyncGetAllCarts",
     async (arg, { rejectWithValue }) => {
         try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
             const response = await CallApiByBody("carts/get-all-carts.php", "get", null)
             return response.data
         } catch (error) {
@@ -141,6 +152,7 @@ export const fetchAsyncCreateCart = createAsyncThunk(
     "product/fetchAsyncCreateCart",
     async (arg, { rejectWithValue }) => {
         try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
             const response = await CallApiByBody("carts/create-cart.php", "POST", arg)
             return response.data
         } catch (error) {
@@ -152,6 +164,7 @@ export const fetchAsyncUpdateCart = createAsyncThunk(
     "product/fetchAsyncUpdateCart",
     async (arg, { rejectWithValue }) => {
         try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
             const response = await CallApiByBody("carts/update-cart.php", "PUT", arg)
             return response.data
         } catch (error) {
@@ -163,6 +176,7 @@ export const fetchAsyncDeleteCart = createAsyncThunk(
     "product/fetchAsyncDeleteCart",
     async (arg, { rejectWithValue }) => {
         try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
             const response = await CallApiByBody("carts/delete-cart.php", "DELETE", arg)
             return response.data
         } catch (error) {
@@ -175,6 +189,7 @@ export const fetchAsyncGetAllSizes = createAsyncThunk(
     "product/fetchAsyncGetAllSizes",
     async (arg, { rejectWithValue }) => {
         try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
             const response = await CallApiByParams("sizes/get-all-sizes.php", "get", arg)
             return response.data
         } catch (error) {
@@ -187,6 +202,7 @@ export const fetchAsyncGetLatestProducts = createAsyncThunk(
     "product/fetchAsyncGetLatestProducts",
     async (data, { rejectWithValue }) => {
         try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
             const response = await CallApiByParams("feed/get-latest-product-list.php", "get", data)
             return response.data
         } catch (error) {
@@ -198,6 +214,7 @@ export const fetchAsyncGetBestSellerProducts = createAsyncThunk(
     "product/fetchAsyncGetBestSellerProducts",
     async (data, { rejectWithValue }) => {
         try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
             const response = await CallApiByParams("feed/get-best-seller-product-list.php", "get", data)
             return response.data
         } catch (error) {

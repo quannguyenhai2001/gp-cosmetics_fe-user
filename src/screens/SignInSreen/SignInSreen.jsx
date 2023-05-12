@@ -102,7 +102,7 @@ const SignInScreen = () => {
                                     )
                                 }}
                             </Formik >
-                            <Divider>HOẶC</Divider>
+
                         </Box>
                     </Grid>
 

@@ -11,6 +11,7 @@ export const fetchAsyncSignUp = createAsyncThunk(
     "auth/fetchAsyncSignUp",
     async (data, { rejectWithValue }) => {
         try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
             const response = await CallApiByBody("auth/sign-up.php", "post", data)
             return response.data;
         } catch (error) {
@@ -23,6 +24,7 @@ export const fetchAsyncSignIn = createAsyncThunk(
     "auth/fetchAsyncSignIn",
     async (data, { rejectWithValue }) => {
         try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
             const response = await CallApiByBody("auth/sign-in-user.php", "post", data)
             return response.data;
         } catch (error) {
@@ -35,6 +37,7 @@ export const fetchAsyncGetUser = createAsyncThunk(
     "auth/fetchAsyncGetUser",
     async (_data, { rejectWithValue }) => {
         try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
             const response = await CallApiByBody("auth/get-user.php", "get", null)
             return response.data;
         } catch (error) {

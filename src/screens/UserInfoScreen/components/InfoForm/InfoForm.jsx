@@ -4,26 +4,33 @@ import { useDispatch, useSelector } from 'react-redux';
 import useStyles from './InfoForm.styles';
 import StringAvatar from 'utils/StringAvatar';
 import { fetchAsyncGetUser, fetchAsyncUpdateUser } from 'redux/slices/UserSlice';
+import { Toast } from 'utils/Toast';
 
 const InfoForm = () => {
     const classes = useStyles();
     const userInfo = useSelector(state => state.user.userInfo);
     const dispatch = useDispatch();
-    const [valueArray, setValueArray] = React.useState('');
+    const [valueArray, setValueArray] = React.useState({
+        display_name: "",
+        address: "",
+        sex: "",
+        age: "",
+        avatar: "",
+    });
 
     //set value array
     React.useEffect(() => {
-        if (userInfo) {
-            setValueArray(
-                {
-                    display_name: userInfo.display_name,
-                    address: userInfo.address,
-                    sex: userInfo.sex,
-                    age: parseInt(userInfo.age),
-                    avatar: userInfo.avatar
-                }
-            )
-        }
+
+        setValueArray(
+            {
+                display_name: userInfo.display_name,
+                address: userInfo.address,
+                sex: userInfo.sex,
+                age: parseInt(userInfo.age),
+                avatar: userInfo.avatar
+            }
+        )
+
     }, [userInfo]);
 
     const [base64, setBase64] = React.useState(userInfo.avatar);
@@ -52,9 +59,9 @@ const InfoForm = () => {
 
         dispatch(fetchAsyncUpdateUser(valueArray)).unwrap().then(() => {
             dispatch(fetchAsyncGetUser())
-            // Toast('success', 'Update user success!');
+            Toast('success', 'Cập nhật thông tin thành công!');
         }).catch(err => {
-            console.log(err)
+            Toast('success', 'Lỗi!')
         })
 
     }
@@ -84,12 +91,12 @@ const InfoForm = () => {
                                 <FormControl>
                                     <RadioGroup className={classes.rootRadio}
                                         aria-labelledby="demo-radio-buttons-group-label"
-                                        defaultValue={valueArray.gnder}
+                                        value={valueArray.sex}
                                         onChange={handleChange}
                                         name="sex"
                                     >
-                                        <FormControlLabel value="nam" control={<Radio />} label="nam" />
-                                        <FormControlLabel value="nữ" control={<Radio />} label="nữ" />
+                                        <FormControlLabel value="Nam" control={<Radio />} label="Nam" />
+                                        <FormControlLabel value="Nữ" control={<Radio />} label="Nữ" />
                                     </RadioGroup>
                                 </FormControl>
 
