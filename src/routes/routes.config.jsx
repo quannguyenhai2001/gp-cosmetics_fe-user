@@ -2,6 +2,7 @@ import DefaultLayout from "layouts/DefaultLayout/DefaultLayout";
 import ProfileLayout from "layouts/ProfileLayout/ProfileLayout";
 import ChangePasswordScreen from "screens/ChangePasswordScreen/ChangePasswordScreen";
 import HomeScreen from "screens/HomeScreen/HomeScreen";
+import NotFound from "screens/NotFound/NotFound";
 import OrderDetailScreen from "screens/OrderDetailScreen/OrderDetailScreen";
 import OrderScreen from "screens/OrderScreen/OrderScreen";
 import PaymentScreen from "screens/PaymentScreen/PaymentScreen";
@@ -79,6 +80,13 @@ export const RouteConfigs = [
         path: "/user/:id/payment",
         element: PaymentScreen,
         isPrivate: true,
+        layout: DefaultLayout,
+
+    },
+    {
+        path: "/not-found",
+        element: NotFound,
+        isPrivate: false,
         layout: DefaultLayout,
 
     },

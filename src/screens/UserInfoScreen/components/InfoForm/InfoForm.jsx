@@ -73,7 +73,7 @@ const InfoForm = () => {
                                     <Typography className={classes.rootTypo}>Điện thoại:</Typography>
                                     <Typography className={classes.rootTypo}>Giới tính:</Typography>
                                     <Typography className={classes.rootTypo}>Tuổi:</Typography>
-                                    <Typography className={classes.rootTypo}>Địa chỉ:</Typography>
+                                    <Typography className={classes.rootTypop}>Địa chỉ:</Typography>
                                 </Box>
                             </Grid>
                             <Grid item xs={6}>

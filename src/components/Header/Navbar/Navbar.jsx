@@ -18,8 +18,9 @@ import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlin
 import logo from 'assets/images/logo/logo_web.png';
 import { Link, useNavigate } from 'react-router-dom';
 import ContactMailOutlinedIcon from '@mui/icons-material/ContactMailOutlined';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Cart from './components/Cart/Cart';
+import { deleteUser } from 'redux/slices/UserSlice';
 
 
 //hide and show navbar
@@ -82,7 +83,7 @@ export default function NavBar(props) {
     const userInfo = useSelector(state => state.user.userInfo);
     const classes = useStyles();
     const navigate = useNavigate();
-
+    const dispatch = useDispatch();
     const [searchValue, setSearchValue] = React.useState('');
     const handleChangeSearch = (event) => {
         setSearchValue(event.target.value);
@@ -98,6 +99,13 @@ export default function NavBar(props) {
             }
         }
     };
+
+    const HandleLogOut = async () => {
+        await dispatch(deleteUser())
+        localStorage.removeItem('access_token');
+
+        navigate('/sign-in');
+    }
     return (
         <HideOnScroll {...props}>
             <AppBar className={classes.rootAppBarTop} elevation={0}>
@@ -193,8 +201,8 @@ export default function NavBar(props) {
                                             </ListItem>
 
                                             <Divider sx={{ margin: '0.5rem 0' }} />
-                                            <ListItem className={classes.rootListItem2} disablePadding>
-                                                <Box sx={{ marginRight: 1 }}>
+                                            <ListItem className={classes.rootListItem2} disablePadding onClick={HandleLogOut}>
+                                                <Box sx={{ marginRight: 1 }} >
                                                     <LogoutIcon />
                                                 </Box>
                                                 <Typography>
@@ -264,26 +272,18 @@ export default function NavBar(props) {
                             <Divider className={classes.divideRoot} orientation="vertical" variant="middle" flexItem />
 
 
-                            <CustomTooltip
-                                title={
-                                    <>
-                                        <Typography color="inherit">
-                                            Bạn chưa đăng nhập!
-                                        </Typography>
-                                    </>
-                                }
-                            >
 
-                                <Box className={classes.BoxRightIcon}>
-                                    <IconButton
-                                        size="medium"
-                                        sx={{ "&:hover": { color: "blue" } }}
-                                    >
-                                        <FaceIcon />
-                                    </IconButton>
-                                    <Typography component={Link} to="/sign-in">Đăng Nhập</Typography>
-                                </Box>
-                            </CustomTooltip>
+
+                            <Box className={classes.BoxRightIcon}>
+                                <IconButton
+                                    size="medium"
+                                    sx={{ "&:hover": { color: "blue" } }}
+                                >
+                                    <FaceIcon />
+                                </IconButton>
+                                <Typography component={Link} to="/sign-in">Đăng Nhập</Typography>
+                            </Box>
+
                             <IconButton
                                 size="medium"
                                 aria-label="cart"

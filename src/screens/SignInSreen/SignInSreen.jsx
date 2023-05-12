@@ -1,5 +1,5 @@
 import { Avatar, Box, Button, Container, Divider, Grid, Typography } from '@mui/material'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useStyles from './SignInSreen.styles';
 import { Field, Form, Formik } from 'formik';
 import Logo from 'assets/images/logo/logo_web.png';
@@ -16,6 +16,11 @@ const SignInScreen = () => {
     const [isError, setIsError] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    useEffect(() => {
+        if (localStorage.getItem("access_token")) {
+            navigate("/")
+        }
+    }, [])
     const changeError = () => {
         setIsError(false)
     }

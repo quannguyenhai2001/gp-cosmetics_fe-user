@@ -59,7 +59,11 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
+        deleteUser: (state, action) => {
 
+            state.userInfo = {}
+            state.accessToken = ""
+        },
     },
     extraReducers: builder => {
         builder.addCase(fetchAsyncSignIn.fulfilled, (state, action) => {
@@ -72,5 +76,7 @@ const userSlice = createSlice({
     }
 })
 
-const { reducer: userReducer } = userSlice
+const { reducer: userReducer, actions } = userSlice
+export const { deleteUser } = actions
+
 export default userReducer
