@@ -40,7 +40,7 @@ const ProductRelativeSlide = () => {
     return (
         <Box sx={{ marginBottom: '5rem' }}>
             <Typography variant="h5" gutterBottom sx={{ textAlign: 'Left', fontWeight: 'bold', marginBottom: '4rem' }}>
-                Các sản phẩm liên quan
+                Các sản phẩm hot hiện nay
             </Typography>
             <Swiper
                 className={classes.swiper}
