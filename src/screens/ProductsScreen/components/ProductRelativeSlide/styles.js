@@ -3,7 +3,7 @@ import { makeStyles } from '@mui/styles';
 export default makeStyles((theme) => ({
     swiper: {
         width: '100%',
-        height: '25rem',
+        height: '30rem',
         '& .swiper-button-prev': {
             '&:after': {
                 fontSize: '3rem',

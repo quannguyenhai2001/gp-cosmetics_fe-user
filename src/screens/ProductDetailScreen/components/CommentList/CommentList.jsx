@@ -54,7 +54,7 @@ const CommentList = () => {
                   <Grid item xs={11}>
                     <Box className={classes.eachCommentContent}>
 
-                      <Typography sx={{ fontWeight: "600", marginRight: '0.4rem' }}>{value.display_name}</Typography>
+                      <Typography sx={{ fontWeight: "600", marginRight: '0.4rem' }}>{value.username}</Typography>
                       <Rating name="half-rating-read" defaultValue={parseFloat(value.star_rating, 10)} precision={0.5} readOnly />
                       <Typography mb={1}>{value.create_at} | Phân loại hàng: {value.size_name}</Typography>
                       <Typography mb={2}>{value.comment}</Typography>
