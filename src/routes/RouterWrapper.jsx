@@ -1,6 +1,5 @@
-import DefaultLayout from "layouts/DefaultLayout/DefaultLayout"
 import React from "react";
-import { useSelector } from "react-redux";
+
 import {
     Routes,
     Route,
@@ -11,7 +10,7 @@ import { RouteConfigs } from "./routes.config";
 function PrivateRouter() {
     const jwtToken = localStorage.getItem("access_token");
     return RouteConfigs.map((route, index) => {
-        if ((!route.isPrivate || (route.isPrivate && jwtToken)) || (route.isPrivate && jwtToken)) {
+        if ((!route.isPrivate || (route.isPrivate && jwtToken))) {
             return <Route key={index} path={route.path} element={(() => {
                 return (
                     <route.layout>
@@ -21,13 +20,9 @@ function PrivateRouter() {
             })()}
             />
         }
-        else if (route.isPrivate && !jwtToken) {
+        else {
             return <Route key={index} path={route.path} element={<Navigate to="/sign-in" />} />
         }
-        else {
-            return <Route key={index} path={route.path} element={<Navigate to="/" />} />
-        }
-
     })
 }
 

@@ -5,15 +5,18 @@ import Box from '@mui/material/Box';
 import { Grid, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
-import { getAllCategories } from 'redux/slices/productSlice';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCategories } from 'redux/slices/productSlice';
+import { Link } from 'react-router-dom';
+import GetCategoryList from 'utils/ListCategories';
+import { CallApiByBody } from 'api/configApi';
 
 
 const Categories = () => {
-    const [categories, setCategories] = useState([])
     const classes = useStyles()
     const dispatch = useDispatch()
+    const categories = useSelector(state => state.products.categories)
+
     //hidden nav
     const [isCheck, setIsCheck] = React.useState(false);
     const handleHiddenNav = () => {
@@ -22,25 +25,8 @@ const Categories = () => {
     useEffect(() => {
         (async () => {
             try {
-                const res = await dispatch(getAllCategories()).unwrap()
-                const categoryList = res.data
-
-                let listFatherCategories = [];
-                categoryList.forEach((category, index) => {
-                    if (!+category.father_category_id) {
-                        listFatherCategories.push(category)
-                    }
-                })
-                const newCategoryList = listFatherCategories.map(value => {
-                    let childCategoryList = []
-                    for (let i = 0; i < categoryList.length; i++) {
-                        if (categoryList[i].father_category_id === value.id) {
-                            childCategoryList.push(categoryList[i])
-                        }
-                    }
-                    return { id: value.id, name: value.name, childCategoryList: childCategoryList }
-                })
-                setCategories(newCategoryList)
+                let response = await CallApiByBody("categories/get-all-categories.php", "get", null);
+                dispatch(setCategories(GetCategoryList(response.data.data)))
             } catch (e) {
                 toast.error('Lỗi!', {
                     position: "top-right",
@@ -81,7 +67,7 @@ const Categories = () => {
                                 <Grid item xs={3} key={index} >
                                     <Box sx={{ display: 'grid', placeItems: 'center' }} >
                                         <Box className={classes.boxEachChildCate} onClick={handleHiddenNav}>
-                                            <Typography className={classes.eachChildCate}> {childCategory.name}</Typography>
+                                            <Typography component={Link} to={`/products/${childCategory.id}`} className={classes.eachChildCate}> {childCategory.name}</Typography>
                                         </Box>
                                     </Box>
                                 </Grid>
@@ -106,7 +92,7 @@ const Categories = () => {
                             <>
                                 {listNav}
                                 <li>
-                                    Blogs
+                                    Tin tức
                                 </li>
                                 <li>
                                     Về chúng tôi

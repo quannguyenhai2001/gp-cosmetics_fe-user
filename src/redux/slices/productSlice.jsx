@@ -1,34 +1,269 @@
-import instanceApi from "api/configApi";
+import instanceApi, { CallApiByBody, CallApiByParams } from "api/configApi";
+
 
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
 const initialState = {
-
+    categories: [],
+    products: [],
+    pageInfo: {},
+    manufacturers: [],
+    carts: [],
+    errorListProducts: false
 };
 
-export const getAllCategories = createAsyncThunk(
-    "auth/getAllCategories",
+export const fetchAsyncGetProducts = createAsyncThunk(
+    "product/fetchAsyncGetProducts",
     async (data, { rejectWithValue }) => {
         try {
-            const response = await instanceApi.get("/categories/get-all-categories.php");
-            return response.data;
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
+            const response = await CallApiByParams("products/get-all-products.php", "get", data)
+            return response.data
         } catch (error) {
-            throw rejectWithValue(error.response.data);
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
+export const fetchAsyncGetRelativeProducts = createAsyncThunk(
+    "product/fetchAsyncGetProducts",
+    async (data, { rejectWithValue }) => {
+        try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
+            const response = await CallApiByParams("products/get-all-products.php", "get", data)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
+
+export const fetchAsyncGetManufactures = createAsyncThunk(
+    "product/fetchAsyncGetManufactures",
+    async (arg, { rejectWithValue }) => {
+        try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
+            const response = await CallApiByBody("manufacturers/get-all-manufacturers.php", "get", null)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
+export const fetchAsyncGetDetailProduct = createAsyncThunk(
+    "product/fetchAsyncGetDetailProduct",
+    async (arg, { rejectWithValue }) => {
+        try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
+            const response = await CallApiByParams("products/get-product.php", "get", arg)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
         }
     }
 );
 
 
+export const fetchAsyncGetRatings = createAsyncThunk(
+    "product/fetchAsyncGetRatings",
+    async (arg, { rejectWithValue }) => {
+        try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
+            const response = await CallApiByParams("ratings/get-all-ratings.php", "get", arg)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
+export const fetchAsyncCreateRating = createAsyncThunk(
+    "product/fetchAsyncGetRating",
+    async (arg, { rejectWithValue }) => {
+        try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
+            const response = await CallApiByBody("ratings/create-rating.php", "post", arg)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
+export const fetchAsyncGetAllBills = createAsyncThunk(
+    "product/fetchAsyncGetAllBills",
+    async (arg, { rejectWithValue }) => {
+        try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
+            const response = await CallApiByParams("bills/get-all-bills.php", "get", arg)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
+export const fetchAsyncCreateBill = createAsyncThunk(
+    "product/fetchAsyncCreateBill",
+    async (arg, { rejectWithValue }) => {
+        try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
+            const response = await CallApiByBody("bills/create-bill.php", "post", arg)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
+export const fetchAsyncCancelBill = createAsyncThunk(
+    "product/fetchAsyncCancelBill",
+    async (arg, { rejectWithValue }) => {
+        try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
+            const response = await CallApiByBody("bills/cancel-bill.php", "put", arg)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
+export const fetchAsyncGetAllBillDetails = createAsyncThunk(
+    "product/fetchAsyncGetAllBillDetails",
+    async (arg, { rejectWithValue }) => {
+        try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
+            const response = await CallApiByParams("bill-details/get-all-bill-details.php", "get", arg)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
+
+export const fetchAsyncGetAllCarts = createAsyncThunk(
+    "product/fetchAsyncGetAllCarts",
+    async (arg, { rejectWithValue }) => {
+        try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
+            const response = await CallApiByBody("carts/get-all-carts.php", "get", null)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
+export const fetchAsyncCreateCart = createAsyncThunk(
+    "product/fetchAsyncCreateCart",
+    async (arg, { rejectWithValue }) => {
+        try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
+            const response = await CallApiByBody("carts/create-cart.php", "POST", arg)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
+export const fetchAsyncUpdateCart = createAsyncThunk(
+    "product/fetchAsyncUpdateCart",
+    async (arg, { rejectWithValue }) => {
+        try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
+            const response = await CallApiByBody("carts/update-cart.php", "PUT", arg)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
+export const fetchAsyncDeleteCart = createAsyncThunk(
+    "product/fetchAsyncDeleteCart",
+    async (arg, { rejectWithValue }) => {
+        try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
+            const response = await CallApiByBody("carts/delete-cart.php", "DELETE", arg)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
+
+export const fetchAsyncGetAllSizes = createAsyncThunk(
+    "product/fetchAsyncGetAllSizes",
+    async (arg, { rejectWithValue }) => {
+        try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
+            const response = await CallApiByParams("sizes/get-all-sizes.php", "get", arg)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
+
+export const fetchAsyncGetLatestProducts = createAsyncThunk(
+    "product/fetchAsyncGetLatestProducts",
+    async (data, { rejectWithValue }) => {
+        try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
+            const response = await CallApiByParams("feed/get-latest-product-list.php", "get", data)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
+export const fetchAsyncGetBestSellerProducts = createAsyncThunk(
+    "product/fetchAsyncGetBestSellerProducts",
+    async (data, { rejectWithValue }) => {
+        try {
+            instanceApi.defaults.headers["Content-Type"] = "application/json; charset=UTF-8"
+            const response = await CallApiByParams("feed/get-best-seller-product-list.php", "get", data)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+);
 const productSlice = createSlice({
     name: 'products',
     initialState,
     reducers: {
+        setCategories: (state, action) => {
+            state.categories = action.payload
+        },
+        deleteListProducts: (state, action) => {
+            state.products = []
+        },
+        deleteCarts: (state, action) => {
+            state.carts = []
+        }
 
     },
     extraReducers: builder => {
 
+        builder.addCase(fetchAsyncGetProducts.fulfilled, (state, action) => {
+
+            if (action.payload.data.length > 0) {
+                state.products = action.payload.data
+                state.pageInfo = action.payload.pageInfo
+                state.errorListProducts = false
+            }
+            else {
+                state.products = []
+                state.pageInfo = []
+                state.errorListProducts = true
+            }
+        })
+
+        builder.addCase(fetchAsyncGetManufactures.fulfilled, (state, action) => {
+            state.manufacturers = action.payload.data
+
+        })
+        builder.addCase(fetchAsyncGetAllCarts.fulfilled, (state, action) => {
+            state.carts = action.payload.data
+
+        })
     }
 })
 
 const { reducer: productReducer, actions } = productSlice
+export const { setCategories, deleteListProducts, deleteCarts } = actions
 export default productReducer

@@ -1,7 +1,7 @@
 import { Avatar, Box, Button, Grid, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser, patchUserInfo } from 'redux/slices/UserSlice';
+import { fetchAsyncGetUser, fetchAsyncUpdateUser } from 'redux/slices/UserSlice';
 import { Toast } from 'utils/Toast';
 import useStyles from './ChangeForm.styles';
 
@@ -11,6 +11,7 @@ const ChangeForm = () => {
     // const userDetail = useSelector(state => state.user.userDetail);
     const dispatch = useDispatch();
     const [valueArray, setValueArray] = React.useState({
+        oldPassword: '',
         password: '',
         confirmPassword: '',
     });
@@ -22,17 +23,17 @@ const ChangeForm = () => {
     const handleConfirm = (event) => {
         event.preventDefault();
         if (valueArray.password !== valueArray.confirmPassword) {
-            alert('Password and Confirm Password is not match');
+            Toast('error', 'Mật khẩu xác thực không trùng khớp!');
         } else {
-            let data = new FormData();
-            data.append("password", valueArray.password);
-            dispatch(patchUserInfo(data)).unwrap().then(() => {
 
-                dispatch(getUser())
-                Toast('success', 'Update user success!');
+            dispatch(fetchAsyncUpdateUser(valueArray)).unwrap().then(() => {
+
+                dispatch(fetchAsyncGetUser())
+                Toast('success', 'Thay đổi mật khẩu thành công!');
 
             }).catch(err => {
-                console.log(err)
+                Toast('error', 'Lỗi!');
+
             })
         }
     }
@@ -41,11 +42,13 @@ const ChangeForm = () => {
             <Grid container spacing={2}>
                 <Grid item xs={2}>
                     <Box className={classes.Typo}>
+                        <Typography className={classes.rootTypo}>Mật khẩu cũ:</Typography>
                         <Typography className={classes.rootTypo}>Mật khẩu mới:</Typography>
                         <Typography className={classes.rootTypo}>Xác nhận mật khẩu:</Typography>
                     </Box>
                 </Grid>
                 <Grid item xs={10}>
+                    <TextField onChange={handleChange} type="password" className={classes.rootTextField} name="oldPassword" variant="outlined" size="small" value={valueArray.oldPassword} />
                     <TextField onChange={handleChange} type="password" className={classes.rootTextField} name="password" variant="outlined" size="small" value={valueArray.password} />
                     <TextField onChange={handleChange} type="password" className={classes.rootTextField} name="confirmPassword" variant="outlined" size="small" value={valueArray.confirmPassword} />
                     <Button onClick={handleConfirm} variant="contained">Lưu</Button>

@@ -5,7 +5,7 @@ const ImgBeauty = () => {
     return (
         <Box sx={{ marginBottom: '5rem' }}>
             <Typography variant="h4" gutterBottom sx={{ textAlign: 'center', marginBottom: '4rem' }}>
-                More Beauty For You
+                Các Nhãn Hàng Cho Bạn
             </Typography>
             <Box sx={{ display: 'flex', justifyContent: 'center', gap: '3rem', marginBottom: '3rem' }}>
                 <img src={require('../../../../assets/images/beauty/img1.webp')} alt="img" />

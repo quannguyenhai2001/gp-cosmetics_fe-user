@@ -61,4 +61,18 @@ instanceApi.interceptors.response.use(
     errorResponseInterceptor
 );
 
+export function CallApiByBody(endpoint, method = "GET", body) {
+    return instanceApi({
+        url: `/${endpoint}`,
+        method: method,
+        data: body
+    })
+}
+export function CallApiByParams(endpoint, method = "GET", body) {
+    return instanceApi({
+        url: `/${endpoint}`,
+        method: method,
+        params: body
+    })
+}
 export default instanceApi;

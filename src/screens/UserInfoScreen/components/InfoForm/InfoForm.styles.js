@@ -30,7 +30,14 @@ export default makeStyles((theme) => ({
     rootTypo: {
         '&.MuiTypography-root': {
             margin: '2rem 0',
-        }
+        },
+
+    },
+    rootTypop: {
+        '&.MuiTypography-root': {
+            margin: '2.8rem 0',
+        },
+
     },
     rootTyp1: {
         '&.MuiTypography-root': {

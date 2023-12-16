@@ -5,9 +5,9 @@ import { FastField, Field, Form, Formik } from 'formik';
 import InputField from 'components/FormElements/InputField/InputField';
 import SelectField from 'components/FormElements/SelectField/SelectField';
 import CheckBoxField from 'components/FormElements/CheckboxField/CheckboxField';
-import { createUserSchema, initialCreateUserValues } from 'utils/validation/form-validate';
+import { createUserSchema, initialCreateUserValues } from 'utils/FormValidate';
 import { useDispatch } from 'react-redux';
-import { postSignUp } from 'redux/slices/UserSlice';
+import { fetchAsyncSignUp } from 'redux/slices/UserSlice';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -40,7 +40,7 @@ const SignUpScreen = () => {
                 phone_number: value.phoneNumber,
                 ...valueObj
             }
-            await dispatch(postSignUp(userData)).unwrap()
+            await dispatch(fetchAsyncSignUp(userData)).unwrap()
             navigate("/sign-in")
             toast.success('Đăng ký thành công!', {
                 position: "top-right",

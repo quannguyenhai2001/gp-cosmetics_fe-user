@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Cart = () => {
+const NotFound = () => {
     return (
         <div>
-            cart
+            Not Found
         </div>
     );
 };
 
-export default Cart;
+export default NotFound;

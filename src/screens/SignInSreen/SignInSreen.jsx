@@ -1,14 +1,14 @@
 import { Avatar, Box, Button, Container, Divider, Grid, Typography } from '@mui/material'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useStyles from './SignInSreen.styles';
 import { Field, Form, Formik } from 'formik';
 import Logo from 'assets/images/logo/logo_web.png';
 import { Link, useNavigate } from 'react-router-dom';
 import InputField from 'components/FormElements/InputField/InputField';
-import { signInSchema, signInValues } from 'utils/validation/form-validate';
+import { signInSchema, signInValues } from 'utils/FormValidate';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { postSignIn } from 'redux/slices/UserSlice';
+import { fetchAsyncSignIn } from 'redux/slices/UserSlice';
 
 const SignInScreen = () => {
     const classes = useStyles()
@@ -16,16 +16,20 @@ const SignInScreen = () => {
     const [isError, setIsError] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    useEffect(() => {
+        if (localStorage.getItem("access_token")) {
+            navigate("/")
+        }
+    }, [])
     const changeError = () => {
         setIsError(false)
-        console.log("gd")
     }
     const handleShowPassword = () => {
         setShowPassword(!showPassword)
     }
     const handleSubmit = async (value) => {
         try {
-            await dispatch(postSignIn(value)).unwrap()
+            await dispatch(fetchAsyncSignIn(value)).unwrap()
             navigate("/")
             toast.success('Đăng nhập thành công!', {
                 position: "top-right",
@@ -98,7 +102,7 @@ const SignInScreen = () => {
                                     )
                                 }}
                             </Formik >
-                            <Divider>HOẶC</Divider>
+
                         </Box>
                     </Grid>
 
